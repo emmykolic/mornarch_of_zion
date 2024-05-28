@@ -62,7 +62,6 @@
 
 .content {
   padding: 20px;
-  
 }
 
 .popup-container {
@@ -88,11 +87,11 @@
   cursor: pointer;
 }
 
-.owl-carousel .item {
-  background: #4CAF50;
-  padding: 20px;
-  margin: 10px;
-  color: white;
-  border-radius: 3px;
-  text-align: center;
+.download-btn {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #0056b3; /* Darker shade of the primary color */
+    transform: scale(1.05); /* Slightly enlarge the button */
 }

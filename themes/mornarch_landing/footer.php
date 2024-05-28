@@ -76,15 +76,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script> -->
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery-3.2.1.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery-migrate-3.0.1.min.js"></script>
+
+
 
 <script src="<?= BURL ?>themes/mornarch_landing/js/popper.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/bootstrap.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.easing.1.3.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.waypoints.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.stellar.min.js"></script>
+<!-- Owl Carousel JS -->
 <script src="<?= BURL ?>themes/mornarch_landing/js/owl.carousel.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.magnific-popup.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/aos.js"></script>

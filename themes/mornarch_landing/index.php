@@ -188,30 +188,67 @@
 
 
     <section id="trending_post"></section>
-    <section class="ftco-section py-5" style="background-color: rgb(212, 202, 202);">
-        <div class="text-center my-2">
-            <h2 class="text-3xl font-weight-bold">Trending Post</h2>
-        </div>
-        <p class="text-center mt-0 lead">Choose from courses in English and many other languages</p>
-        <div class="d-flex justify-content-center align-items-center w-4/9">
-            <div class="d-flex flex-wrap py-5 m-9 owl-one owl-carousel owl-theme spacing-2 spacing-md-2">
-                <div class="item max-w-sm bg-white rounded-lg shadow-md shadow-gray-300 my-2 mx-2">
-                    <input type="hidden" name="pid" value="1">
-                    <img class="w-100 h-44 object-cover rounded-lg" src="https://images.pexels.com/photos/92905/pexels-photo-92905.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Product Image">
-                    <div class="px-5 pb-3 align-items-end">
-                        <a href="#" class="min-h-fit p-2">
-                            <h5 class="text-l font-weight-bold tracking-tight d-flex justify-content-center text-dark">Laptops</h5>
-                        </a>
-                        <p class="p-2 min-h-full">Dell is an Outstanding system, with trem...</p>
-                        <div class="p-2">
-                            <a href="http://localhost/ent_store/carts/action/1" class="btn btn-success">Add To Cart</a>
+    <section class="ftco-section ftco-no-pt bg-light py-3" id="services">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+                    <!-- <span class="subheading text-danger">What we offer</span> -->
+                    <h2 class="mb-2">Trending Post</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="carousel-car owl-carousel">
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?=BURL?>themes/mornarch_landing/images/performer.jpg);">
+                                </div>
+                                <div class="text">
+                                    <h2 class="mb-3"><a href="#">Inter-cities Transportation</a></h2>
+                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="<?= BURL ?>" class="btn btn-danger py-2 mr-1">Book now</a> </p>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?=BURL?>themes/mornarch_landing/images/performer.jpg);">
+                                </div>
+                                <div class="text">
+                                    <h2 class="mb-3"><a href="#">Waybill/Cargo</a></h2>
+                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="<?= BURL ?>index/cargo" class="btn btn-danger py-2 mr-1">Book now</a> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?=BURL?>themes/mornarch_landing/images/performer.jpg);">
+                                </div>
+                                <div class="text">
+                                    <h2 class="mb-3"><a href="#">Waybill/Cargo</a></h2>
+                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="<?= BURL ?>index/cargo" class="btn btn-danger py-2 mr-1">Book now</a> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="car-wrap rounded ftco-animate">
+                                <div class="img rounded d-flex align-items-end" style="background-image: url(<?=BURL?>themes/mornarch_landing/images/performer.jpg);">
+                                </div>
+                                <div class="text">
+                                    <h2 class="mb-3"><a href="#">Charter</a></h2>
+                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="<?= BURL ?>index/charter" class="btn btn-danger py-2 mr-1">Book now</a> </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <!-- Repeat the .item divs as needed -->
             </div>
         </div>
     </section>
+
 
 
 

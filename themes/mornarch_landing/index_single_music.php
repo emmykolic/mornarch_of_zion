@@ -57,7 +57,7 @@
                 </div>
             </div>
                     
-            <div class="col-md-8 block-9 mb-md-5">
+            <div class="col-md-4 block-9 mb-md-5">
                 <div class="">
                     <p><?=$row['song_description']?></p>
                 </div>
@@ -67,7 +67,38 @@
                         Your browser does not support the audio element.
                     </audio>
                     <!-- Link to trigger download -->
-                    <a href="<?=BURL . $row['song']?>" download>Download Audio</a>
+                    <div class="text-left ml-5 mt-3">
+                        <a class="btn btn-primary download-btn" href="<?=BURL . $row['song']?>" download>Download Audio</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="border w-100 p-4 rounded mb-2 d-flex">
+                            <div class="icon mr-3">
+                                <span class="icon-map-o"></span>
+                            </div>
+                            <p><span>Address:</span> 346 Ikwerre Road Ikwerre Road Port Harcourt, Rivers state, Port Harcourt, Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="border w-100 p-4 rounded mb-2 d-flex">
+                            <div class="icon mr-3">
+                                <span class="icon-map-o"></span>
+                            </div>
+                            <p><span>Address:</span> Owerri, Nigeria</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="border w-100 p-4 rounded mb-2 d-flex">
+                            <div class="icon mr-3">
+                                <span class="icon-map-o"></span>
+                            </div>
+                            <p><span>Address:</span> Onitcha Nigeria</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -369,33 +369,51 @@
 	});
 	$('#time_pick').timepicker();
 
-	$(document).ready(function () {
-		$(".owl-one").owlCarousel({
-			items: 4,
+	var carousel = function() {
+		$('.carousel-car').owlCarousel({
+			center: true,
 			loop: true,
-			margin: 10,
-			responsiveClass: true,
-			dots: false,
 			autoplay: true,
-			autoplayTimeout: 3000,
-			autoplayHoverPause: true,
-			nav: false,      
-			responsive: {
-				0: {
-					items: 1,
-					nav: false
+			items:1,
+			margin: 30,
+			stagePadding: 0,
+			nav: false,
+			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+			responsive:{
+				0:{
+					items: 1
 				},
-				600: {
-					items: 2,
-					nav: false
+				600:{
+					items: 2
 				},
-				1000: {
-					items: 4,
-					nav: false
+				1000:{
+					items: 4
 				}
 			}
 		});
-	});
+		$('.carousel-testimony').owlCarousel({
+			center: true,
+			loop: true,
+			items:1,
+			margin: 30,
+			stagePadding: 0,
+			nav: false,
+			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+			responsive:{
+				0:{
+					items: 1
+				},
+				600:{
+					items: 2
+				},
+				1000:{
+					items: 3
+				}
+			}
+		});
+
+	};
+	carousel();
 	
 	
 	
