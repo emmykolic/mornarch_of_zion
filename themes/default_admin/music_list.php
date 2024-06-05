@@ -17,6 +17,7 @@
                                     <th>Song Image</th>
                                     <th>Song Name</th>
                                     <th>Song</th>
+                                    <th>Song Lyrics</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -34,6 +35,17 @@
                                             Your browser does not support the audio element.
                                         </audio>
                                     </td>
+                                    <td>
+                                        <div>
+                                            <p class="song-lyrics" id="lyrics-<?= $row['aid'] ?>">
+                                                <?= substr($row['song_lyrics'], 0, 100) . (strlen($row['song_lyrics']) > 100 ? '...' : '') ?>
+                                            </p>
+                                            <?php if (strlen($row['song_lyrics']) > 100): ?>
+                                                <a href="javascript:void(0);" class="read-more" data-song-id="<?= $row['aid'] ?>">Read more</a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+
                                     <td>
                                         <a href="<?=BURL?>music/delete/<?=$row['aid']?>" class="btn btn-outline-danger btn-sm">
                                             <i class="bx bx-trash"></i>

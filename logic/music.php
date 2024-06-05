@@ -23,10 +23,39 @@ class music extends boiler{
         $this->set_token();
         $this->auth->user(9);
         $song_list = $this->db->query("SELECT * FROM audios ORDER BY aid LIMIT 20");
+        
+        function shorten_text($text, $max_length = 100) {
+            if (strlen($text) > $max_length) {
+                $shortened = substr($text, 0, $max_length) . '...';
+            } else {
+                $shortened = $text;
+            }
+            return $shortened;
+        }
+        
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
         include_once 'themes/' . $this->setting->admin_theme . '/music_list.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
+
+    // In music.php or the relevant controller
+
+    // In music.php or relevant controller
+
+    public function get_full_lyrics() {
+        $aid = intval($_GET['id']);
+        $result = $this->db->query("SELECT song_lyrics FROM audios WHERE aid = $aid");
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            echo $row['song_lyrics'];
+        } else {
+            http_response_code(404);
+            echo 'Lyrics not found';
+        }
+    }
+
+
 
 
     public function show(){
@@ -62,6 +91,7 @@ class music extends boiler{
         $genre = $this->clean->post("genre");
         $mood = $this->clean->post("mood");
         $song_description = $this->clean->post("song_description");
+        $song_lyrics = $this->clean->post("song_lyrics");
         $song_img = $_FILES['song_img']; // Change this line to access the file input for the image
         $audio_File = $_FILES['audioFile'];
         $moz_tune = $this->clean->post("moz_tune");
@@ -108,7 +138,7 @@ class music extends boiler{
 
         // Insert data into the database
         if ($this->error == 0) {
-            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_img, moz_tune, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$imageFilePath', '$moz_tune', '$date_created')");
+            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, moz_tune, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$moz_tune', '$date_created')");
 
             $this->alert->set("Upload successful", "success");
             header('Location: ' . BURL . 'music/song_list'); // Redirect to a success page
@@ -148,10 +178,6 @@ class music extends boiler{
         include_once 'themes/' . $this->setting->admin_theme . '/music_list_edit.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
-
-
-
-    // Your PHP class or functions...
 
     // Your edit_action method
     public function edit_action() {
@@ -247,6 +273,38 @@ class music extends boiler{
             header('location:' . BURL . "music/edit?=".$aid);
         }
     }
+
+    public function track_play($aid) {
+        // Get the POST data
+        $aid = intval($_POST['id']);
+        $type = $_POST['type'];
+    
+        // Determine the column to update based on the type
+        if ($type === 'play') {
+            $this->db->query("UPDATE audios SET play_count = play_count + 1 WHERE aid = $aid");
+        } elseif ($type === 'download') {
+            $this->db->query("UPDATE audios SET download_count = download_count + 1 WHERE aid = $aid");
+        } else {
+            // Invalid type
+            http_response_code(400);
+            echo 'Invalid type';
+            exit;
+        }
+    
+        // Update the database
+        if ($this->db->query($query)) {
+            // Return a success response
+            echo 'Success';
+        } else {
+            // Return an error response
+            http_response_code(500);
+            echo 'Database error';
+        }
+    }
+    
+    
+    
+    
 
     // Function to get file MIME type using mime_content_type
     private function getFileMimeType($filePath) {

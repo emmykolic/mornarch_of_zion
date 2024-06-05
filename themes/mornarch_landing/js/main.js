@@ -84,78 +84,6 @@
 	// Scrollax
    $.Scrollax();
 
-	var carousel = function() {
-		$('.carousel-car').owlCarousel({
-			center: true,
-			loop: true,
-			autoplay: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 3
-				}
-			}
-		});
-		// $('.carousel-testimony').owlCarousel({
-		// 	center: true,
-		// 	loop: true,
-		// 	items:1,
-		// 	margin: 30,
-		// 	stagePadding: 0,
-		// 	nav: false,
-		// 	navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-		// 	responsive:{
-		// 		0:{
-		// 			items: 1
-		// 		},
-		// 		600:{
-		// 			items: 2
-		// 		},
-		// 		1000:{
-		// 			items: 3
-		// 		}
-		// 	}
-		// });
-
-		$(".owl-one").owlCarousel({
-            items: 4,
-            loop: true,
-            margin: 10,
-            responsiveClass: true,
-            dots: false,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true,
-			nav: false,		
-            responsive: {
-                0: {
-                    items: 1,
-                    nav: false
-                },
-                600: {
-                    items: 2,
-                    nav: false
-                },
-                1000: {
-                    items: 4,
-                    nav: false,
-                }
-            }
-        });
-
-	};
-	carousel();
-
 
 	$('nav .dropdown').hover(function(){
 		var $this = $(this);
@@ -374,7 +302,7 @@
 			center: true,
 			loop: true,
 			autoplay: true,
-			items:1,
+			items: 1,
 			margin: 30,
 			stagePadding: 0,
 			nav: false,
@@ -387,7 +315,7 @@
 					items: 2
 				},
 				1000:{
-					items: 4
+					items: 3
 				}
 			}
 		});
@@ -414,7 +342,42 @@
 
 	};
 	carousel();
+
 	
+
+	document.addEventListener('DOMContentLoaded', function() {
+		// Get all audio players and download buttons
+		var audioPlayers = document.querySelectorAll('audio[id^="audioPlayer-"]');
+		var downloadButtons = document.querySelectorAll('a[id^="downloadButton-"]');
+	
+		audioPlayers.forEach(function(audioPlayer) {
+			var songId = audioPlayer.getAttribute('data-song-id'); // Get the song ID from the data attribute
+	
+			// Track audio play count
+			audioPlayer.addEventListener('play', function() {
+				// Send AJAX request to increment play count
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', '<?=BURL?>music/track_play', true);
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.send('id=' + songId + '&type=play');
+			});
+		});
+	
+		downloadButtons.forEach(function(downloadButton) {
+			var songId = downloadButton.id.replace('downloadButton-', ''); // Extract the song ID from the button ID
+	
+			// Track download count
+			downloadButton.addEventListener('click', function() {
+				// Send AJAX request to increment download count
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', '<?=BURL?>music/track_play', true);
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.send('id=' + songId + '&type=download');
+			});
+		});
+	});
+	
+
 	
 	
 })(jQuery);

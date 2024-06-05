@@ -22,7 +22,20 @@
                 </div>
                 <div class="mb-3">
                     <label for="Description">Tell Us About The Song! <span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="song_description" id="editor1" rows="10" cols="80" required><?=$single['song_description']?></textarea>
+                    <textarea class="form-control" name="song_description" id="editor1" rows="5" cols="40" required><?=$single['song_description']?></textarea>
+                    
+                    <script>
+                        CKEDITOR.config.language = 'en'; // Set language
+                        CKEDITOR.replace('editor1',{
+                            height: 300,
+                            toolbar: 'Basic',
+                            // Other configuration options...
+                        });
+                    </script>
+                </div>
+                <div class="mb-3">
+                    <label for="Lyrics">Lyrics Of The Song! <span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="song_lyrics" id="editor1" rows="5" cols="40" required><?=$single['song_lyrics']?></textarea>
                     
                     <script>
                         CKEDITOR.config.language = 'en'; // Set language

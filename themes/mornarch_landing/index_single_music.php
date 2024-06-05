@@ -62,13 +62,13 @@
                     <p><?=$row['song_description']?></p>
                 </div>
                 <div>
-                    <audio controls loop>
+                    <audio controls loop id="audioPlayer-<?= $row['aid'] ?>" data-song-id="<?= $row['aid'] ?>">
                         <source src="<?=BURL . $row['song']?>" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                     <!-- Link to trigger download -->
                     <div class="text-left ml-5 mt-3">
-                        <a class="btn btn-primary download-btn" href="<?=BURL . $row['song']?>" download>Download Audio</a>
+                        <a class="btn btn-primary download-btn" id="downloadButton-<?= $row['aid'] ?>" href="<?=BURL . $row['song']?>" download>Download Audio</a>
                     </div>
                 </div>
             </div>

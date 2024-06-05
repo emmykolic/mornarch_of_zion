@@ -105,3 +105,9 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.read-more {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -274,3 +274,49 @@ $("#userSearch").on('input',function(){
     }
   }) 
 })
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   var readMoreLinks = document.querySelectorAll('.read-more');
+
+//   readMoreLinks.forEach(function(link) {
+//       link.addEventListener('click', function() {
+//           var songId = this.getAttribute('data-song-id');
+//           var lyricsElement = document.getElementById('lyrics-' + songId);
+
+//           // Fetch full lyrics from the server using AJAX
+//           var xhr = new XMLHttpRequest();
+//           xhr.open('GET', '<?= BURL ?>music/get_full_lyrics?id=' + songId, true);
+//           xhr.onload = function() {
+//               if (xhr.status === 200) {
+//                   lyricsElement.textContent = xhr.responseText;
+//                   // Hide the "Read more" link
+//                   link.style.display = 'none';
+//               }
+//           };
+//           xhr.send();
+//       });
+//   });
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var readMoreLinks = document.querySelectorAll('.read-more');
+
+  readMoreLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+          var songId = this.getAttribute('data-song-id');
+          var lyricsElement = document.getElementById('lyrics-' + songId);
+
+          // Fetch full lyrics from the server using AJAX
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', '<?= BURL ?>music/get_full_lyrics?id=' + songId, true);
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  lyricsElement.textContent = xhr.responseText;
+                  // Hide the "Read more" link
+                  link.style.display = 'none';
+              }
+          };
+          xhr.send();
+      });
+  });
+});
