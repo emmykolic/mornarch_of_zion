@@ -377,6 +377,25 @@
 		});
 	});
 	
+	document.addEventListener('DOMContentLoaded', function() {
+		document.querySelectorAll('.read-more').forEach(function(readMoreLink) {
+			readMoreLink.addEventListener('click', function() {
+				var truncatedText = this.previousElementSibling.previousElementSibling;
+				var fullText = this.previousElementSibling;
+	
+				// Toggle the display of truncated and full text
+				if (fullText.style.display === 'none') {
+					fullText.style.display = 'inline';
+					truncatedText.style.display = 'none';
+					this.textContent = 'Read Less';
+				} else {
+					fullText.style.display = 'none';
+					truncatedText.style.display = 'inline';
+					this.textContent = 'Read More';
+				}
+			});
+		});
+	});
 
 	
 	

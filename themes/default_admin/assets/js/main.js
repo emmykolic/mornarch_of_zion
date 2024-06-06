@@ -298,6 +298,10 @@ $("#userSearch").on('input',function(){
 //   });
 // });
 
+  CKEDITOR.replace('editor1', { height: 300, toolbar: 'Basic' });
+  CKEDITOR.replace('editor2', { height: 300, toolbar: 'Basic' });
+
+
 document.addEventListener('DOMContentLoaded', function() {
   var readMoreLinks = document.querySelectorAll('.read-more');
 

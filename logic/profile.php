@@ -9,8 +9,9 @@ class profile extends boiler{
 		$this->set_token(); 
 		$this->auth->admin();
 		$uid = $this->auth->uid;
-        $profile=$this->db->query("SELECT * FROM users WHERE uid='$uid'");
-		$prow=$profile->fetch_assoc();
+        $profile=$this->db->query("SELECT * FROM users WHERE uid='$uid' ");
+		$row=$profile->fetch_assoc();
+		// $prow = $row;
 
 		include_once 'themes/'.$this->setting->admin_theme.'/header.php';
  		include_once 'themes/'.$this->setting->admin_theme.'/profile.php';

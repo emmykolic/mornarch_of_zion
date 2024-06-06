@@ -1,5 +1,5 @@
 <div class="row mt-5">
-    <div class="col-md-6 offset-md-3 col-12 m-3 mx-auto">
+    <div class="col-12 offset-sm-2 col-sm-8 m-3 mx-auto">
         <div class="shadow p-4 text-center">
             <h3 class="mb-4"><b>List Of Songs!</b></h3>
             <hr>
@@ -36,15 +36,26 @@
                                         </audio>
                                     </td>
                                     <td>
-                                        <div>
-                                            <p class="song-lyrics" id="lyrics-<?= $row['aid'] ?>">
-                                                <?= substr($row['song_lyrics'], 0, 100) . (strlen($row['song_lyrics']) > 100 ? '...' : '') ?>
-                                            </p>
-                                            <?php if (strlen($row['song_lyrics']) > 100): ?>
-                                                <a href="javascript:void(0);" class="read-more" data-song-id="<?= $row['aid'] ?>">Read more</a>
-                                            <?php endif; ?>
-                                        </div>
-                                    </td>
+
+                                    <?php while ($row = $song_list->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?= $row['aid'] ?></td>
+                                        <td>
+                                            <div>
+                                                <p>
+                                                    <!-- Truncated Text -->
+                                                    <span class="truncated-text"><?= truncate($row['song_lyrics'], 100) ?></span>
+                                                    
+                                                    <!-- Full Text -->
+                                                    <span class="full-text" style="display: none;"><?= $row['song_lyrics'] ?></span>
+                                                    
+                                                    <!-- Read More Link -->
+                                                    <a href="javascript:void(0);" class="read-more">Read More</a>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endwhile; ?>
 
                                     <td>
                                         <a href="<?=BURL?>music/delete/<?=$row['aid']?>" class="btn btn-outline-danger btn-sm">

@@ -14,7 +14,7 @@ class dashboard extends boiler
 		$this->page_title = "Dashboard";
 		$this->stats = new stats($this->db);
 		$uid = $this->auth->uid;
-		$users = $this->db->query("SELECT * FROM users");
+		$users = $this->db->query("SELECT * FROM users WHERE uid = '$uid' ");
 		$users = $users->fetch_assoc();
 		$users_num = $this->db->query("SELECT * FROM users");
 		$users_num = $users_num->num_rows;

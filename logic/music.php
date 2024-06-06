@@ -18,25 +18,23 @@ class music extends boiler{
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
 
-    public function song_list(){
-        $uid = $this->auth->uid;
-        $this->set_token();
-        $this->auth->user(9);
-        $song_list = $this->db->query("SELECT * FROM audios ORDER BY aid LIMIT 20");
-        
-        function shorten_text($text, $max_length = 100) {
-            if (strlen($text) > $max_length) {
-                $shortened = substr($text, 0, $max_length) . '...';
-            } else {
-                $shortened = $text;
-            }
-            return $shortened;
+   public function song_list(){
+    $uid = $this->auth->uid;
+    $this->set_token();
+    $this->auth->user(9);
+    $song_list = $this->db->query("SELECT * FROM audios ORDER BY aid LIMIT 20");
+
+    function truncate($text, $chars = 100) {
+        if (strlen($text) > $chars) {
+            $text = substr($text, 0, $chars) . "...";
         }
-        
-        include_once 'themes/' . $this->setting->admin_theme . '/header.php';
-        include_once 'themes/' . $this->setting->admin_theme . '/music_list.php';
-        include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+        return $text;
     }
+
+    include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+    include_once 'themes/' . $this->setting->admin_theme . '/music_list.php';
+    include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+}
 
     // In music.php or the relevant controller
 
@@ -54,6 +52,8 @@ class music extends boiler{
             echo 'Lyrics not found';
         }
     }
+
+    
 
 
 

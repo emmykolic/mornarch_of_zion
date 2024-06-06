@@ -1,3 +1,10 @@
+<?php
+  $uid = $this->auth->uid;
+  $profile=$this->db->query("SELECT * FROM users WHERE uid='$uid' ");
+  $prow=$profile->fetch_assoc();
+  // $prow = $row;
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -62,7 +69,17 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="<?= BURL ?>themes/default_admin/js/config.js"></script>
-  <script src="<?= BURL  ?>assets/ckeditor/ckeditor.js"></script>
+  <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+  <script>
+      // Ensure CKEditor is properly configured and loaded
+      CKEDITOR.config.language = 'en'; // Set language to English
+      CKEDITOR.replace('editor1', {
+          height: 300,
+          toolbar: 'Basic'
+          // You can add more configuration options here
+      });
+  </script>
+
 </head>
 
 <!-- <style>
@@ -261,7 +278,11 @@
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
-                    <img src="<?=BURL?><?=$prow['photo']?>" alt class="w-px-40 h-auto rounded-circle">
+                    <?php if(isset($prow) && is_array($prow)): ?>
+                        <img src="<?=BURL?><?php echo $prow['photo']; ?>" alt class="w-px-40 h-auto rounded-circle">
+                    <?php else: ?>
+                        <img src="<?=BURL?>default_admin/img/avatar/1.png" alt class="w-px-40 h-auto rounded-circle">
+                    <?php endif; ?>
                   </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
