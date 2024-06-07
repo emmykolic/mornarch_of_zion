@@ -345,59 +345,39 @@
 
 	
 
-	document.addEventListener('DOMContentLoaded', function() {
-		// Get all audio players and download buttons
-		var audioPlayers = document.querySelectorAll('audio[id^="audioPlayer-"]');
-		var downloadButtons = document.querySelectorAll('a[id^="downloadButton-"]');
+	// document.addEventListener('DOMContentLoaded', function() {
+	// 	// Get all audio players and download buttons
+	// 	var audioPlayers = document.querySelectorAll('audio[id^="audioPlayer-"]');
+	// 	var downloadButtons = document.querySelectorAll('a[id^="downloadButton-"]');
 	
-		audioPlayers.forEach(function(audioPlayer) {
-			var songId = audioPlayer.getAttribute('data-song-id'); // Get the song ID from the data attribute
+	// 	audioPlayers.forEach(function(audioPlayer) {
+	// 		var songId = audioPlayer.getAttribute('data-song-id'); // Get the song ID from the data attribute
 	
-			// Track audio play count
-			audioPlayer.addEventListener('play', function() {
-				// Send AJAX request to increment play count
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', '<?=BURL?>music/track_play', true);
-				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				xhr.send('id=' + songId + '&type=play');
-			});
-		});
+	// 		// Track audio play count
+	// 		audioPlayer.addEventListener('play', function() {
+	// 			// Send AJAX request to increment play count
+	// 			var xhr = new XMLHttpRequest();
+	// 			xhr.open('POST', '<?=BURL?>music/track_play', true);
+	// 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	// 			xhr.send('id=' + songId + '&type=play');
+	// 		});
+	// 	});
 	
-		downloadButtons.forEach(function(downloadButton) {
-			var songId = downloadButton.id.replace('downloadButton-', ''); // Extract the song ID from the button ID
+	// 	downloadButtons.forEach(function(downloadButton) {
+	// 		var songId = downloadButton.id.replace('downloadButton-', ''); // Extract the song ID from the button ID
 	
-			// Track download count
-			downloadButton.addEventListener('click', function() {
-				// Send AJAX request to increment download count
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', '<?=BURL?>music/track_play', true);
-				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-				xhr.send('id=' + songId + '&type=download');
-			});
-		});
-	});
+	// 		// Track download count
+	// 		downloadButton.addEventListener('click', function() {
+	// 			// Send AJAX request to increment download count
+	// 			var xhr = new XMLHttpRequest();
+	// 			xhr.open('POST', '<?=BURL?>music/track_play', true);
+	// 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	// 			xhr.send('id=' + songId + '&type=download');
+	// 		});
+	// 	});
+	// });
 	
-	document.addEventListener('DOMContentLoaded', function() {
-		document.querySelectorAll('.read-more').forEach(function(readMoreLink) {
-			readMoreLink.addEventListener('click', function() {
-				var truncatedText = this.previousElementSibling.previousElementSibling;
-				var fullText = this.previousElementSibling;
-	
-				// Toggle the display of truncated and full text
-				if (fullText.style.display === 'none') {
-					fullText.style.display = 'inline';
-					truncatedText.style.display = 'none';
-					this.textContent = 'Read Less';
-				} else {
-					fullText.style.display = 'none';
-					truncatedText.style.display = 'inline';
-					this.textContent = 'Read More';
-				}
-			});
-		});
-	});
 
-	
 	
 })(jQuery);
 

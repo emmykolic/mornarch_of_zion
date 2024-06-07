@@ -35,27 +35,25 @@
                                             Your browser does not support the audio element.
                                         </audio>
                                     </td>
+                                    
                                     <td>
-
-                                    <?php while ($row = $song_list->fetch_assoc()): ?>
-                                    <tr>
-                                        <td><?= $row['aid'] ?></td>
-                                        <td>
-                                            <div>
-                                                <p>
-                                                    <!-- Truncated Text -->
-                                                    <span class="truncated-text"><?= truncate($row['song_lyrics'], 100) ?></span>
+                                        <div>
+                                            <p>
+                                                <!-- Truncated Text -->
+                                                <span class="truncated-text"><?= truncate($row['song_lyrics'], 100) ?></span>
+                                                
+                                                <!-- Full Text -->
+                                                <span class="full-text" style="display: none;"><?= $row['song_lyrics'] ?></span>
+                                                
+                                                <?php if ($row['song_lyrics']):?>
+                                                <!-- Read More Link -->
+                                                <a href="javascript:void(0);" class="read-more">Read More</a>
+                                                <?php elseif ($row['song_lyrics'] == ""):?>
                                                     
-                                                    <!-- Full Text -->
-                                                    <span class="full-text" style="display: none;"><?= $row['song_lyrics'] ?></span>
-                                                    
-                                                    <!-- Read More Link -->
-                                                    <a href="javascript:void(0);" class="read-more">Read More</a>
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php endwhile; ?>
+                                                <?php endif; ?>
+                                            </p>
+                                        </div>
+                                    </td>
 
                                     <td>
                                         <a href="<?=BURL?>music/delete/<?=$row['aid']?>" class="btn btn-outline-danger btn-sm">
