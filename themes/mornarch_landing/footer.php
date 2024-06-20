@@ -107,7 +107,17 @@
 
 <script src="<?= BURL ?>themes/mornarch_landing/js/main.js"></script>
 
-<script src="<?= BURL ?>/assets/register.js"></script>
+<script src="<?= BURL ?>assets/register.js"></script>
+
+<script src="<?= BURL ?>themes/mornarch_landing/js/plugin.js"></script>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<!-- sidebar -->
+<script src="<?= BURL ?>themes/mornarch_landing/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="<?= BURL ?>themes/mornarch_landing/js/custom.js"></script>
+
+<!-- <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script> -->
 
 <script type="text/javascript">
     function validate(x = "are you sure you want to perform this action?") {

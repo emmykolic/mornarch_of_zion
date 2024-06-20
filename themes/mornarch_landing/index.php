@@ -5,7 +5,7 @@
                 <div class="col-lg-8 ftco-animate">
                     <div class="text w-100 text-center mb-md-5 pb-md-5">
                         <h1 class="mb-4"><?= $this->setting->site_name ?></h1>
-                        <p style="font-size:1.2em"> Unique, comfortable and safe transportation system.</p>
+                        <p style="font-size:1.2em"> <?=$this->setting->site_description ?></p>
 
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-8 d-flex align-items-center " style="min-height: 100%;">
                             <div class="services-wrap rounded-right w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-                                <h3 class="heading-section mb-5"><span class="text-danger">Genext...</span> A Better Way to Travel</h3>
+                                <h3 class="heading-section mb-5"><span class="text-danger">Mornarch...</span> A Place Where Gospel Music Shakes The World! '🌍</h3>
                                 <div class="row d-flex mb-4">
                                     <div class="col-md-4 d-flex align-self-stretch ftco-animate">
                                         <div class="services w-100 text-center">
@@ -125,7 +125,7 @@
                         <!-- First Post -->
                         <?php while ($row = $audios->fetch_assoc()): ?>
                         <div class="col-xl-6 col-lg-6">
-                            <div class="row py-3 mt-3">
+                            <div class="row py-3">
                                 <div class="col-md-6">
                                     <img src="<?=BURL . $row['song_img']?>" class="img-fluid rectangular-image rounded img-thumbnail" alt="Post Image">
                                 </div>

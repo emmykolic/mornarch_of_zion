@@ -14,44 +14,7 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-	}
-
-	// function single($aid){
-	// 	// $is_landing = 1;
-	// 	$this->set_token();
-	// 	$song_single = $this->db->query("SELECT * FROM audios WHERE aid = '$aid' ");
-	// 	$song_single = $song_single->fetch_assoc();
-	// 	// Serve the audio data for download
-	// 	header('Content-Type: audio/mpeg');
-	// 	header('Content-Disposition: attachment; filename="' . $song_single['song_name'] . '.mp3"');
-	// 	echo $song_single['audio_data'];
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/header.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/index_single_music.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-	// }
-
-	// function single($aid) {
-	// 	$this->set_token();
-		
-	// 	// Fetch audio data from the database
-	// 	$song_single = $this->db->query("SELECT * FROM audios WHERE aid = '$aid'");
-	// 	$song_single = $song_single->fetch_assoc();
-		
-	// 	// Include header and theme files
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/header.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/index_single_music.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-		
-	// 	// Check if the download button is clicked
-	// 	if (isset($_GET['download'])) {
-	// 		// Serve the audio data for download
-	// 		header('Content-Type: audio/mpeg');
-	// 		header('Content-Disposition: attachment; filename="' . $song_single['song_name'] . '.mp3"');
-	// 		echo $song_single['audio_data'];
-	// 		exit; // Stop further execution
-	// 	}
-	// }
-	
+	}	
 
 	function single($aid) {
 		$this->set_token();
@@ -65,18 +28,15 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/index_single_music.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
-	
 
-
-
-	// public function blog(){
-	// 	$is_landing = 1;
-	// 	$this->set_token();
-	// 	$routes = $this->db->query("SELECT * FROM routes");
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/header.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
-	// 	include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-	// }
+	public function blog(){
+		$is_landing = 1;
+		$this->set_token();
+		// $routes = $this->db->query("SELECT * FROM routes");
+		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	}
 
 
 	// public function booking_action()

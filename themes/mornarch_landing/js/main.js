@@ -378,6 +378,58 @@
 	// });
 	
 
+	// $(document).ready(function() {
+	// 	var likeCount = 0;
+	// 	var commentCount = 0;
+
+	// 	$('.like-btn').on('click', function() {
+	// 		likeCount++;
+	// 		$('#like-count').text(likeCount);
+	// 	});
+
+	// 	$('#add-comment-btn').on('click', function() {
+	// 		var commentText = $('#comment-text').val().trim();
+	// 		if (commentText) {
+	// 			commentCount++;
+	// 			$('#comment-list').append('<li class="list-group-item">' + commentText + '</li>');
+	// 			$('#comment-text').val('');
+	// 			$('#comment-count').text(commentCount);
+	// 		}
+	// 	});
+	// });
+
+	$(document).ready(function() {
+		// Like button click event
+		$('.like-button').click(function() {
+			var likeCountElem = $(this).find('.like-count');
+			var likeCount = parseInt(likeCountElem.text());
+			likeCount++;
+			likeCountElem.text(likeCount);
+		});
+
+		// Comment button click event
+		$('.comment-button').click(function() {
+			$('.comment-section').toggle();
+		});
+
+		// Comment form submit event
+		$('#commentForm').submit(function(event) {
+			event.preventDefault();
+			var commentText = $('#comment').val();
+			if (commentText) {
+				var commentItem = $('<li></li>').text(commentText);
+				$('.comment-list').append(commentItem);
+
+				var commentCountElem = $('.comment-button').find('.comment-count');
+				var commentCount = parseInt(commentCountElem.text());
+				commentCount++;
+				commentCountElem.text(commentCount);
+
+				$('#comment').val('');
+			}
+		});
+	});
+
 	
 })(jQuery);
 

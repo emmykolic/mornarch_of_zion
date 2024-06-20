@@ -29,10 +29,13 @@
     <link href="<?= BURL ?>assets/croppie.css" rel="stylesheet" />
     
     
-    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/animate.css">
+
+    <!-- bootstrap css -->
+    <!-- <link rel="stylesheet" href="themes/mornarch_landing/css/bootstrap.min.css"> -->
 
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/owl.carousel.min.css">
@@ -46,12 +49,22 @@
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/jquery.timepicker.css">
 
-
+        
+    <!-- style css -->
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/flaticon.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/font-awesome.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/icomoon.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/style.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/style2.css">
+    <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/style3.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/jquery.mCustomScrollbar.min.css">
+    <!-- Responsive-->
+    <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/responsive.css">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen"> 
+    
 </head>
 
 <body>
@@ -59,7 +72,7 @@
     <?php if (isset($is_landing)) : ?>
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark ftco-navbar-light" id="ftco-navbar">
         <?php else : ?>
-            <nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-white ftco-navbar-dark shadow" id="ftco-navbar">
+            <nav class="navbar navbar-expand-lg navbar-light sticky-top ftco_navbar bg-white ftco-navbar-dark shadow" id="ftco-navbar">
             <?php endif; ?>
                 <div class="container">
                     <a class="navbar-brand" href="<?= BURL ?>"><img src="<?= BURL ?>assets/<?= $this->setting->site_logo; ?>" height="40"></a>
