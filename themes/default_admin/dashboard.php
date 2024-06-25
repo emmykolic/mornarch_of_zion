@@ -58,8 +58,8 @@
                     <div class="card">
                         <div class="card-body">
                         
-                        <span>Routes</span>
-                        <h3 class="card-title text-nowrap mb-2"> <i class="menu-icon tf-icons bx bx-briefcase"></i> 6</h3>
+                        <span class="fw-semibold d-block mb-1">Blogs</span>
+                        <h3 class="card-title text-nowrap mb-2"> <i class="menu-icon tf-icons bx bx-briefcase"></i> <?=$blogs_num?></h3>
                         </div>
                     </div>
                 </div>

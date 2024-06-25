@@ -150,11 +150,6 @@
                     <div data-i18n="Without menu">General Setting</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="<?= BURL ?>advert" class="menu-link">
-                    <div data-i18n="Container">Advert Mgt.</div>
-                  </a>
-                </li>
 
                 <li class="menu-item">
                   <a href="<?= BURL ?>videos" class="menu-link">
@@ -162,11 +157,6 @@
                   </a>
                 </li>
                 
-                <li class="menu-item">
-                  <a href="<?= BURL ?>blog" class="menu-link">
-                    <div data-i18n="Fluid">Blog Mgt.</div>
-                  </a>
-                </li>
                 <li class="menu-item">
                   <a href="<?= BURL ?>users" class="menu-link">
                     <div data-i18n="Blank">User Mgt.</div>
@@ -189,6 +179,12 @@
                         <div data-i18n="Without menu">Payments</div>
                       </a>
                     </li>
+
+                    <li class="menu-item">
+                      <a href="<?= BURL ?>advert" class="menu-link">
+                        <div data-i18n="Container">Advert Mgt.</div>
+                      </a>
+                    </li>
                   </ul>
                 </li>
             
@@ -196,34 +192,28 @@
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons fa-solid fa-bullhorn"></i>
-                  <div data-i18n="Layouts">Promotion Mgt.</div>
+                  <div data-i18n="Layouts">Blog Mgt.</div>
                 </a>
 
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?= BURL ?>cargo" class="menu-link">
-                      <div data-i18n="Without menu">All Cargo</div>
+                    <a href="<?= BURL ?>blog" class="menu-link">
+                      <div data-i18n="Fluid">Blog Add.</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?= BURL ?>cargo/add" class="menu-link">
-                      <div data-i18n="Without menu">New Cargo</div>
+                    <a href="<?= BURL ?>blog/single" class="menu-link">
+                      <div data-i18n="Fluid">Blog View.</div>
                     </a>
                   </li>
-                  <li class="menu-item">
-                    <a href="<?= BURL ?>cargo/batch" class="menu-link">
-                      <div data-i18n="Without navbar">Batch</div>
-                    </a>
-                  </li>
-
                 </ul>
               </li>
 
               <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Audio Music Menu</div>
-              </a>
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-layout"></i>
+                  <div data-i18n="Layouts">Audio Music Menu</div>
+                </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
                     <a href="<?= BURL ?>music" class="menu-link">
@@ -245,8 +235,8 @@
                       <div data-i18n="Container">Songs </div>
                     </a>
                   </li>
-              </ul>
-            </li>
+                </ul>
+              </li>
         <?php endif ?>
 
           <li class="menu-item">

@@ -42,7 +42,7 @@
             </div>
         </div>
     </div> -->
-    <div class="container mt-5">
+    <div class="container m-5">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Blog Post Title</h5>

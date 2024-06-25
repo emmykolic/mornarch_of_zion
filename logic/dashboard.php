@@ -22,6 +22,8 @@ class dashboard extends boiler
 		$driver_num = $drivers->num_rows;
 		$audio = $this->db->query("SELECT * FROM audios ");
 		$audio_num = $audio->num_rows;
+		$blogs = $this->db->query("SELECT * FROM blogs ");
+		$blogs_num = $blogs->num_rows;
 		$this->set_token();
 		include_once 'themes/' . $this->setting->admin_theme . '/header.php';
 		include_once 'themes/' . $this->setting->admin_theme . '/dashboard.php';
