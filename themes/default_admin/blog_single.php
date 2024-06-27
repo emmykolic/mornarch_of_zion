@@ -36,8 +36,17 @@
                                         
                                         <td>
                                             <div>
+                                                <!-- Truncated Text -->
+                                                 <span class="truncated-text"><?= truncate($row['blog_content'], 100) ?></span>
                                                 <!-- Full Text -->
                                                 <p class="full-text" style="display: none;"><?= $row['blog_content'] ?></p>
+
+                                                <?php if ($row['blog_content']):?>
+                                                <!-- Read More Link -->
+                                                <a href="javascript:void(0);" class="see-more">Read More</a>
+                                                <?php elseif ($row['blog_content'] == ""):?>
+                                                    
+                                                <?php endif; ?>
                                             </div>
                                         </td>
 
@@ -46,10 +55,10 @@
                                         </td>
 
                                         <td>
-                                            <a href="<?=BURL?>music/delete/<?=$row['bid']?>" class="btn btn-outline-danger btn-sm">
+                                            <a href="<?=BURL?>blog/delete/<?=$row['bid']?>" class="btn btn-outline-danger btn-sm">
                                                 <i class="bx bx-trash"></i>
                                             </a>
-                                            <a href="<?=BURL?>music/edit/<?=$row['bid']?>" class="btn btn-outline-primary btn-sm">
+                                            <a href="<?=BURL?>blog/edit/<?=$row['bid']?>" class="btn btn-outline-primary btn-sm">
                                                 <i class="bx bx-edit"></i>
                                             </a>
                                         </td>
