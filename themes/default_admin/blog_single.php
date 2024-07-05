@@ -51,7 +51,7 @@
                                         </td>
 
                                         <td>
-                                            <span><?=$row['date_created']?></span>
+                                            <span><?=date('d/m/Y h:i:s', $row['date_created'])?></span>
                                         </td>
 
                                         <td>

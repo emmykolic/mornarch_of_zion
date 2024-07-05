@@ -30,12 +30,22 @@ class index extends boiler
 	}
 
 	public function blog(){
+		$this->page_title = "M.O.Z | Blog";
 		$is_landing = 1;
 		$this->set_token();
-		// $routes = $this->db->query("SELECT * FROM routes");
+		function shorten_text($text, $max_length = 100) {
+			if (strlen($text) > $max_length) {
+				$shortened = substr($text, 0, $max_length) . '...';
+			} else {
+				$shortened = $text;
+			}
+			return $shortened;
+		}		
+
+		$get_blog = $this->db->query("SELECT * FROM blogs ");
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
-		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+		// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
 
 

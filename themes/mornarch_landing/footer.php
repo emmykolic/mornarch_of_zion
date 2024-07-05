@@ -41,7 +41,7 @@
                     <div class="block-23 mb-3">
                         <ul>
                             <li><span class="icon icon-map-marker"></span><span class="text"><?= $this->setting->site_address ?></span></li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span class="text"><?= $this->setting->site_phone_number ?></span></a></li>
+                            <li><a href="tel:<?= $this->setting->site_phone_number ?>"><span class="icon icon-phone"></span><span class="text"><?= $this->setting->site_phone_number ?></span></a></li>
                             <li><a href="#"><span class="icon icon-envelope"></span><span class="text"><?= $this->setting->site_email ?></span></a></li>
                         </ul>
                     </div>
@@ -63,7 +63,8 @@
 
 
 <!-- loader -->
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
         <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg>

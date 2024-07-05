@@ -172,6 +172,8 @@ class blog extends boiler
         }
     }
 
+    $date_created = time();
+
     if ($this->error == 0) {
         // Escape the variables to prevent SQL injection
         $imagePathForDB = $this->db->real_escape_string($imageFilePath);
@@ -179,7 +181,7 @@ class blog extends boiler
         $blog_content = $this->db->real_escape_string($blog_content);
 
         // Update the database with the escaped values
-        $this->db->query("UPDATE blogs SET blog_img='$imagePathForDB', title_of_blog='$title_of_blog', blog_content='$blog_content' WHERE bid='$bid'");
+        $this->db->query("UPDATE blogs SET blog_img='$imagePathForDB', title_of_blog='$title_of_blog', blog_content='$blog_content',  date_created = '$date_created' WHERE bid='$bid'");
         $this->alert->set("Blog Updated successfully", 'success');
         header('location:' . BURL . "blog/single");
     } else {

@@ -430,6 +430,120 @@
 		});
 	});
 
+	document.addEventListener('DOMContentLoaded', function() {
+		document.querySelectorAll('.read-more').forEach(function(readMoreLink) {
+			readMoreLink.addEventListener('click', function() {
+				var shortText = this.previousElementSibling.previousElementSibling;
+				var fullText = this.previousElementSibling;
+	
+				// Toggle the display of short and full text
+				if (fullText.style.display === 'none') {
+					fullText.style.display = 'inline';
+					shortText.style.display = 'none';
+					this.textContent = 'Read Less';
+				} else {
+					fullText.style.display = 'none';
+					shortText.style.display = 'inline';
+					this.textContent = 'Read More';
+				}
+			});
+		});
+	});
+
+	var limit = 5;
+        var offset = 0;
+        var loading = false;
+
+        function loadPosts(limit, offset) {
+            if (loading) return;
+            loading = true;
+            $('#loading-spinner').show();
+
+            $.ajax({
+                url: 'fetch_posts.php',
+                type: 'GET',
+                data: {
+                    limit: limit,
+                    offset: offset
+                },
+                success: function(data) {
+                    var posts = JSON.parse(data);
+                    posts.forEach(function(post) {
+                        $('#post-container .col-md-6').append(`
+                            <div class="card m-3">
+                                <div class="card-body">
+                                    <img src="${post.blog_img}" alt="Blog Image" class="img-fluid rounded img-custom">
+                                    <h5 class="card-title">${post.title_of_blog}</h5>
+                                    <p class="card-text">
+                                        <span class="short-text">${shortenText(post.blog_content, 100)}</span>
+                                        <span class="full-text" style="display: none;">${post.blog_content}</span>
+                                        ${post.blog_content.length > 100 ? '<a href="javascript:void(0);" class="read-more">Read More</a>' : ''}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="btn btn-primary like-button">
+                                            <i class="fa fa-thumbs-up"></i> Like (<span class="like-count">0</span>)
+                                        </button>
+                                        <button class="btn btn-secondary comment-button">
+                                            <i class="fa fa-comments"></i> Comment (<span class="comment-count">0</span>)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-section mt-3" style="display: none;">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="commentForm">
+                                            <div class="form-group">
+                                                <label for="comment">Leave a comment:</label>
+                                                <textarea class="form-control" id="comment" rows="3" required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+                                        </form>
+                                        <div class="mt-3">
+                                            <h5>Comments:</h5>
+                                            <ul class="list-unstyled comment-list"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                    offset += limit;
+                    loading = false;
+                    $('#loading-spinner').hide();
+                }
+            });
+        }
+
+        function shortenText(text, maxLength) {
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }
+
+        $(document).ready(function() {
+            loadPosts(limit, offset);
+
+            $(window).scroll(function() {
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                    loadPosts(limit, offset);
+                }
+            });
+
+            $(document).on('click', '.read-more', function() {
+                var $this = $(this);
+                var $fullText = $this.prev('.full-text');
+                var $shortText = $this.prevAll('.short-text');
+
+                if ($fullText.is(':hidden')) {
+                    $fullText.show();
+                    $shortText.hide();
+                    $this.text('Read Less');
+                } else {
+                    $fullText.hide();
+                    $shortText.show();
+                    $this.text('Read More');
+                }
+            });
+        });
 	
 })(jQuery);
 
