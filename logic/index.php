@@ -29,10 +29,11 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
 
-	public function blog(){
+	public function blog() {
 		$this->page_title = "M.O.Z | Blog";
 		$is_landing = 1;
 		$this->set_token();
+	
 		function shorten_text($text, $max_length = 100) {
 			if (strlen($text) > $max_length) {
 				$shortened = substr($text, 0, $max_length) . '...';
@@ -40,13 +41,48 @@ class index extends boiler
 				$shortened = $text;
 			}
 			return $shortened;
-		}		
-
-		$get_blog = $this->db->query("SELECT * FROM blogs ");
+		}        
+	
+		// Initial fetch of blog posts
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 2 OFFSET 0");
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
 		// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
+	
+	public function fetch_posts() {
+		$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 2;
+		$offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+	
+		$query = "SELECT * FROM blogs ORDER BY bid LIMIT $limit OFFSET $offset";
+		$result = $this->db->query($query);
+	
+		$posts = [];
+		while ($row = $result->fetch_assoc()) {
+			$posts[] = $row;
+		}
+	
+		echo json_encode($posts);
+	}
+	
+
+	// public function fetchPosts($limit, $offset) {
+	// 	$query = "SELECT * FROM blogs ORDER BY bid LIMIT ? OFFSET ?";
+	// 	$stmt = $this->db->prepare($query);
+	// 	$stmt->bind_param('ii', $limit, $offset);
+	// 	$stmt->execute();
+	// 	$result = $stmt->get_result();
+	
+	// 	$posts = [];
+	// 	while ($row = $result->fetch_assoc()) {
+	// 		$posts[] = $row;
+	// 	}
+	
+	// 	echo json_encode($posts);
+	// }
+
+	
+	
 
 
 	// public function booking_action()

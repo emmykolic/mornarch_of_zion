@@ -450,9 +450,31 @@
 		});
 	});
 
-	var limit = 5;
-        var offset = 0;
+	$(document).on('click', '.read-more', function() {
+		var $this = $(this);
+		var $fullText = $this.prev('.full-text');
+		var $shortText = $this.prevAll('.short-text');
+
+		if ($fullText.is(':hidden')) {
+			$fullText.show();
+			$shortText.hide();
+			$this.text('Read Less');
+		} else {
+			$fullText.hide();
+			$shortText.show();
+			$this.text('Read More');
+		}
+	});
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	var limit = 2;
+        var offset = 2; // start from the third item
         var loading = false;
+        var burl = '<?= BURL ?>';
+
+        function shortenText(text, maxLength) {
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }
 
         function loadPosts(limit, offset) {
             if (loading) return;
@@ -460,7 +482,7 @@
             $('#loading-spinner').show();
 
             $.ajax({
-                url: 'fetch_posts.php',
+                url: burl + "logic/index/fetch_posts",
                 type: 'GET',
                 data: {
                     limit: limit,
@@ -472,7 +494,7 @@
                         $('#post-container .col-md-6').append(`
                             <div class="card m-3">
                                 <div class="card-body">
-                                    <img src="${post.blog_img}" alt="Blog Image" class="img-fluid rounded img-custom">
+                                    <img src="${burl + post.blog_img}" alt="Blog Image" class="img-fluid rounded img-custom">
                                     <h5 class="card-title">${post.title_of_blog}</h5>
                                     <p class="card-text">
                                         <span class="short-text">${shortenText(post.blog_content, 100)}</span>
@@ -511,38 +533,18 @@
                     offset += limit;
                     loading = false;
                     $('#loading-spinner').hide();
+                },
+                error: function() {
+                    loading = false;
+                    $('#loading-spinner').hide();
                 }
             });
         }
 
-        function shortenText(text, maxLength) {
-            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-        }
-
-        $(document).ready(function() {
-            loadPosts(limit, offset);
-
-            $(window).scroll(function() {
-                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-                    loadPosts(limit, offset);
-                }
-            });
-
-            $(document).on('click', '.read-more', function() {
-                var $this = $(this);
-                var $fullText = $this.prev('.full-text');
-                var $shortText = $this.prevAll('.short-text');
-
-                if ($fullText.is(':hidden')) {
-                    $fullText.show();
-                    $shortText.hide();
-                    $this.text('Read Less');
-                } else {
-                    $fullText.hide();
-                    $shortText.show();
-                    $this.text('Read More');
-                }
-            });
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                loadPosts(limit, offset);
+            }
         });
 	
 })(jQuery);
