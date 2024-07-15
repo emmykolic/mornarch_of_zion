@@ -1,4 +1,4 @@
-<section class="ftco-section ftco-intro bg-danger" style="background-image: url('<?=BURL?>themes/mornarch_landing/images/handshake.jpg'); background-position: center;">
+    <section class="ftco-section ftco-intro bg-danger" style="background-image: url('<?=BURL?>themes/mornarch_landing/images/handshake.jpg'); background-position: center;">
         <div class="overlay"></div>
         <div class="container">
             <div class="row justify-content-end">
@@ -8,7 +8,6 @@
             </div>
         </div>
     </section>
-
 
     <div class="container m-5">
         <div class="row m-3" id="post-container">
@@ -79,13 +78,13 @@
 
 
 
-<!-- loader -->
-<!-- <div id="ftco-loader" class="show fullscreen">
-    <svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-    </svg>
-</div> -->
+    <!-- loader -->
+    <!-- <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+    </div> -->
 
 
 <!-- Owl Carousel JS -->
