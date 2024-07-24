@@ -113,20 +113,44 @@
                             <?php else : ?>
                                 <li class="nav-item"><a href="<?= BURL ?>signup" class="btn btn-danger p-2 nav-link">Login/Register</a></li>
                             <?php endif; ?>
-                            <li class="nav-item search">
-                                <span class="fas fa-search" id="search"></span>
-                            </li>
+                            <!-- <li class="nav-item search">
+                                <span class="fa fa-search" id="search"></span>
+                            </li> -->
+                            <!-- Search Icon -->
+                            <div class="search-icon" id="search">
+                                <span class="fa fa-search"></span>
+                            </div>
+                            <!-- <li class="nav-item">
+								<button class="search"><span class="fa fa-search ml-2" id="search"></span></button>
+						    </li> -->
                         </ul>
                     </div>
                 </div>
-                <div class="search_input" id="search_input_box">
+                <!-- <div class="search_input" id="search_input_box">
                     <div class="container">
                         <form class="d-flex justify-content-between">
                             <input type="text" class="form-control" id="search_input" placeholder="Search Here">
                             <button type="submit" class="btn"></button>
-                            <span class="fa fa-times" id="close_search" title="Close Search"></span>
+                            <span class="bx bx-times" id="close_search" title="Close Search"></span>
                         </form>
                     </div>
+                </div> -->
+                <!-- <div class="search_input d-none d-sm-block " id="search_input_box" style="z-index: 30;">
+                    <form class="d-flex justify-content-between bg-white position-relative" action="#" method="post">
+                        <input type="text" class="form-control border-0" id="search_input" placeholder="Search Here">
+                        <button type="submit" class="btn btn-outline-secondary"></button>
+                        <span class="fa fa-times p-1" id="close_search" title="Close Search"></span>
+                    </form>
+                </div> -->
+
+                <!-- Search Input Box -->
+                <div class="search-input-box position-relative" id="search_input_box" style="display: none;">
+                    <form class="d-flex justify-content-between bg-white p-2 border rounded">
+                        <input type="text" class="form-control border-0" id="search_input" placeholder="Search Here">
+                        <button type="submit" class="btn btn-outline-secondary d-none"></button>
+                        <span class="fa fa-times p-2" id="close_search" title="Close Search"></span>
+                    </form>
                 </div>
+
             </nav>
             <!-- END nav -->

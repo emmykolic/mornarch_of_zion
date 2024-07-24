@@ -28,15 +28,33 @@
 		}
 	};
 
-	// Search Toggle
-    $("#search_input_box").hide();
-    $("#search").on("click", function () {
-        $("#search_input_box").slideToggle();
-        $("#search_input").focus();
-    });
-    $("#close_search").on("click", function () {
-        $('#search_input_box').slideUp(500);
-    });
+	 // Search Toggle
+	//  $("#search_input_box").hide();
+	//  $("#search").on("click", function () {
+	// 	 $("#search_input_box").slideToggle();
+	// 	 $("#search_input").focus();
+	//  });
+	//  $("#close_search").on("click", function () {
+	// 	 $('#search_input_box').slideUp(500);
+	//  });
+
+	$(document).ready(function () {
+		// Initially hide the search input box
+		$("#search_input_box").hide();
+	
+		// Toggle the search input box when the search icon is clicked
+		$("#search").on("click", function () {
+			$("#search_input_box").slideToggle();
+			$("#search_input").focus();
+		});
+	
+		// Close the search input box when the close icon is clicked
+		$("#close_search").on("click", function () {
+			$('#search_input_box').slideUp(500);
+		});
+	});
+	
+		
 
 	// document.addEventListener("DOMContentLoaded", function () {
 	// 	// Show the pop-up after a delay (e.g., 3 seconds)

@@ -53,6 +53,23 @@
 	padding: 10px 3px;
 }
 
+.search-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 5px;
+}
+
+.search-input-box {
+  width: 100%;
+  z-index: 30;
+  margin-top: 10px; /* Adjust this if needed */
+  display: none; /* Ensure this is set */
+}
+
+.fa-times {
+  cursor: pointer;
+}
+
 .rectangular-image {
   width: 90%;  /* Adjust the width as needed */
   height: 150px;  /* Set a fixed height */

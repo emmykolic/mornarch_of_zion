@@ -62,13 +62,13 @@
 
 
 
-<!-- loader -->
+<!-- loader
 <div id="ftco-loader" class="show fullscreen">
     <svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
         <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
     </svg>
-</div>
+</div> -->
 
 
 <!-- Owl Carousel JS -->
@@ -98,8 +98,8 @@
 <script src="<?= BURL ?>themes/mornarch_landing/js/bootstrap-datepicker.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.timepicker.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/scrollax.min.js"></script>
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
-<!-- <script src="<?= BURL ?>themes/mornarch_landing/js/google-map.js"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="<?= BURL ?>themes/mornarch_landing/js/google-map.js"></script>
 <!-- Bootstrap Notify -->
 <script src="<?= BURL ?>assets/bootstrap-notify/bootstrap-notify.min.js"></script>
 
