@@ -1,0 +1,213 @@
+<?php
+class blog extends boiler
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
+    public function  defaultb($start = 0)
+    {
+        $this->auth->user();
+        $this->page_title = "M.O.Z Blog";
+        $uid = $this->auth->uid;
+        $this->set_token();
+        // $list = $this->db->query("SELECT * FROM trips,routes WHERE trips.route=routes.rid ORDER BY trips.tid DESC LIMIT $start, 50");
+        $this->auth->user(9);
+        include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/blog.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+    }
+
+    public function action()
+    {
+        $uploadDir = 'assets/blog_uploads/'; // Specify your upload directory
+        $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+
+        $this->auth->editor();
+        $uid = $this->auth->uid;
+
+        $title_of_blog = $this->clean->post('title_of_blog');
+        if ($title_of_blog == "") {
+            $this->error = 1;
+            $this->error_msg .= ' Empty Title!';
+        }
+
+        $blog_content = $this->clean->post('blog_content');
+        if ($blog_content == "") {
+            $this->error = 1;
+            $this->error_msg .= ' Empty Blog Content!';
+        }
+
+        $blog_img = $_FILES['blog_img']; // Change this line to access the file input for the image
+        if ($blog_img == "") {
+            $this->error = 1;
+            $this->error_msg .= ' Empty Image Field';
+        }
+        // Handle Image File Upload
+        $imageFilePath = $uploadDir . basename($blog_img['name']);
+        $imageFileType = $this->getFileMimeType($blog_img['tmp_name']);
+        
+        echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
+
+        if (in_array($imageFileType, $allowedImageTypes)) {
+            if (move_uploaded_file($blog_img['tmp_name'], $imageFilePath)) {
+                // Image upload successful
+            } else {
+                $this->error = 1;
+                $this->error_msg .= "Error moving uploaded image file.<br>";
+            }
+        } else {
+            $this->error = 1;
+            $this->error_msg .= "Invalid image file type.<br>";
+        }
+
+        $date_created = date('Y-m-d H:i:s');
+        
+        if ($this->error == 0) {
+            $this->db->query("INSERT INTO blogs (title_of_blog,blog_content,blog_img,date_created) VALUES ('$title_of_blog','$blog_content','$imageFilePath','$date_created') ");
+            $this->alert->set("Trip added successfully", 'success');
+            header('location:' . BURL . "blog/single");
+        } else {
+            $this->alert->set($this->error_msg, 'danger');
+            header('location:' . BURL . "blog");
+        }
+    }
+
+    public function  single(){
+        $this->auth->user();
+        $this->page_title = "M.O.Z Blog | Single";
+        $uid = $this->auth->uid;
+        $this->set_token();
+        $this->auth->user(9);
+        $blog_list = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 20");
+
+        function truncate($text, $chars = 100) {
+            if (strlen($text) > $chars) {
+                $text = substr($text, 0, $chars) . "...";
+            }
+            return $text;
+        }
+
+        include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/blog_single.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+    }
+
+
+    public function  edit($bid)
+    {
+        $this->auth->editor();
+
+        $this->page_title = "Edit Blogs";
+        $this->set_token();
+        // $single = $this->db->query("SELECT * FROM trips,routes WHERE trips.route=routes.rid AND trips.tid='$tid' ");
+        $single = $this->db->query("SELECT * FROM blogs WHERE bid='$bid' ");
+        if ($single->num_rows > 0) {
+            $single = $single->fetch_assoc();
+            // $driver = $single['driver'];
+            // $vehicle = $single['vehicle'];
+        } else {
+            $this->alert->set("Blog cannot be found", 'danger');
+            die(header('location:' . BURL . "blog"));
+        }
+        // $routes = $this->db->query("SELECT * FROM routes");
+        // $vehicles = $this->db->query("SELECT * FROM vehicles");
+        // $drivers = $this->db->query("SELECT * FROM users WHERE type=4");
+        include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/blog_edit.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+    }
+
+
+
+    public function edit_action(){   
+    $uploadDir = 'assets/blog_uploads/'; // Specify your upload directory
+    $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+
+    $this->auth->editor();
+    
+    $uid = $this->auth->uid;
+    $title_of_blog = $this->clean->post('title_of_blog');
+    $bid = $this->clean->post('bid');
+    if ($bid == "") {
+        $this->error = 1;
+        $this->error_msg .= ' Invalid Blog !';
+    }
+
+    if ($title_of_blog == "") {
+        $this->error = 1;
+        $this->error_msg .= ' Empty Title!';
+    }
+
+    $blog_content = $this->clean->post('blog_content');
+    if ($blog_content == "") {
+        $this->error = 1;
+        $this->error_msg .= ' Empty Content';
+    }
+
+    $blog_img = $_FILES['blog_img'];
+    if ($blog_img['error'] == UPLOAD_ERR_NO_FILE) {
+        $this->error = 1;
+        $this->error_msg .= ' Empty Image Field';
+    } else {
+        // Handle Image File Upload
+        $imageFilePath = $uploadDir . basename($blog_img['name']);
+        $imageFileType = $this->getFileMimeType($blog_img['tmp_name']);
+        
+        echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
+
+        if (in_array($imageFileType, $allowedImageTypes)) {
+            if (move_uploaded_file($blog_img['tmp_name'], $imageFilePath)) {
+                // Image upload successful
+            } else {
+                $this->error = 1;
+                $this->error_msg .= "Error moving uploaded image file.<br>";
+            }
+        } else {
+            $this->error = 1;
+            $this->error_msg .= "Invalid image file type.<br>";
+        }
+    }
+
+    $date_created = time();
+
+    if ($this->error == 0) {
+        // Escape the variables to prevent SQL injection
+        $imagePathForDB = $this->db->real_escape_string($imageFilePath);
+        $title_of_blog = $this->db->real_escape_string($title_of_blog);
+        $blog_content = $this->db->real_escape_string($blog_content);
+
+        // Update the database with the escaped values
+        $this->db->query("UPDATE blogs SET blog_img='$imagePathForDB', title_of_blog='$title_of_blog', blog_content='$blog_content',  date_created = '$date_created' WHERE bid='$bid'");
+        $this->alert->set("Blog Updated successfully", 'success');
+        header('location:' . BURL . "blog/single");
+    } else {
+        $this->alert->set($this->error_msg, 'danger');
+        header('location:' . BURL . "blog/single");
+    }
+}
+
+// Helper function to get the MIME type of a file
+private function getFileMimeType($filePath) {
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $filePath);
+    finfo_close($finfo);
+    return $mimeType;
+}
+
+    // Function to get file MIME type using mime_content_type
+    // private function getFileMimeType($filePath) {
+    //     if (function_exists('mime_content_type')) {
+    //         return mime_content_type($filePath);
+    //     } else {
+    //         // If mime_content_type function is not available, fallback to a less reliable method
+    //         $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    //         $mime = finfo_file($finfo, $filePath);
+    //         finfo_close($finfo);
+    //         return $mime;
+    //     }
+    // }
+}
