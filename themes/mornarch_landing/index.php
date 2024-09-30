@@ -251,9 +251,9 @@
                     <h2 class="mb-2">Trending Post</h2>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-12">
-                    <div class="carousel-trend ">
+                    <div class="carousel-trend owl-carousel">
                         <div class="item">
                             <div class="car-wrap rounded">
                                 <div class="img rounded d-flex align-items-end" style="background-image: url(https://genextmotors.com.ng/themes/genext_landing/images/inter.jpg);">
@@ -286,10 +286,46 @@
                                 </div>
                             </div>
                         </div>
-                        sdlk/f
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="owl-carousel owl-theme">
+                            <div class="item">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 1">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card 1</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card 2</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card 3</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 

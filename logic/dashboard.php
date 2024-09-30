@@ -10,11 +10,13 @@ class dashboard extends boiler
 
 	public function  defaultb()
 	{
+		$uid = $this->auth->uid;
 		$this->set_token();
 		$this->auth->user("dashboard");
 		$this->page_title = "Dashboard";
+		
 		$this->stats = new stats($this->db);
-		$uid = $this->auth->uid;
+		
 		$users = $this->db->query("SELECT * FROM users WHERE uid = '$uid' ");
 		$users = $users->fetch_assoc();
 		$users_num = $this->db->query("SELECT * FROM users");

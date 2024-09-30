@@ -351,51 +351,98 @@
 	});
 	$('#time_pick').timepicker();
 
-	var carousel = function() {
-		$('.carousel-trend').owlCarousel({
-			center: true,
-			loop: true,
-			autoplay: true,
-			items: 3,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 3
-				}
-			}
-		});
-		$('.carousel-testimony').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 3
-				}
-			}
-		});
+	// var carousel = function() {
+	// 	$('.carousel-trend').owlCarousel({
+	// 		center: true,
+	// 		loop: true,
+	// 		autoplay: true,
+	// 		items: 3,
+	// 		margin: 30,
+	// 		stagePadding: 0,
+	// 		nav: false,
+	// 		navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+	// 		responsive:{
+	// 			0:{
+	// 				items: 1
+	// 			},
+	// 			600:{
+	// 				items: 2
+	// 			},
+	// 			1000:{
+	// 				items: 3
+	// 			}
+	// 		}
+	// 	});
+	// 	$('.carousel-testimony').owlCarousel({
+	// 		center: true,
+	// 		loop: true,
+	// 		items:1,
+	// 		margin: 30,
+	// 		stagePadding: 0,
+	// 		nav: false,
+	// 		navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+	// 		responsive:{
+	// 			0:{
+	// 				items: 1
+	// 			},
+	// 			600:{
+	// 				items: 2
+	// 			},
+	// 			1000:{
+	// 				items: 3
+	// 			}
+	// 		}
+	// 	});
 
-	};
-	carousel();
+	// };
+	// carousel();
+
+	// $(document).ready(function(){
+	// 	var carousel = function() {
+	// 		$('.carousel-trend').owlCarousel({
+	// 			center: true,
+	// 			loop: true,
+	// 			autoplay: true,
+	// 			items: 3,
+	// 			margin: 30,
+	// 			stagePadding: 0,
+	// 			nav: false,
+	// 			responsive: {
+	// 				0: {
+	// 					items: 1
+	// 				},
+	// 				600: {
+	// 					items: 2
+	// 				},
+	// 				1000: {
+	// 					items: 3
+	// 				}
+	// 			}
+	// 		});
+	// 	};
+	// 	carousel();
+	// });
+
+	$(document).ready(function(){
+		$('.owl-carousel').owlCarousel({
+			loop: true,
+			margin: 10,
+			nav: true,
+			responsive: {
+				0: {
+					items: 1
+				},
+				600: {
+					items: 2
+				},
+				1000: {
+					items: 3
+				}
+			}
+		});
+	});
+	
+	
 
 	
 

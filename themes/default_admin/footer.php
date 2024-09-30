@@ -29,12 +29,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.min.js"></script>
 
 <!-- Include Bootstrap Tags Input JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.8.0/dist/bootstrap-tagsinput.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.8.0/dist/bootstrap-tagsinput.min.js"></script> -->
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/js/standalone/selectize.min.js"></script> -->
 
 <!-- Include Selectize.js JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/js/standalone/selectize.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/js/standalone/selectize.min.js"></script> -->
 
 <!-- build:js assets/vendor/js/core.js -->
 <script src="<?= BURL ?>themes/default_admin/assets/vendor/libs/jquery/jquery.js"></script>

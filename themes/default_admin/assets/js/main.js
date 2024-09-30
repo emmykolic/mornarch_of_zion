@@ -9,16 +9,16 @@ let menu, animate;
 var input = document.querySelector('#tag-input');
 new Tagify(input);
 
-$('#select-tags').selectize({
-  delimiter: ',',
-  persist: false,
-  create: function(input) {
-      return {
-          value: input,
-          text: input
-      };
-  }
-});
+// $('#select-tags').selectize({
+//   delimiter: ',',
+//   persist: false,
+//   create: function(input) {
+//       return {
+//           value: input,
+//           text: input
+//       };
+//   }
+// });
 
 $(document).ready(function() {
   $('#select-tags').selectize({

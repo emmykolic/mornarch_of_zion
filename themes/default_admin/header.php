@@ -50,10 +50,10 @@
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/css/selectize.default.css" /> -->
 
   <!-- Include Selectize.js CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/css/selectize.default.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/css/selectize.default.css" /> -->
 
   <!-- Include Bootstrap Tags Input CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.8.0/dist/bootstrap-tagsinput.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.8.0/dist/bootstrap-tagsinput.css" rel="stylesheet"> -->
 
 
   <!-- Icons. Uncomment required icon fonts -->
@@ -283,7 +283,7 @@
                     <?php if(isset($prow) && is_array($prow)): ?>
                         <img src="<?=BURL?><?php echo $prow['photo']; ?>" alt class="w-px-40 h-auto rounded-circle">
                     <?php else: ?>
-                        <img src="<?=BURL?>default_admin/img/avatar/1.png" alt class="w-px-40 h-auto rounded-circle">
+                        <img src="<?=BURL?>assets/profile.jpg" alt class="w-px-40 h-auto rounded-circle">
                     <?php endif; ?>
                   </div>
                 </a>
@@ -313,7 +313,7 @@
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="settings">
+                    <a class="dropdown-item" href="<?=BURL?>settings">
                       <i class="bx bx-cog me-2"></i>
                       <span class="align-middle">Settings</span>
                     </a>
