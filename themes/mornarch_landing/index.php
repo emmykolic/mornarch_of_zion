@@ -222,15 +222,25 @@
                                         <h6 class="widgettitle font-weight-bold">
                                             <span>Popular Posts</span>
                                         </h6>
-                                                <div class="single-post">
-                                            <div class="part-img">
-                                                <img src="http://localhost/benExchange/assets/images/post/post_thumb1695800803.jpg" alt="Introduction to PayPal by Ben&#039;s Exchange">
+
+                                        <?php while ($row = $get_blog->fetch_assoc()): ?>
+                                            <div class="single-post">
+                                                <div class="part-img">
+                                                    <img src="<?= BURL . $row['blog_img'] ?>" alt="<?= htmlspecialchars($row['title_of_blog']) ?>" class="w-100 border">
+                                                </div>
+                                                <div class="part-text">
+                                                    <h4>
+                                                        <a href="<?= BURL ?>index_blog_details/<?= $row['bid'] ?>/<?= $row['slug'] ?>">
+                                                            <?= $row['title_of_blog'] ?>
+                                                        </a>
+                                                    </h4>
+                                                    <small>Views: <?=$row['views']?></small><br> <!-- Display the view count if you like -->
+                                                    <small>27 Sep, 2023</small>
+                                                </div>
                                             </div>
-                                            <div class="part-text">
-                                                <h4><a href="http://localhost/benExchange/details/1/introduction-to-paypal-by-bens-exchange">What is PayPal?PayPal&amp;nbsp;is a simple p...</a></h4>
-                                                <small>27 Sep, 2023</small>
-                                            </div>
-                                        </div>
+                                        <?php endwhile; ?>
+
+
                                     </div>
                                 </div>  
                             </div>                  

@@ -11,6 +11,9 @@ class index extends boiler
 		$is_landing = 1;
 		$this->set_token();
 		$audios = $this->db->query("SELECT * FROM audios ORDER BY aid DESC LIMIT 25");
+		// $get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid  OFFSET 0");
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY views DESC LIMIT 5");
+		// $get_blog = $db->query("SELECT title_of_blog, blog_img, slug FROM blogs ORDER BY popularity DESC");
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
@@ -29,26 +32,64 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
 
-	public function blog() {
+	// public function blog($bid) {
+	// 	$this->page_title = "M.O.Z | Blog";
+	// 	$is_landing = 1;
+	// 	$this->set_token();
+	
+	// 	function shorten_text($text, $max_length = 100) {
+	// 		if (strlen($text) > $max_length) {
+	// 			$shortened = substr($text, 0, $max_length) . '...';
+	// 		} else {
+	// 			$shortened = $text;
+	// 		}
+	// 		return $shortened;
+	// 	}        
+	
+	// 	// Initial fetch of blog posts
+	// 	$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 2 OFFSET 0");
+	// 	// $blog_list = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 20");
+    //     $blog_id = $row['bid']; // Assuming you have the blog post ID 
+    //     $this->db->query("UPDATE blogs SET views = views + 1  WHERE bid = '$blog_id'");
+    //     $slug = generateUniqueSlug($title_of_blog, $db);
+	// 	include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+	// 	include_once 'themes/' . $this->setting->landing_theme . '/index_blog_details.php';
+	// 	// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	// }
+
+	public function blog($bid) {
 		$this->page_title = "M.O.Z | Blog";
 		$is_landing = 1;
 		$this->set_token();
 	
+		// Function to shorten text (optional)
 		function shorten_text($text, $max_length = 100) {
-			if (strlen($text) > $max_length) {
-				$shortened = substr($text, 0, $max_length) . '...';
-			} else {
-				$shortened = $text;
-			}
-			return $shortened;
-		}        
+			return (strlen($text) > $max_length) ? substr($text, 0, $max_length) . '...' : $text;
+		}
 	
-		// Initial fetch of blog posts
-		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 2 OFFSET 0");
+		// Fetch blog post data
+		$get_blog = $this->db->query("SELECT * FROM blogs WHERE bid = '$bid' LIMIT 1");
+	
+		if ($get_blog->num_rows == 0) {
+			echo "Blog post not found.";
+			return;
+		}
+	
+		$row = $get_blog->fetch_assoc();
+	
+		// Generate slug if it's not set (assuming $title_of_blog exists)
+		$slug = generateSlug($row['title_of_blog'], $this->db);
+	
+		// Update the view count for the blog
+		$this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$bid'");
+	
+		// Include header and blog details template
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
-		include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
-		// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/index_blog_details.php';
 	}
+	
+	
+	
 	
 	public function fetch_posts() {
 		$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 2;

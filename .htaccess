@@ -12,3 +12,8 @@ RewriteRule ^(.*)$ https://www.vpayint.com/$1 [R=301,L]
 RewriteRule ^()$ ./index.php?p=index [NC,L]
 RewriteRule ^([^/.]+)$ ./index.php?p=$1 [NC,L]
 RewriteRule ^([^/.]+)/(.*)$ ./index.php?p=$1&params=$2 [NC,L]
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^single$ index.php?action=single [QSA,L]

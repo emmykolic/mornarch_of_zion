@@ -21,8 +21,31 @@ class blog extends boiler
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
 
-    public function action()
-    {
+    /**
+     * Generates a URL-friendly slug from a given string
+     * and ensures it is unique by checking against the database.
+     */
+    public function generateSlug($title, $db) {
+        // Convert the title to lowercase and replace spaces and special characters
+        $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($title));
+
+        // Ensure slug is unique by appending a number if necessary
+        $original_slug = $slug;
+        $counter = 1;
+
+        // Query to check if the slug already exists in the database
+        $result = $db->query("SELECT * FROM blogs WHERE slug = '$slug'");
+
+        while ($result->num_rows > 0) {
+            $slug = $original_slug . '-' . $counter;
+            $result = $db->query("SELECT * FROM blogs WHERE slug = '$slug'");
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    public function action() {
         $uploadDir = 'assets/blog_uploads/'; // Specify your upload directory
         $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
 
@@ -46,10 +69,11 @@ class blog extends boiler
             $this->error = 1;
             $this->error_msg .= ' Empty Image Field';
         }
+
         // Handle Image File Upload
         $imageFilePath = $uploadDir . basename($blog_img['name']);
         $imageFileType = $this->getFileMimeType($blog_img['tmp_name']);
-        
+
         echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
 
         if (in_array($imageFileType, $allowedImageTypes)) {
@@ -67,8 +91,13 @@ class blog extends boiler
         $date_created = date('Y-m-d H:i:s');
         
         if ($this->error == 0) {
-            $this->db->query("INSERT INTO blogs (title_of_blog,blog_content,blog_img,date_created) VALUES ('$title_of_blog','$blog_content','$imageFilePath','$date_created') ");
-            $this->alert->set("Trip added successfully", 'success');
+            // Generate the slug for the blog post
+            // Use $this->generateSlug instead of generateSlug
+            $slug = $this->generateSlug($title_of_blog, $this->db);
+            $this->db->query("INSERT INTO blogs (title_of_blog, blog_content, blog_img, slug, date_created) 
+                            VALUES ('$title_of_blog', '$blog_content', '$imageFilePath', '$slug', '$date_created')");
+            
+            $this->alert->set("Blog added successfully", 'success');
             header('location:' . BURL . "blog/single");
         } else {
             $this->alert->set($this->error_msg, 'danger');
@@ -76,27 +105,47 @@ class blog extends boiler
         }
     }
 
-    public function  single(){
+    public function single() {
+        // Ensure the user is authenticated
         $this->auth->user();
         $this->page_title = "M.O.Z Blog | Single";
         $uid = $this->auth->uid;
         $this->set_token();
-        $this->auth->user(9);
-        $blog_list = $this->db->query("SELECT * FROM blogs ORDER BY bid LIMIT 20");
-
-        function truncate($text, $chars = 100) {
-            if (strlen($text) > $chars) {
-                $text = substr($text, 0, $chars) . "...";
-            }
-            return $text;
+        
+        // Get the blog ID from the URL
+        $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
+        
+        // Debugging line to check the blog ID
+        echo "Blog ID: " . $blog_id . "<br>";
+        
+        // Fetch the blog post based on the blog ID
+        $result = $this->db->query("SELECT * FROM blogs WHERE bid = '$blog_id' LIMIT 1");
+    
+        // Check if the blog post exists
+        if ($result->num_rows > 0) {
+            // Fetch the blog post data
+            $row = $result->fetch_assoc();
+            $blog_id = $row['bid'];
+            $slug = $row['slug'];
+            $title_of_blog = $row['title_of_blog'];
+            $blog_content = $row['blog_content'];
+            $views = $row['views'];
+    
+            // Increment the views count for this blog post
+            $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
+        } else {
+            echo "Blog post not found.";
+            exit;
         }
-
+    
+        // Include the necessary files for the single blog post page
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
         include_once 'themes/' . $this->setting->admin_theme . '/blog_single.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
-
-
+    
+        
+    
     public function  edit($bid)
     {
         $this->auth->editor();
