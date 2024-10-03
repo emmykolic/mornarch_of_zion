@@ -111,39 +111,135 @@ class blog extends boiler
         $this->page_title = "M.O.Z Blog | Single";
         $uid = $this->auth->uid;
         $this->set_token();
+        $this->auth->user(9);
+        $blog_list = $this->db->query("SELECT *, slug FROM blogs ORDER BY bid DESC LIMIT 20");
+        //$blog_id = $row['bid']; // Assuming you have the blog post ID 
+        // $this->db->query("UPDATE blogs SET views = views + 1  OR slug = '$slug' WHERE bid = '$blog_id'");
+        // $slug = generateSlug($title, $db);
+
+        function truncate($text, $chars = 100) {
+            if (strlen($text) > $chars) {
+                $text = substr($text, 0, $chars) . "...";
+            }
+            return $text;
+        }
         
         // Get the blog ID from the URL
-        $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
+        // $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
         
         // Debugging line to check the blog ID
-        echo "Blog ID: " . $blog_id . "<br>";
+        // echo "Blog ID: " . $blog_id . "<br>";
         
         // Fetch the blog post based on the blog ID
-        $result = $this->db->query("SELECT * FROM blogs WHERE bid = '$blog_id' LIMIT 1");
+        // $blog_list = $this->db->query("SELECT * FROM blogs LIMIT 1");
     
-        // Check if the blog post exists
-        if ($result->num_rows > 0) {
-            // Fetch the blog post data
-            $row = $result->fetch_assoc();
-            $blog_id = $row['bid'];
-            $slug = $row['slug'];
-            $title_of_blog = $row['title_of_blog'];
-            $blog_content = $row['blog_content'];
-            $views = $row['views'];
+        // // Check if the blog post exists
+        // if ($blog_list->num_rows > 0) {
+        //     // Fetch the blog post data
+        //     $row = $blog_list->fetch_assoc();
+        //     $blog_id = $row['bid'];
+        //     $slug = $row['slug'];
+        //     $title_of_blog = $row['title_of_blog'];
+        //     $blog_content = $row['blog_content'];
+        //     $views = $row['views'];
     
             // Increment the views count for this blog post
-            $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
-        } else {
-            echo "Blog post not found.";
-            exit;
-        }
+            // $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
+        // } else {
+        //     echo "Blog post not found.";
+        //     exit;
+        // }
     
         // Include the necessary files for the single blog post page
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
         include_once 'themes/' . $this->setting->admin_theme . '/blog_single.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
+
+    public function getBlogID($title_of_blog) {
+        // Sanitize the input to prevent SQL injection
+        $title_of_blog = $this->db->real_escape_string($title_of_blog);
+        
+        // Query to get the blog ID (bid) from the blogs table where the title matches
+        $query = $this->db->query("SELECT bid FROM blogs WHERE title_of_blog = '$title_of_blog' LIMIT 1");
+        
+        // Execute the query
+        $result = $this->db->query($query);
+        
+        // Check if the result has any rows
+        if ($result->num_rows > 0) {
+            // Fetch the row as an associative array
+            $row = $result->fetch_assoc();
+            
+            // Access the bid (blog ID) from the result
+            $blog_id = $row['bid'];
+            
+            // Debugging line to check the blog ID
+            echo "Blog ID from getBlogID: " . $blog_id . "<br>";
+            
+            // Return the blog ID
+            return $blog_id;
+        } else {
+            // If no blog was found, return false
+            echo "Blog post not found.";
+            return false;
+        }
+    }
+
+    // public function single() {
+    //     // Ensure the user is authenticated
+    //     $this->auth->user();
+    //     $this->page_title = "M.O.Z Blog | Single";
+    //     $uid = $this->auth->uid;
+    //     $this->set_token();
     
+    //     // Get the blog ID from the URL if provided, otherwise use the title to get the blog ID
+    //     // $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
+        
+    //     // If the blog ID is not present in the URL, try getting it by blog title (or another field)
+    //     // if ($blog_id == 0 && isset($_GET['title_of_blog'])) {
+    //         // Fetch the blog ID using the title_of_blog from the URL
+    //         // $title_of_blog = $_GET['title_of_blog'];
+    //         // $blog_id = $this->getBlogID($title_of_blog);
+    //     // }
+    
+    //     // Debugging line to check the blog ID
+    //     // echo "Blog ID in single: " . $blog_id . "<br>";
+        
+    //     // Check if the blog_id is valid
+    //     if ($blog_id > 0) {
+    //         // Fetch the blog post based on the blog ID
+    //         $result = $this->db->query("SELECT * FROM blogs WHERE bid = '$blog_id' LIMIT 1");
+    
+    //         // Check if the blog post exists
+    //         if ($result->num_rows > 0) {
+    //             // Fetch the blog post data
+    //             $row = $result->fetch_assoc();
+    //             $blog_id = $row['bid'];
+    //             $slug = $row['slug'];
+    //             $title_of_blog = $row['title_of_blog'];
+    //             $blog_content = $row['blog_content'];
+    //             $views = $row['views'];
+    
+    //             // Increment the views count for this blog post
+    //             $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
+    //         } else {
+    //             echo "Blog post not found.";
+    //             exit;
+    //         }
+    //     } else {
+    //         // If the blog ID is invalid (like 0), show an error message
+    //         echo "Invalid blog ID.";
+    //         exit;
+    //     }
+    
+    //     // Include the necessary files for the single blog post page
+    //     include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+    //     include_once 'themes/' . $this->setting->admin_theme . '/blog_single.php';
+    //     include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+    // }
+    
+        
         
     
     public function  edit($bid)

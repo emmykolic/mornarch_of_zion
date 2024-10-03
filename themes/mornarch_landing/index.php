@@ -230,9 +230,10 @@
                                                 </div>
                                                 <div class="part-text">
                                                     <h4>
-                                                        <a href="<?= BURL ?>index_blog_details/<?= $row['bid'] ?>/<?= $row['slug'] ?>">
+                                                        <a href="<?= BURL ?>index/blog/index_blog_details/<?= $row['bid'] ?>/<?= $row['slug'] ?>">
                                                             <?= $row['title_of_blog'] ?>
                                                         </a>
+
                                                     </h4>
                                                     <small>Views: <?=$row['views']?></small><br> <!-- Display the view count if you like -->
                                                     <small>27 Sep, 2023</small>

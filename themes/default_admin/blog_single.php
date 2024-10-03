@@ -22,6 +22,7 @@
                                         <th>Blog Name</th>
                                         <th>Blog Content</th>
                                         <th>Date Created</th>
+                                        <th>Views</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -32,14 +33,14 @@
                                         <td>
                                             <img src="<?=BURL . $row['blog_img']?>" width="100" class="h-auto rounded-circle" />
                                         </td>
-                                        <td><?=htmlspecialchars($title_of_blog);?></td>
+                                        <td><?=htmlspecialchars($row['title_of_blog']);?></td>
                                         
                                         <td>
                                             <div>
                                                 <!-- Truncated Text -->
                                                  <span class="truncated-text"><?= truncate($row['blog_content'], 100) ?></span>
                                                 <!-- Full Text -->
-                                                <p class="full-text" style="display: none;"><?= nl2br(htmlspecialchars($blog_content)); ?></p>
+                                                <p class="full-text" style="display: none;"><?= nl2br(htmlspecialchars($row['blog_content'])); ?></p>
 
                                                 <?php if ($row['blog_content']):?>
                                                 <!-- Read More Link -->
@@ -51,8 +52,11 @@
                                         </td>
 
                                         <td>
-                                            <small>Views: <?php echo $views; ?></small>
-                                            <span><?=date('d/m/Y h:i:s', $row['date_created'])?></span>
+                                            <span><?=date( $row['date_created'])?></span>
+                                        </td>
+
+                                        <td>
+                                            <small>Views: <?= $row['views'] ?></small>
                                         </td>
 
                                         <td>

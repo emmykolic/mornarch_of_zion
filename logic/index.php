@@ -13,11 +13,29 @@ class index extends boiler
 		$audios = $this->db->query("SELECT * FROM audios ORDER BY aid DESC LIMIT 25");
 		// $get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid  OFFSET 0");
 		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY views DESC LIMIT 5");
+
+		// Check if the request is for a blog post (blog detail URL pattern)
+        if (preg_match('/index\/blog\/index_blog_details\/(\d+)\/(.+)/', $_SERVER['REQUEST_URI'], $matches)) {
+            // $matches[1] should be the blog ID (bid)
+            // $matches[2] should be the slug
+            $blog_id = (int) $matches[1];
+            $slug = $matches[2];
+
+            // Debugging line to check extracted blog ID and slug
+            echo "Blog ID received: " . $blog_id . "<br>";
+            echo "Slug received: " . $slug . "<br>";
+
+            // Call the blog method with the blog ID
+            $blog_controller = new blog();
+            $blog_controller->blog($blog_id);
+            exit;
+        }
+		
 		// $get_blog = $db->query("SELECT title_of_blog, blog_img, slug FROM blogs ORDER BY popularity DESC");
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-	}	
+	}
 
 	function single($aid) {
 		$this->set_token();
@@ -57,28 +75,99 @@ class index extends boiler
 	// 	// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	// }
 
+	function generateSlug($string, $db) {
+		// Convert the string to lowercase
+		$slug = strtolower($string);
+	
+		// Replace any non-alphanumeric characters with hyphens
+		$slug = preg_replace('/[^a-z0-9-]+/', '-', $slug);
+	
+		// Remove any trailing hyphens
+		$slug = trim($slug, '-');
+	
+		// Optionally, you can check if this slug is unique in the database
+		$result = $db->query("SELECT bid FROM blogs WHERE slug = '$slug' LIMIT 1");
+		if ($result->num_rows > 0) {
+			// If the slug already exists, append a unique identifier
+			$slug .= '-' . uniqid();
+		}
+	
+		return $slug;
+	}	
+
+	// public function blog($bid) {
+	// 	$this->page_title = "M.O.Z | Blog";
+	// 	$this->set_token();
+
+	// 	echo "Blog ID received: " . $bid . "<br>"; // Debugging output
+	
+	// 	// Function to shorten text
+	// 	function shorten_text($text, $max_length = 100) {
+	// 		return (strlen($text) > $max_length) ? substr($text, 0, $max_length) . '...' : $text;
+	// 	}
+	
+	// 	// Cast bid to integer to avoid SQL injection
+	// 	$bid = (int) $bid;
+	
+	// 	// Fetch blog post data
+	// 	$get_blog = $this->db->query("SELECT * FROM blogs WHERE bid = $bid LIMIT 1");
+	
+	// 	if ($get_blog->num_rows > 0) {
+	// 		echo "Blog post not found.";
+	// 		return;
+	// 	}
+	
+	// 	$row = $get_blog->fetch_assoc();
+	
+	// 	// Generate slug if it's not set (assuming $title_of_blog exists)
+	// 	$slug = generateSlug($row['title_of_blog'], $this->db);
+	
+	// 	// Increment view count
+	// 	$this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = $bid");
+	
+	// 	// Debugging output to ensure the correct data is fetched
+	// 	echo "Blog ID: " . $bid . "<br>";
+	// 	echo "Blog Title: " . $row['title_of_blog'] . "<br>";
+	// 	echo "Slug: " . $slug . "<br>";
+	
+	// 	// Include the header and blog details template
+	// 	include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+	// 	include_once 'themes/' . $this->setting->landing_theme . '/index_blog_details.php';
+	// 	include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	// }
+
 	public function blog($bid) {
 		$this->page_title = "M.O.Z | Blog";
 		$is_landing = 1;
 		$this->set_token();
+
+		// Debugging line to check if $bid is received correctly
+		echo "Received Blog ID: " . $bid . "<br>";
 	
-		// Function to shorten text (optional)
-		function shorten_text($text, $max_length = 100) {
-			return (strlen($text) > $max_length) ? substr($text, 0, $max_length) . '...' : $text;
+		// Check if $bid is valid
+		if ($bid <= 0) {
+			echo "Invalid blog ID.";
+			return;
 		}
 	
 		// Fetch blog post data
 		$get_blog = $this->db->query("SELECT * FROM blogs WHERE bid = '$bid' LIMIT 1");
 	
+		// Debugging line to check if the query returned any rows
 		if ($get_blog->num_rows == 0) {
 			echo "Blog post not found.";
 			return;
 		}
 	
 		$row = $get_blog->fetch_assoc();
+		echo "<pre>"; print_r($row); echo "</pre>"; // Debugging line to check fetched blog data
 	
 		// Generate slug if it's not set (assuming $title_of_blog exists)
-		$slug = generateSlug($row['title_of_blog'], $this->db);
+		if (!isset($row['slug']) || empty($row['slug'])) {
+			$slug = generateSlug($row['title_of_blog'], $this->db);
+		} else {
+			$slug = $row['slug'];
+		}
 	
 		// Update the view count for the blog
 		$this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$bid'");
@@ -86,10 +175,54 @@ class index extends boiler
 		// Include header and blog details template
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index_blog_details.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
+
+
+	public function blog_view() {
+		$this->page_title = "M.O.Z | Blog";
+		$is_landing = 1;
+		$this->set_token();
 	
+		// Fetch blog post data
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
 	
+		// Fetch blog post data
+		$collect_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
+
+		function shorten_text($text, $max_length = 100) {
+			if (strlen($text) > $max_length) {
+				$shortened = substr($text, 0, $max_length) . '...';
+			} else {
+				$shortened = $text;
+			}
+			return $shortened;
+		}  
 	
+		if ($collect_blog->num_rows == 0) {
+			echo "Blog post not found.";
+			return;
+		}
+	
+		$row = $collect_blog->fetch_assoc();
+
+		$bid = $row['bid'];
+	
+		// Generate slug if it's not set (assuming $title_of_blog exists)
+		if (!isset($row['slug']) || empty($row['slug'])) {
+			$slug = generateSlug($row['title_of_blog'], $this->db);
+		} else {
+			$slug = $row['slug'];
+		}
+	
+		// Update the view count for the blog
+		$this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$bid'");
+	
+		// Include header and blog details template
+		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/index_blog.php';
+		// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	}
 	
 	public function fetch_posts() {
 		$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 2;
