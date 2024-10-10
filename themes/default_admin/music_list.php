@@ -6,7 +6,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"></h5>
-                    <a href="<?=BURL?>music/add" class="btn btn-primary p-2">Add Music</a>
+                    <a href="<?=BURL?>music" class="btn btn-primary p-2">Add Music</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

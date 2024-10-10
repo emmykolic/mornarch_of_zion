@@ -36,6 +36,9 @@
 <!-- Include Selectize.js JavaScript -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/selectize@0.15.2/dist/js/standalone/selectize.min.js"></script> -->
 
+<!-- Include Select2 CSS and JS (Make sure you include these in your head section) -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- build:js assets/vendor/js/core.js -->
 <script src="<?= BURL ?>themes/default_admin/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="<?= BURL ?>themes/default_admin/assets/vendor/libs/popper/popper.js"></script>
@@ -74,6 +77,80 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
+      "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
+    }
+  }
+</script>
+<script type="module">
+  import {
+    ClassicEditor,
+    Essentials,
+    Paragraph,
+    Bold,
+    Italic,
+    Font
+  } from 'ckeditor5';
+  ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+      plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
+      toolbar: [
+        'undo', 'redo', '|', 'bold', 'italic', '|',
+        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+      ]
+    } )
+    .then( editor => {
+      window.editor = editor;
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+</script>
+<!-- A friendly reminder to run on a server, remove this during the integration. -->
+<script>
+  window.onload = function() {
+    if ( window.location.protocol === 'file:' ) {
+      alert( 'This sample requires an HTTP server. Please serve this file with a web server.' );
+    }
+  };
+</script>
+
+<script type="module">
+  import {
+    ClassicEditor,
+    Essentials,
+    Paragraph,
+    Bold,
+    Italic,
+    Font
+  } from 'ckeditor5';
+  ClassicEditor
+    .create( document.querySelector( '#editor1' ), {
+      plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
+      toolbar: [
+        'undo', 'redo', '|', 'bold', 'italic', '|',
+        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+      ]
+    } )
+    .then( editor => {
+      window.editor = editor;
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+</script>
+<!-- A friendly reminder to run on a server, remove this during the integration. -->
+<script>
+  window.onload = function() {
+    if ( window.location.protocol === 'file:' ) {
+      alert( 'This sample requires an HTTP server. Please serve this file with a web server.' );
+    }
+  };
+</script>
 
 <?php if ($this->page_js != "") : ?>
   <script src="<?= $this->page_js ?>"></script>

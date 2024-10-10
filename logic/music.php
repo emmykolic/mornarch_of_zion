@@ -8,39 +8,39 @@ class music extends boiler{
     public function defaultb(){
         $this->page_title = "M.O.Z Music";
         // $list = $this->db->query("SELECT * FROM trips,routes WHERE trips.route=routes.rid ORDER BY trips.tid DESC LIMIT $start, 50");
-        $uid = $this->auth->uid;
         $this->set_token();
+        $uid = $this->auth->uid;
         $this->auth->user(9);
         $get_genre = $this->db->query("SELECT * FROM genre ");
         $get_mood = $this->db->query("SELECT * FROM mood ");
 
-        $genres = [];
-        while ($row = $get_genre->fetch_assoc()) {
-            $genres[] = $row['genre_name'];
-        }
+        // $genres = [];
+        // while ($row = $get_genre->fetch_assoc()) {
+        //     $genres[] = $row['genre_name'];
+        // }
         
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
         include_once 'themes/' . $this->setting->admin_theme . '/music.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
 
-   public function song_list(){
-    $uid = $this->auth->uid;
-    $this->set_token();
-    $this->auth->user(9);
-    $song_list = $this->db->query("SELECT * FROM audios ORDER BY aid LIMIT 20");
+    public function song_list(){
+        $uid = $this->auth->uid;
+        $this->set_token();
+        $this->auth->user(9);
+        $song_list = $this->db->query("SELECT * FROM audios ORDER BY aid LIMIT 20");
 
-    function truncate($text, $chars = 100) {
-        if (strlen($text) > $chars) {
-            $text = substr($text, 0, $chars) . "...";
+        function truncate($text, $chars = 100) {
+            if (strlen($text) > $chars) {
+                $text = substr($text, 0, $chars) . "...";
+            }
+            return $text;
         }
-        return $text;
-    }
 
-    include_once 'themes/' . $this->setting->admin_theme . '/header.php';
-    include_once 'themes/' . $this->setting->admin_theme . '/music_list.php';
-    include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
-}
+        include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/music_list.php';
+        include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+    }
 
     // In music.php or the relevant controller
 
@@ -80,107 +80,98 @@ class music extends boiler{
         $get_mood = $this->db->query("SELECT * FROM mood WHERE mid = '$mid' ");
         // Execute the query and return the mood name
     }
-    
+
+
     public function action() {
-        $uploadDir = 'assets/music_uploads/'; 
+        if (!$this->auth->is_logged_in()) {
+            echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
+            exit;
+        }
+
+        // File upload directories
+        $uploadDir = 'assets/music_uploads/';
         $uploadDir2 = 'assets/uploads/';
-        $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
-        $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
-        $uid = $this->auth->uid;
-        $name_of_song = $this->clean->post("name_of_song");
-        $genre = $this->clean->post("genre");
-        $mood = $this->clean->post("mood");
-        $song_description = $this->clean->post("song_description");
-        $song_lyrics = $this->clean->post("song_lyrics");
+        // Validate form data
+        $name_of_song = $this->clean->post('name_of_song');
+        $genre = $this->clean->post('genre');
+        $mood = $this->clean->post('mood');
+        $song_description = $this->clean->post('song_description');
+        $song_lyrics = $this->clean->post('song_lyrics');
+
+        // Debugging: Log form data for verification
+        error_log('Form Data: ' . print_r($_POST, true));
+        error_log('File Data: ' . print_r($_FILES, true));
+
+        // Handle audio file upload
+        $audioFile = $_FILES['audioFile'];
+        $audioFilePath = $uploadDir . basename($audioFile['name']);
+        if (!move_uploaded_file($audioFile['tmp_name'], $audioFilePath)) {
+            error_log('Audio upload failed.');
+            echo json_encode(['status' => 'error', 'message' => 'Error uploading audio file.']);
+            exit;
+        }
+
+        // Handle image file upload
         $song_img = $_FILES['song_img'];
-        $audio_File = $_FILES['audioFile'];
-        $moz_tune = $this->clean->post("moz_tune");
-
-
-        // Handle Audio File Upload
-        $audioFileType = $audio_File['type'];
-        $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
-
-        if (in_array($audioFileType, $allowedAudioTypes)) {
-            $audioFilePath = $uploadDir . $audio_File['name'];
-            if (!move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
-                echo json_encode(['status' => 'error', 'message' => 'Error moving uploaded audio file.']);
-                exit;
-            }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid audio file type.']);
-            exit;
-        }
-
-        // Handle Image File Upload
         $imageFilePath = $uploadDir2 . basename($song_img['name']);
-        $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
-
-        if (in_array($imageFileType, $allowedImageTypes)) {
-            if (!move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
-                echo json_encode(['status' => 'error', 'message' => 'Error moving uploaded image file.']);
-                exit;
-            }
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid image file type.']);
+        if (!move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
+            error_log('Image upload failed.');
+            echo json_encode(['status' => 'error', 'message' => 'Error uploading image file.']);
             exit;
         }
 
-        $date_created = time();
-
-        // Insert data into the database
-        if ($this->error == 0) {
-            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, moz_tune, date_created) 
-            VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$moz_tune', '$date_created')");
-
+        // Insert into database
+        $insertQuery = "INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', NOW())";
+        
+        if ($this->db->query($insertQuery)) {
             echo json_encode(['status' => 'success', 'redirect' => BURL . 'music/song_list']);
-            exit;
         } else {
-            echo json_encode(['status' => 'error', 'message' => $this->error_msg]);
-            exit;
+            error_log('Database error: ' . $this->db->error);
+            echo json_encode(['status' => 'error', 'message' => 'Database insert error: ' . $this->db->error]);
         }
     }
 
-
-        // Handle Audio File Upload
-        // $audioFileType = $audio_File['type'];
-        // echo "Audio File Type: " . $audioFileType . "<br>";  // Debugging line
-
-        // $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
-
-        // if (in_array($audioFileType, $allowedAudioTypes)) {
-        //     $audioFilePath = $uploadDir . $audio_File['name'];
-        //     if (move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
-        //         // File upload successful
-        //     } else {
-        //         $this->error = 1;
-        //         $this->error_msg .= "Error moving uploaded audio file.<br>";
-        //     }
-        // } else {
-        //     $this->error = 1;
-        //     $this->error_msg .= "Invalid audio file type.<br>";
-        // }
     
-        // Handle Image File Upload
-        // $imageFilePath = $uploadDir2 . basename($song_img['name']);
-        // $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
-        
-        // echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
 
-        // if (in_array($imageFileType, $allowedImageTypes)) {
-        //     if (move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
-        //         // Image upload successful
-        //     } else {
-        //         $this->error = 1;
-        //         $this->error_msg .= "Error moving uploaded image file.<br>";
-        //     }
-        // } else {
-        //     $this->error = 1;
-        //     $this->error_msg .= "Invalid image file type.<br>";
-        // }
+    // Handle Audio File Upload
+    // $audioFileType = $audio_File['type'];
+    // echo "Audio File Type: " . $audioFileType . "<br>";  // Debugging line
 
-        // $date_created = time();
+    // $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
+
+    // if (in_array($audioFileType, $allowedAudioTypes)) {
+    //     $audioFilePath = $uploadDir . $audio_File['name'];
+    //     if (move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
+    //         // File upload successful
+    //     } else {
+    //         $this->error = 1;
+    //         $this->error_msg .= "Error moving uploaded audio file.<br>";
+    //     }
+    // } else {
+    //     $this->error = 1;
+    //     $this->error_msg .= "Invalid audio file type.<br>";
+    // }
+
+    // Handle Image File Upload
+    // $imageFilePath = $uploadDir2 . basename($song_img['name']);
+    // $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
+    
+    // echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
+
+    // if (in_array($imageFileType, $allowedImageTypes)) {
+    //     if (move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
+    //         // Image upload successful
+    //     } else {
+    //         $this->error = 1;
+    //         $this->error_msg .= "Error moving uploaded image file.<br>";
+    //     }
+    // } else {
+    //     $this->error = 1;
+    //     $this->error_msg .= "Invalid image file type.<br>";
+    // }
+
+    // $date_created = time();
 
         // Insert data into the database
     //     if ($this->error == 0) {
@@ -347,26 +338,19 @@ class music extends boiler{
             echo 'Database error';
         }
     }
-    
-    
-    
-    
 
     // Function to get file MIME type using mime_content_type
     private function getFileMimeType($filePath) {
-    if (function_exists('mime_content_type')) {
-        return mime_content_type($filePath);
-    } else {
-        // If mime_content_type function is not available, fallback to a less reliable method
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $filePath);
-        finfo_close($finfo);
-        return $mime;
+        if (function_exists('mime_content_type')) {
+            return mime_content_type($filePath);
+        } else {
+            // If mime_content_type function is not available, fallback to a less reliable method
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $filePath);
+            finfo_close($finfo);
+            return $mime;
+        }
     }
 }
-
-    
-}
-
 
 ?>

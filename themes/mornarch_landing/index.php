@@ -103,36 +103,15 @@
                 <div class="col-md-12	featured-top">
                     <div class="row no-gutters d-flex">
                         <div class="col-md-4 d-flex align-items-center bg-danger" style="min-height: 100%;">
-                            <form action="https://genextmotors.com.ng/index/booking_action" class="request-form w-100 ftco-animate bg-danger" method="post">
-                                <h2>Book a trip</h2>
-                                <div class="form-group">
-                                    <label for="" class="label">Route</label>
-                                    <select class="form-control" aria-label="Select A Route" aria-describedby="route" name="route" id="route" required />
-                                        <option value="">Select Route</option>
-                                        <option value="1">Port Harcourt - Owerri </option>
-                                        <option value="2">Owerri - Port Harcourt </option>
-                                        <option value="3">Onitsha - Port Harcourt </option>
-                                        <option value="4">Port Harcourt - Onitsha </option>
-                                        <option value="5">Onitsha - Owerri </option>
-                                        <option value="6">Owerri - Onitsha </option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="label">Take-off date</label>
-                                    <input type="date" class="form-control" placeholder="Date" name="trip_date">
-                                </div>
-                                <input type="hidden"  name="ticket_type" value="Single Ticket">
-                                
-                                <div class="form-group">
-                                    <input type="submit" value="Book Now" class="btn btn-dark py-3 px-4" name="94d7dcb1ef0ec1fbe1f2b869b97629d7ccd8d520">
-                                </div>
-                            </form>
+                            <div class="m-5 bg-white shadow w-100 h-50">
+                                H1
+                            </div>
                         </div>
                         <div class="col-md-8 d-flex align-items-center " style="min-height: 100%;">
                             <div class="services-wrap rounded-right w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-                                <h3 class="heading-section mb-5"><span class="text-danger">Genext...</span> A Better Way to Travel</h3>
+                                <h3 class="heading-section mb-5"><span class="text-danger">Mornarch...</span> A Place Where Everything Gospel Is Brought To Your Step</h3>
                                 <div class="row d-flex mb-4">
-                                    <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="col-md-4 d-flex align-self-stretch">
                                         <div class="services w-100 text-center">
                                             <div class="icon d-flex align-items-center justify-content-center border-danger"><span class="flaticon-route  text-danger"></span></div>
                                             <div class="text w-100">
@@ -140,7 +119,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="col-md-4 d-flex align-self-stretch">
                                         <div class="services w-100 text-center">
                                             <div class="icon d-flex align-items-center justify-content-center border-danger"><span class="flaticon-handshake text-danger"></span></div>
                                             <div class="text w-100">
@@ -148,7 +127,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 d-flex align-self-stretch ftco-animate">
+                                    <div class="col-md-4 d-flex align-self-stretch">
                                         <div class="services w-100 text-center">
                                             <div class="icon d-flex align-items-center justify-content-center border-danger"><span class="flaticon-car text-danger"></span></div>
                                             <div class="text w-100">

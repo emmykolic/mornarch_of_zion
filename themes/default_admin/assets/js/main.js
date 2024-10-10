@@ -20,14 +20,14 @@ new Tagify(input);
 //   }
 // });
 
-$(document).ready(function() {
-  $('#select-tags').selectize({
-      plugins: ['remove_button'],  // Allows the tags to have a remove button
-      delimiter: ',',
-      persist: false,
-      create: false  // Prevent users from adding new options if they type something
-  });
-});
+// $(document).ready(function() {
+//   $('#select-tags').selectize({
+//       plugins: ['remove_button'],  // Allows the tags to have a remove button
+//       delimiter: ',',
+//       persist: false,
+//       create: false  // Prevent users from adding new options if they type something
+//   });
+// });
 
 
 (function () {
@@ -395,73 +395,94 @@ $("#userSearch").on('input',function(){
 		});
 	});
 
-
   $(document).ready(function() {
-    let burl = $('#burl').val();
+    var burl = 'your_base_url_here';  // Set the base URL for your action
 
-    $('#myForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
+    // Initialize CKEditor
+    CKEDITOR.replace('song_description');
+    CKEDITOR.replace('song_lyrics');
 
-        var formData = new FormData(this); // Create form data
+    // Ensure the form does not refresh
+    $('#songForm').on('submit', function(e) {
+          e.preventDefault();  // Prevent form from refreshing the page
 
-        // Show the progress bar
-        $('#progressBarDiv').show();
-        $('#progressBar').css('width', '0%').html('0%'); // Reset progress bar
+          // Update CKEditor textarea values before form submission
+          for (let instance in CKEDITOR.instances) {
+              CKEDITOR.instances[instance].updateElement();
+          }
 
-        // Simulate gradual progress before actual file submission
-        var fakeProgress = 0;
-        var interval = setInterval(function() {
-            if (fakeProgress < 90) { // Increase to 90% only (simulate fake progress)
-                fakeProgress += 1;
-                $('#progressBar').css('width', fakeProgress + '%');
-                $('#progressBar').html(fakeProgress + '%');
-            }
-        }, 50); // Speed of gradual increase
+          // Validate the form fields before proceeding
+          if (!this.checkValidity()) {
+              $('#result').html('<div class="alert alert-danger">Please fill out all required fields.</div>');
+              return;
+          }
 
-        $.ajax({
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
+          // Show the progress bar and reset it
+          $('#progressBarDiv').show();
+          $('#progressBar').css('width', '0%').html('0%');
 
-                // Upload progress event (real progress updates)
-                xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                        var realProgress = Math.round((e.loaded / e.total) * 100);
-                        fakeProgress = realProgress > fakeProgress ? realProgress : fakeProgress; // Sync with real progress
+          // Create formData object with the form values
+          var formData = new FormData(this);
 
-                        $('#progressBar').css('width', realProgress + '%');
-                        $('#progressBar').html(realProgress + '%');
-                    }
-                }, false);
+          // Fake progress before real data upload
+          var fakeProgress = 0;
+          var interval = setInterval(function() {
+              if (fakeProgress < 90) {  // Fake progress up to 90%
+                  fakeProgress += 1;
+                  $('#progressBar').css('width', fakeProgress + '%').html(fakeProgress + '%');
+              }
+          }, 50);
 
-                return xhr;
-            },
-            url: (burl + "music/action"), // Replace with your PHP script
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                clearInterval(interval); // Stop the fake progress interval
+          // Perform AJAX submission
+          $.ajax({
+              xhr: function() {
+                  var xhr = new window.XMLHttpRequest();
 
-                // Parse the JSON response
-                var jsonResponse = JSON.parse(response);
+                  // Progress event for upload
+                  xhr.upload.addEventListener('progress', function(e) {
+                      if (e.lengthComputable) {
+                          var percentComplete = Math.round((e.loaded / e.total) * 100);
+                          fakeProgress = percentComplete > fakeProgress ? percentComplete : fakeProgress;  // Sync fake and real progress
+                          $('#progressBar').css('width', percentComplete + '%').html(percentComplete + '%');
+                      }
+                  }, false);
 
-                if (jsonResponse.status === 'success') {
-                    // Redirect to the success page
-                    window.location.href = jsonResponse.redirect;
-                } else {
-                    // Show error message
-                    $('#result').html('<div class="alert alert-danger">' + jsonResponse.message + '</div>');
-                }
-            },
-            error: function() {
-                clearInterval(interval); // Stop the fake progress interval
+                  return xhr;
+              },
+              url: burl + 'music/action',  // Set the action URL (update as needed)
+              type: 'POST',
+              data: formData,
+              processData: false,  // Do not process the form data
+              contentType: false,  // Prevent jQuery from overriding content-type
+              success: function(response) {
+                  clearInterval(interval);  // Stop fake progress interval
 
-                $('#result').html('<div class="alert alert-danger">Error submitting the form!</div>');
-            }
-        });
-    });
-});
+                  try {
+                      var jsonResponse = JSON.parse(response);  // Parse JSON response
+
+                      if (jsonResponse.status === 'success') {
+                          window.location.href = jsonResponse.redirect;  // Redirect on success
+                      } else {
+                          $('#result').html('<div class="alert alert-danger">' + jsonResponse.message + '</div>');
+                      }
+                  } catch (error) {
+                      $('#result').html('<div class="alert alert-danger">Unexpected response from the server.</div>');
+                  }
+              },
+              error: function() {
+                  clearInterval(interval);  // Stop fake progress interval
+                  $('#result').html('<div class="alert alert-danger">There was an error submitting the form.</div>');
+              }
+          });
+      });
+  });
+
+
+  
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
   const input = document.getElementById('tag-input');

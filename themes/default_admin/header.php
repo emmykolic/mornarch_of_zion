@@ -44,6 +44,9 @@
   <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-flat.css" />
   <!--jsocials-->
 
+  <!-- Include Select2 CSS and JS (Make sure you include these in your head section) -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
   <!-- Tagify CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
 
@@ -74,14 +77,15 @@
 
 
   <!-- Page CSS -->
-
+  <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
   <!-- Helpers -->
   <script src="<?= BURL ?>themes/default_admin/assets/vendor/js/helpers.js"></script>
 
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="<?= BURL ?>themes/default_admin/js/config.js"></script>
-  <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+  <!-- <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script> -->
+  
   <script>
       // Ensure CKEditor is properly configured and loaded
       CKEDITOR.config.language = 'en'; // Set language to English
