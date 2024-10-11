@@ -104,37 +104,6 @@ function loaderror($erx=""){
 	
 }
 
-// // Include necessary files (database, controllers, etc.)
-// include_once 'logic/blog.php'; // Assuming this is where the blog class is located
-
-// // Check if the request matches the blog detail URL pattern with /index/blog/index_blog_details/
-// if (preg_match('/index\/blog\/index_blog_details\/(\d+)\/(.+)/', $_SERVER['REQUEST_URI'], $matches)) {
-//     // $matches[1] should be the blog ID (bid)
-//     // $matches[2] should be the slug
-//     $blog_id = (int) $matches[1];
-//     $slug = $matches[2];
-
-//     // Debugging line to check extracted blog ID and slug
-//     echo "Blog ID received: " . $blog_id . "<br>";
-//     echo "Slug received: " . $slug . "<br>";
-
-//     // Call your blog method with the blog ID
-//     $blog_controller = new blog();
-//     $blog_controller->blog($blog_id);
-//     exit;
-// } else {
-//     // No matching route, show 404 error
-//     header("HTTP/1.0 404 Not Found");
-//     echo "404 - Page not found";
-//     exit;
-// }
-
-// Fallback default action (e.g., homepage or other routes)
-// For example:
-// $index_controller = new index();
-// $index_controller->defaultb();
-
-
 if (file_exists('logic/'.$page.'.php')==1) {
 	include 'logic/'.$page.'.php';
 }
@@ -184,7 +153,6 @@ if (class_exists($page)){
 
 	loaderror(" page class not found or improperly named");
 }
-
 
 
 ?>

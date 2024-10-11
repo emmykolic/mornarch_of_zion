@@ -13,12 +13,6 @@ class music extends boiler{
         $this->auth->user(9);
         $get_genre = $this->db->query("SELECT * FROM genre ");
         $get_mood = $this->db->query("SELECT * FROM mood ");
-
-        // $genres = [];
-        // while ($row = $get_genre->fetch_assoc()) {
-        //     $genres[] = $row['genre_name'];
-        // }
-        
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
         include_once 'themes/' . $this->setting->admin_theme . '/music.php';
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
@@ -83,108 +77,74 @@ class music extends boiler{
 
 
     public function action() {
-        if (!$this->auth->is_logged_in()) {
-            echo json_encode(['status' => 'error', 'message' => 'User not logged in.']);
-            exit;
-        }
-
-        // File upload directories
-        $uploadDir = 'assets/music_uploads/';
+        $uploadDir = 'assets/music_uploads/'; 
         $uploadDir2 = 'assets/uploads/';
-
-        // Validate form data
-        $name_of_song = $this->clean->post('name_of_song');
-        $genre = $this->clean->post('genre');
-        $mood = $this->clean->post('mood');
-        $song_description = $this->clean->post('song_description');
-        $song_lyrics = $this->clean->post('song_lyrics');
-
-        // Debugging: Log form data for verification
-        error_log('Form Data: ' . print_r($_POST, true));
-        error_log('File Data: ' . print_r($_FILES, true));
-
-        // Handle audio file upload
-        $audioFile = $_FILES['audioFile'];
-        $audioFilePath = $uploadDir . basename($audioFile['name']);
-        if (!move_uploaded_file($audioFile['tmp_name'], $audioFilePath)) {
-            error_log('Audio upload failed.');
-            echo json_encode(['status' => 'error', 'message' => 'Error uploading audio file.']);
-            exit;
-        }
-
-        // Handle image file upload
+        $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
+        $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    
+        $uid = $this->auth->uid;
+        $name_of_song = $this->clean->post("name_of_song");
+        $genre = $this->clean->post("genre");
+        $mood = $this->clean->post("mood");
+        $song_description = $this->clean->post("song_description");
+        $song_lyrics = $this->clean->post("song_lyrics");
         $song_img = $_FILES['song_img'];
-        $imageFilePath = $uploadDir2 . basename($song_img['name']);
-        if (!move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
-            error_log('Image upload failed.');
-            echo json_encode(['status' => 'error', 'message' => 'Error uploading image file.']);
-            exit;
-        }
+        $audio_File = $_FILES['audioFile'];
+        $moz_tune = $this->clean->post("moz_tune");
 
-        // Insert into database
-        $insertQuery = "INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', NOW())";
-        
-        if ($this->db->query($insertQuery)) {
-            echo json_encode(['status' => 'success', 'redirect' => BURL . 'music/song_list']);
+        // Handle Audio File Upload
+        $audioFileType = $audio_File['type'];
+        echo "Audio File Type: " . $audioFileType . "<br>";  // Debugging line
+
+        $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
+
+        if (in_array($audioFileType, $allowedAudioTypes)) {
+            $audioFilePath = $uploadDir . $audio_File['name'];
+            if (move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
+                // File upload successful
+            } else {
+                $this->error = 1;
+                $this->error_msg .= "Error moving uploaded audio file.<br>";
+            }
         } else {
-            error_log('Database error: ' . $this->db->error);
-            echo json_encode(['status' => 'error', 'message' => 'Database insert error: ' . $this->db->error]);
+            $this->error = 1;
+            $this->error_msg .= "Invalid audio file type.<br>";
+        }
+    
+        // Handle Image File Upload
+        $imageFilePath = $uploadDir2 . basename($song_img['name']);
+        $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
+        
+        echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
+
+        if (in_array($imageFileType, $allowedImageTypes)) {
+            if (move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
+                // Image upload successful
+                // $this->error = 1;
+                // $this->error_msg .= "Image Upload Successful.<br>";
+            } else {
+                $this->error = 1;
+                $this->error_msg .= "Error moving uploaded image file.<br>";
+            }
+        } else {
+            $this->error = 1;
+            $this->error_msg .= "Invalid image file type.<br>";
+        }
+    
+        $date_created = time();
+    
+        // Insert data into the database
+        if ($this->error == 0) {
+            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, date_created) 
+            VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$date_created')");
+    
+            $this->alert->set("Upload successful", "success");
+            header('Location: ' . BURL . 'music/song_list'); // Redirect to a success page
+        } else {
+            $this->alert->set($this->error_msg, "danger");
+            header('Location: ' . BURL . 'music'); // Redirect back to the upload page
         }
     }
-
-    
-
-    // Handle Audio File Upload
-    // $audioFileType = $audio_File['type'];
-    // echo "Audio File Type: " . $audioFileType . "<br>";  // Debugging line
-
-    // $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
-
-    // if (in_array($audioFileType, $allowedAudioTypes)) {
-    //     $audioFilePath = $uploadDir . $audio_File['name'];
-    //     if (move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
-    //         // File upload successful
-    //     } else {
-    //         $this->error = 1;
-    //         $this->error_msg .= "Error moving uploaded audio file.<br>";
-    //     }
-    // } else {
-    //     $this->error = 1;
-    //     $this->error_msg .= "Invalid audio file type.<br>";
-    // }
-
-    // Handle Image File Upload
-    // $imageFilePath = $uploadDir2 . basename($song_img['name']);
-    // $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
-    
-    // echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
-
-    // if (in_array($imageFileType, $allowedImageTypes)) {
-    //     if (move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
-    //         // Image upload successful
-    //     } else {
-    //         $this->error = 1;
-    //         $this->error_msg .= "Error moving uploaded image file.<br>";
-    //     }
-    // } else {
-    //     $this->error = 1;
-    //     $this->error_msg .= "Invalid image file type.<br>";
-    // }
-
-    // $date_created = time();
-
-        // Insert data into the database
-    //     if ($this->error == 0) {
-    //         $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, moz_tune, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$moz_tune', '$date_created')");
-
-    //         $this->alert->set("Upload successful", "success");
-    //         header('Location: ' . BURL . 'music/song_list'); // Redirect to a success page
-    //     } else {
-    //         $this->alert->set($this->error_msg, "danger");
-    //         header('Location: ' . BURL . 'music'); // Redirect back to the upload page
-    //     }
-
-    // }
 
     public function edit($aid){
         $this->page_title = "Edit Trip";

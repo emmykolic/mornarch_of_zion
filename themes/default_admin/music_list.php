@@ -30,7 +30,7 @@
                                     </td>
                                     <td><?=$row['song_name']?></td>
                                     <td>
-                                        <audio controls loop>
+                                        <audio controls loop class="audio-player" data-aid="<?=$row['aid']?>">
                                             <source src="<?=BURL . $row['song']?>" type="audio/mpeg">
                                             Your browser does not support the audio element.
                                         </audio>
@@ -56,13 +56,16 @@
                                     </td>
 
                                     <td>
-                                        <a href="<?=BURL?>music/delete/<?=$row['aid']?>" class="btn btn-outline-danger btn-sm">
-                                            <i class="bx bx-trash"></i>
-                                        </a>
-                                        <a href="<?=BURL?>music/edit/<?=$row['aid']?>" class="btn btn-outline-primary btn-sm">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
+                                        <div style="display: flex; flex-direction: row; gap: 5px;">
+                                            <a href="<?=BURL?>music/delete/<?=$row['aid']?>" class="btn btn-outline-danger btn-sm">
+                                                <i class="bx bx-trash"></i>
+                                            </a>
+                                            <a href="<?=BURL?>music/edit/<?=$row['aid']?>" class="btn btn-outline-primary btn-sm">
+                                                <i class="bx bx-edit"></i>
+                                            </a>
+                                        </div>
                                     </td>
+
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>

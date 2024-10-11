@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <form id="songForm" enctype="multipart/form-data" method="post">
+            <form class="form-horizontal form-material" action="<?=BURL?>music/action" id="songForm" enctype="multipart/form-data" method="post">
                 <div class="row">
                     <!-- Left Column -->
                     <div class="col-12 col-md-6">
@@ -78,23 +78,22 @@
                 </div>
 
                 <!-- Progress Bar -->
-                <div class="progress mt-3" id="progressBarDiv" style="display: none;">
+                <!-- <div class="progress mt-3" id="progressBarDiv" style="display: none;">
                     <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-                </div>
+                </div> -->
 
                 <!-- Submit Button -->
-                <div class="text-center mt-4">
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                <div class="form-group">
+                    <div class="col-12 text-center mt-4">
+                        <input type="submit" value="Send" class="btn btn-primary btn-block">
+                    </div>
                 </div>
             </form>
 
-            <!-- Result Message -->
-            <div id="result"></div>
+            <!-- Result area -->
+            <div id="result" class="mt-3"></div>
         </div>
     </div>
-
-    <!-- Result area -->
-    <div id="result" class="mt-3"></div>
 </div>
 
 

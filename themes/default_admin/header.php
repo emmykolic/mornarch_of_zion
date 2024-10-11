@@ -77,7 +77,7 @@
 
 
   <!-- Page CSS -->
-  <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
+  <!-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css"> -->
   <!-- Helpers -->
   <script src="<?= BURL ?>themes/default_admin/assets/vendor/js/helpers.js"></script>
 
@@ -86,15 +86,6 @@
   <script src="<?= BURL ?>themes/default_admin/js/config.js"></script>
   <!-- <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script> -->
   
-  <script>
-      // Ensure CKEditor is properly configured and loaded
-      CKEDITOR.config.language = 'en'; // Set language to English
-      CKEDITOR.replace('editor1', {
-          height: 300,
-          toolbar: 'Basic'
-          // You can add more configuration options here
-      });
-  </script>
 
 </head>
 

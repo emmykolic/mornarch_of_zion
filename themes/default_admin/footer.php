@@ -60,13 +60,6 @@
 <!-- Sweet Alert -->
 <script src="<?= BURL ?>assets/sweetalert/sweetalert.min.js"></script>
 
-<script src="<?= BURL  ?>ckeditor5/ckeditor.js"></script>
-<script>
-   CKEDITOR.config.language = 'en'; // Set language
-   CKEDITOR.replace('editor1');
-   var editorData = CKEDITOR.instances.editor1.getData();
-</script>
-
 <script src="<?= BURL ?>assets/tinymce/tinymce.min.js"></script>
 
 <!-- Main JS -->
@@ -78,14 +71,7 @@
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-<script type="importmap">
-  {
-    "imports": {
-      "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
-      "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
-    }
-  }
-</script>
+
 <script type="module">
   import {
     ClassicEditor,
