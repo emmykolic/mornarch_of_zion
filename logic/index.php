@@ -37,18 +37,44 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
 
-	function single($aid) {
+	private function formatParagraphs($paragraphs, $breakAfter = 2) {
+		$output = '';
+		foreach ($paragraphs as $index => $paragraph) {
+			$output .= nl2br(htmlspecialchars($paragraph)) . '<br><br>';
+			if (($index + 1) % $breakAfter == 0) {
+				$output .= '<br>'; // Double break after every 2 paragraphs
+			}
+		}
+		return $output;
+	}
+	
+	public function single($aid) {
 		$this->set_token();
-		
+	
 		// Fetch audio data from the database
 		$song_single_query = $this->db->query("SELECT * FROM audios WHERE aid = '$aid'");
-		// $song_single = $song_single->fetch_assoc();
-		
-		// Include header and theme files
-		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
-		include_once 'themes/' . $this->setting->landing_theme . '/index_single_music.php';
-		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
-	}
+	
+		if ($song_single_query->num_rows > 0) {
+			// Fetch the first row (since we're only expecting one result)
+			$row = $song_single_query->fetch_assoc();
+	
+			// Handle empty fields gracefully
+			$song_description = !empty($row['song_description']) ? explode("\n\n", $row['song_description']) : [];
+			$song_lyrics = !empty($row['song_lyrics']) ? explode("\n\n", $row['song_lyrics']) : [];
+	
+			// Format song description and lyrics
+			$formattedSongDescription = $this->formatParagraphs($song_description); // Call as a method
+			$formattedSongLyrics = $this->formatParagraphs($song_lyrics); // Call as a method
+	
+			// Include header and theme files
+			include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/index_single_music.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+		} else {
+			echo "No song found.";
+		}
+	}	
+    
 
 	// public function blog($bid) {
 	// 	$this->page_title = "M.O.Z | Blog";
