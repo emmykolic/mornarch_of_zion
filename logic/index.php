@@ -117,8 +117,6 @@ class index extends boiler
 		include_once 'themes/' . $this->setting->landing_theme . '/index_music.php';
 		// include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 	}
-	
-	
     
 
 	// public function blog($bid) {
@@ -327,6 +325,13 @@ class index extends boiler
 	// }
 
 	
+	public function video() {
+		
+		
+		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/index_videos.php';
+		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	}
 	
 
 

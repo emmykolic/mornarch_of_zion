@@ -2,7 +2,7 @@
     <div class="overlay"></div>
     <div class="container">
         <div class="row justify-content-end">
-            <div class="col-md-6 heading-section heading-section-white ftco-animate">
+            <div class="col-md-6 heading-section heading-section-white">
                 <h2 class="mb-3">We offer a safe and fast way to delivery your goods to any destination in nigeria.</h2>
             </div>
         </div>

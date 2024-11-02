@@ -157,12 +157,6 @@
                     <div data-i18n="Without menu">General Setting</div>
                   </a>
                 </li>
-
-                <li class="menu-item">
-                  <a href="<?= BURL ?>videos" class="menu-link">
-                    <div data-i18n="Fluid">Video Mgt.</div>
-                  </a>
-                </li>
                 
                 <li class="menu-item">
                   <a href="<?= BURL ?>users" class="menu-link">
@@ -174,27 +168,47 @@
 
           <?php endif; ?>
           <?php if ($this->auth->user->type >= 5) : ?>
-                <li class="menu-item">
-                  <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-car detail"></i>
-                    <div data-i18n="Layouts">Advert Mgt.</div>
-                  </a>
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-car detail"></i>
+                  <div data-i18n="Layouts">Advert Mgt.</div>
+                </a>
 
-                  <ul class="menu-sub">
-                    <li class="menu-item">
-                      <a href="<?= BURL ?>Trace Payment" class="menu-link">
-                        <div data-i18n="Without menu">Payments</div>
-                      </a>
-                    </li>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>Trace Payment" class="menu-link">
+                      <div data-i18n="Without menu">Payments</div>
+                    </a>
+                  </li>
 
-                    <li class="menu-item">
-                      <a href="<?= BURL ?>advert" class="menu-link">
-                        <div data-i18n="Container">Advert Mgt.</div>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-            
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>advert" class="menu-link">
+                      <div data-i18n="Container">Advert Mgt.</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-video"></i>
+                  <div data-i18n="Layouts">Video's Mgt.</div>
+                </a>
+
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>videos" class="menu-link">
+                      <div data-i18n="Fluid">Add Video.</div>
+                    </a>
+                  </li>
+                  <!-- Some other things. -->
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>videos/video_list" class="menu-link">
+                      <div data-i18n="Fluid">Video List.</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
 
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
