@@ -353,20 +353,19 @@ class index extends boiler
 		}
 		return $formattedText;
 	}
-
+	
 	public function video_view($vid) {
 		$this->set_token();
 		$this->auth->user();
 		$this->page_title = "M.O.Z Videos | Video List";
 		$uid = $this->auth->uid;
-
-		// Fetch video data and associated song data
+	
+		// Fetch data from both videos and audio tables
 		$get_video_query = $this->db->query("SELECT videos.*, audios.song_name, audios.song_img, audios.song_description, audios.song_lyrics FROM videos INNER JOIN audios ON videos.vid = audios.aid WHERE videos.vid = '$vid' LIMIT 1");
 		// Fetch blog post data
 		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
-
+	
 		if ($get_video_query->num_rows > 0) {
-			// Fetch the first row
 			$row = $get_video_query->fetch_assoc();
 
 			// Tags processing
@@ -376,13 +375,13 @@ class index extends boiler
 			$backgroundImage = !empty($row['song_img']) ? BURL . $row['song_img'] : BURL . 'assets/default_image.jpg';
 
 			// Handle empty fields gracefully
-			$song_description = !empty($row['song_description']) ? explode("\n\n", $row['song_description']) : [];
-			$song_lyrics = !empty($row['song_lyrics']) ? explode("\n\n", $row['song_lyrics']) : [];
-
-			// Format song description and lyrics
-			$formattedSongDescription = $this->formatParagraphss($song_description);
-			$formattedSongLyrics = $this->formatParagraphss($song_lyrics);
-
+			// $song_description = !empty($row['song_description']) ? explode("\n\n", $row['song_description']) : [];
+			// $song_lyrics = !empty($row['song_lyrics']) ? explode("\n\n", $row['song_lyrics']) : [];
+	
+			// Convert line breaks in song lyrics and description into HTML line breaks
+			$formattedSongLyrics = nl2br(htmlspecialchars($row['song_lyrics']));
+			$formattedSongDescription = nl2br(htmlspecialchars($row['song_description']));
+	
 			// Include header and theme files
 			include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 			include_once 'themes/' . $this->setting->landing_theme . '/index_video_view.php';
