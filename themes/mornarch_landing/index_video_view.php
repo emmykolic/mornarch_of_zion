@@ -9,48 +9,35 @@
     </div>
 </section>
 
-<section class="ftco-section contact-section mt-0">
+<section class="ftco-section contact-section mt-0 blog-post">
     <div class="container">
         <div class="m-3">
-            <small><?= date("M, Y") ?></small><br>
-            <button class="bg-dark">fdds</button>
+            <small><?= date("d, M, Y") ?></small><br>
+           <?php 
+           foreach ($tags as $tag) {
+            // Trim whitespace and display each tag in a <span>
+            echo '<span class="bg-dark text-white p-1 m-1">' . htmlspecialchars(trim($tag)) . '</span>';
+            }
+            ?>
         </div>
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-8 block-9 mb-md-5">
-                <!-- Contact Info (Address etc) -->
                 <div>
                     <b><h1><?= htmlspecialchars($row['song_name']) ?></h1></b>
                 </div>
 
-                <div class="float-right">
-                    <audio controls loop id="audioPlayer-<?= $row['aid'] ?>" data-song-id="<?= $row['aid'] ?>">
-                        <source src="<?= BURL . htmlspecialchars($row['song']) ?>" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div class="text-left ml-5 mt-3">
-                        <a class="btn btn-primary download-btn" id="downloadButton-<?= $row['aid'] ?>" href="<?= BURL . htmlspecialchars($row['song']) ?>" download>Download Audio</a>
-                    </div>
-                </div>
-
                 <div class="mb-3" style="margin-top: 20%;">
-                    <!-- <label for="song_lyrics">Lyrics Of The Song! <span class="text-danger">*</span></label> -->
-                    <div id="song_lyrics" class="">
+                    <div id="song_lyrics">
                         <?= $formattedSongLyrics; ?>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="song_description">Tell Us About The Song! <span class="text-danger">*</span></label>
-                    <div id="song_description" class="">
+                    <div id="song_description">
                         <?= $formattedSongDescription; ?>
                     </div>
                 </div>
-                jksdkfkj
-                <!-- Iframe Of The Song If It's Exits -->
             </div>
-            
-            
-
 
 
             <!-- Blog Section on the right -->

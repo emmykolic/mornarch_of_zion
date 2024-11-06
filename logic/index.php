@@ -47,12 +47,15 @@ class index extends boiler
 		}
 		return $output;
 	}
-	
+
 	public function single($aid) {
 		$this->set_token();
 	
 		// Fetch audio data from the database
 		$song_single_query = $this->db->query("SELECT * FROM audios WHERE aid = '$aid'");
+
+		// Fetch blog post data
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
 	
 		if ($song_single_query->num_rows > 0) {
 			// Fetch the first row (since we're only expecting one result)
@@ -326,11 +329,67 @@ class index extends boiler
 
 	
 	public function video() {
-		
-		
+		$this->auth->user();
+		$this->page_title = "M.O.Z Videos | Video List";
+		$uid = $this->auth->uid;
+		$this->set_token();
+	
+		// Fetch data from both videos and audio tables
+		// $get_video = $this->db->query("SELECT videos.*, audios.song_name FROM videos INNER JOIN audios ON videos.song_id = audios.aid ORDER BY videos.vid LIMIT 10");
+		$get_video = $this->db->query("SELECT videos.*, audios.song_name, audios.song_img FROM videos INNER JOIN audios ON videos.vid = audios.aid ORDER BY videos.vid LIMIT 10");
+		// Fetch blog post data
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
+
+	
 		include_once 'themes/' . $this->setting->landing_theme . '/header.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/index_videos.php';
 		include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+	}
+
+	private function formatParagraphss($paragraphs) {
+		$formattedText = '';
+		foreach ($paragraphs as $paragraph) {
+			$formattedText .= '<p>' . htmlspecialchars($paragraph) . '</p>';
+		}
+		return $formattedText;
+	}
+
+	public function video_view($vid) {
+		$this->set_token();
+		$this->auth->user();
+		$this->page_title = "M.O.Z Videos | Video List";
+		$uid = $this->auth->uid;
+
+		// Fetch video data and associated song data
+		$get_video_query = $this->db->query("SELECT videos.*, audios.song_name, audios.song_img, audios.song_description, audios.song_lyrics FROM videos INNER JOIN audios ON videos.vid = audios.aid WHERE videos.vid = '$vid' LIMIT 1");
+		// Fetch blog post data
+		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
+
+		if ($get_video_query->num_rows > 0) {
+			// Fetch the first row
+			$row = $get_video_query->fetch_assoc();
+
+			// Tags processing
+			$tags = explode(',', $row['tag_video']); // Split tags by comma
+
+			// Set background image path
+			$backgroundImage = !empty($row['song_img']) ? BURL . $row['song_img'] : BURL . 'assets/default_image.jpg';
+
+			// Handle empty fields gracefully
+			$song_description = !empty($row['song_description']) ? explode("\n\n", $row['song_description']) : [];
+			$song_lyrics = !empty($row['song_lyrics']) ? explode("\n\n", $row['song_lyrics']) : [];
+
+			// Format song description and lyrics
+			$formattedSongDescription = $this->formatParagraphss($song_description);
+			$formattedSongLyrics = $this->formatParagraphss($song_lyrics);
+
+			// Include header and theme files
+			include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/index_video_view.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
+		} else {
+			echo "No song found.";
+		}
 	}
 	
 

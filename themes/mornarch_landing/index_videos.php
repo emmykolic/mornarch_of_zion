@@ -8,48 +8,85 @@
         </div>
     </div>
 </section>
-<section class="ftco-section contact-section">
-    <div class="container">
-        <div class="row d-flex mb-5 contact-info">
-            <div class="col-md-4">
-                <div class="row mb-5">
-                    <div class="col-md-12">
-                        <div class="border w-100 p-4 rounded mb-2 d-flex">
-                            <div class="icon mr-3">
-                                <span class="icon-map-o"></span>
-                            </div>
-                            <p><span>Address:</span> 346 Ikwerre Road Ikwerre Road Port Harcourt, Rivers state, Port Harcourt, Nigeria</p>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="border w-100 p-4 rounded mb-2 d-flex">
-                            <div class="icon mr-3">
-                                <span class="icon-map-o"></span>
-                            </div>
-                            <p><span>Address:</span> Owerri, Nigeria</p>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="border w-100 p-4 rounded mb-2 d-flex">
-                            <div class="icon mr-3">
-                                <span class="icon-map-o"></span>
-                            </div>
-                            <p><span>Address:</span> Onitcha Nigeria</p>
-                        </div>
-                    </div>
+<section class="ftco-section ftco-no-pt bg-light blog-post">
+    <div style="margin-top: 30px; margin-bottom: 30px">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 heading-section text-center mb-5">
+                    <span class="subheading text-danger">Here's Our Latest Post</span>
+                    <h2 class="mb-2">Latest Post</h2>
+                    <hr>
                 </div>
             </div>
-            <div class="col-md-8 block-9 mb-md-5">
-                <form action="#" class="bg-light p-5 contact-form">
-                    <h1 class="text-center text-danger display-6"> Track your cargo</h1>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Your Tracking Number">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8">
+                    <div class="row" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;">
+                        <!-- First Post -->
+                        <?php while ($row = $get_video->fetch_assoc()): ?>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="row py-3">
+                                <div class="col-md-6">
+                                    <img src="<?=BURL . $row['song_img']?>" class="img-fluid rectangular-image rounded img-thumbnail" alt="Post Image">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="part-text">
+                                        <h4><a href="<?=BURL?>index/video_view/<?=$row['vid']?>"><?=$row['song_name']?></a></h4>
+                                        <small>dsjx</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endwhile; ?>
+                        <!-- End Of First Post -->
                     </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-12">
+                    <div class="sidebar" style="position: sticky; top: 20px; align-self: flex-start;">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-6">
+                                <div class="widget widget_categories mt-2">
+                                    <h6 class="widgettitle font-weight-bold"><span>Categories</span></h6>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <a href="http://localhost/benExchange/blog-category/2/freelancing">FREELANCING
+                                                <span class="count float-right">(1)</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="http://localhost/benExchange/blog-category/1/paypal">PayPal
+                                                <span class="count float-right">(1)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-6">
+                                <div class="widget widget-popular-post">
+                                    <h6 class="widgettitle font-weight-bold">
+                                        <span>Popular Posts</span>
+                                    </h6>
 
-                    <div class="form-group d-flex justify-content-center">
-                        <input type="submit" value="Send Message" class="btn btn-dark py-3 px-5 ">
+                                    <?php while ($row = $get_blog->fetch_assoc()): ?>
+                                        <div class="single-post">
+                                            <div class="part-img">
+                                                <img src="<?= BURL . $row['blog_img'] ?>" alt="<?= htmlspecialchars($row['title_of_blog']) ?>" class="w-100 border">
+                                            </div>
+                                            <div class="part-text">
+                                                <h4>
+                                                    <a href="<?= BURL ?>index/blog/index_blog_details/<?= $row['bid'] ?>/<?= $row['slug'] ?>">
+                                                        <?= $row['title_of_blog'] ?>
+                                                    </a>
+                                                </h4>
+                                                <small>Views: <?=$row['views']?></small><br>
+                                                <small>27 Sep, 2023</small>
+                                            </div>
+                                        </div>
+                                    <?php endwhile; ?>
+                                </div>
+                            </div>  
+                        </div>                  
                     </div>
-                </form>
+                </div>
 
             </div>
         </div>
