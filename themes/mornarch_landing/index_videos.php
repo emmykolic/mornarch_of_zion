@@ -23,6 +23,10 @@
                     <div class="row" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;">
                         <!-- First Post -->
                         <?php while ($row = $get_video->fetch_assoc()): ?>
+                            <?php
+                            // Generate slug from the song name
+                            $song_slug = strtolower(preg_replace('/-+/', '-', str_replace(' ', '-', trim(preg_replace('/[^A-Za-z0-9 ]+/', '', $row['song_name'])))));
+                            ?>
                         <div class="col-xl-6 col-lg-6">
                             <div class="row py-3">
                                 <div class="col-md-6">
@@ -30,7 +34,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="part-text">
-                                        <h4><a href="<?=BURL?>index/video_view/<?=$row['vid']?>"><?=$row['song_name']?></a></h4>
+                                        <h4><a href="<?= BURL ?>index/video_view/<?= $row['vid'] ?>/<?= $song_slug ?>"><?= $row['song_name'] ?></a></h4>
                                         <small>dsjx</small>
                                     </div>
                                 </div>

@@ -337,6 +337,7 @@ class index extends boiler
 		// Fetch data from both videos and audio tables
 		// $get_video = $this->db->query("SELECT videos.*, audios.song_name FROM videos INNER JOIN audios ON videos.song_id = audios.aid ORDER BY videos.vid LIMIT 10");
 		$get_video = $this->db->query("SELECT videos.*, audios.song_name, audios.song_img FROM videos INNER JOIN audios ON videos.vid = audios.aid ORDER BY videos.vid LIMIT 10");
+		
 		// Fetch blog post data
 		$get_blog = $this->db->query("SELECT * FROM blogs ORDER BY bid");
 
@@ -381,6 +382,33 @@ class index extends boiler
 			// Convert line breaks in song lyrics and description into HTML line breaks
 			$formattedSongLyrics = nl2br(htmlspecialchars($row['song_lyrics']));
 			$formattedSongDescription = nl2br(htmlspecialchars($row['song_description']));
+
+			// Initialize video ID as empty
+			$videoId = '';
+
+			// Check if source URL exists and extract video ID accordingly
+			if (!empty($row['source'])) {
+				$url = $row['source'];
+
+				// Parse the URL and extract the video ID from different possible formats
+				if (strpos($url, 'watch?v=') !== false) {
+					// Full YouTube URL with watch?v=
+					$videoId = explode('watch?v=', $url)[1];
+				} elseif (strpos($url, 'youtu.be/') !== false) {
+					// Short YouTube URL
+					$videoId = explode('youtu.be/', $url)[1];
+				} elseif (strpos($url, 'youtube.com/embed/') !== false) {
+					// Already in embed format
+					$videoId = explode('embed/', $url)[1];
+				} else {
+					// Catch all for unusual cases by taking the last segment
+					$parts = explode('/', rtrim($url, '/'));
+					$videoId = end($parts);
+				}
+
+				// Ensure no query parameters remain in the video ID
+				$videoId = strtok($videoId, '&');
+			}
 	
 			// Include header and theme files
 			include_once 'themes/' . $this->setting->landing_theme . '/header.php';

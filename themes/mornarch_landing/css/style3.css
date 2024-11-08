@@ -213,3 +213,23 @@
 .owl-nav .owl-next {
     right: -30px;
 }
+
+/* Ensure consistent button height and font scaling */
+/* .btn-responsive { */
+    /* padding: 8px; */
+    /* height: 100%;  For consistent alignment */
+    /* font-size: 14px; */
+/* } */
+
+/* @media (max-width: 576px) {
+    .btn-responsive {
+        font-size: 12px;  /* Smaller font size for small screens */
+    /* } */
+/* } */ 
+
+/* Maintain button colors on hover
+.no-hover:hover {
+    color: #dc3545 !important;
+    background-color: transparent !important;
+    border-color: #dc3545 !important;
+} */

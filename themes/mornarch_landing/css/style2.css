@@ -169,14 +169,13 @@
     transform: scale(1.05); /* Slightly enlarge the button */
 }
 
-
-
-
-
-
-
-
-
+/* Custom class to disable hover color change */
+.no-hover:hover {
+  color: #dc3545 !important; /* Maintains the default text color */
+  background-color: transparent !important; /* Keeps the button transparent */
+  border-color: #dc3545 !important; /* Maintains the border color */
+  text-decoration: none;
+}
 
 .paddind_bottom_0 {
   padding-bottom: 0 !important;

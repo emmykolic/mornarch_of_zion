@@ -29,6 +29,7 @@ $full_song_query = $this->db->query("SELECT * FROM audios ORDER BY aid DESC LIMI
                 <div class="row" id="song-container">
                     <!-- Initial songs loaded here by PHP loop -->
                     <?php while ($row = $full_song_query->fetch_assoc()): ?>
+                        <?php $song_slug = strtolower(preg_replace('/-+/', '-', str_replace(' ', '-', trim(preg_replace('/[^A-Za-z0-9 ]+/', '', $row['song_name']))))); ?>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4 song-item">
                             <div class="row py-3 align-items-center">
                                 <div class="col-md-6">
@@ -36,7 +37,7 @@ $full_song_query = $this->db->query("SELECT * FROM audios ORDER BY aid DESC LIMI
                                 </div>
                                 <div class="col-md-6">
                                     <div class="part-text">
-                                        <h4><a href="<?= BURL ?>index/single/<?= $row['aid'] ?>"><?= htmlspecialchars($row['song_name']) ?></a></h4>
+                                        <h4><a href="<?= BURL ?>index/single/<?= $row['aid'] ?>/<?= $song_slug ?>"><?= htmlspecialchars($row['song_name']) ?></a></h4>
                                         <small>dsjx</small>
                                     </div>
                                 </div>
