@@ -60,6 +60,9 @@ class index extends boiler
 		if ($song_single_query->num_rows > 0) {
 			// Fetch the first row (since we're only expecting one result)
 			$row = $song_single_query->fetch_assoc();
+
+			// Tags processing
+			$tags = explode(',', $row['tag_audio']); // Split tags by comma
 	
 			// Set background image path with base URL
 			$backgroundImage = !empty($row['song_img']) ? BURL . $row['song_img'] : BURL . 'assets/default_image.jpg';

@@ -74,6 +74,19 @@
                             <label for="moz_tune">MOZ Tune <span class="text-danger">*</span></label>
                             <input type="file" class="form-control" id="moz_tune" name="moz_tune" accept=".aac">
                         </div> -->
+
+                        <div class="mb-3">
+                            <label for="name">Add Tags For The Audio <span class="text-danger">*</span></label>
+                            
+                            <!-- Input field for adding tags -->
+                            <input type="text" id="tagInput" class="form-control" placeholder="Type a tag and press Enter">
+                            
+                            <!-- Container to display added tags -->
+                            <div id="tagContainer" class="mt-2"></div>
+
+                            <!-- Hidden input field to store tags for form submission -->
+                            <input type="hidden" name="tag_audio" id="hiddenTagInput" required>
+                        </div>
                     </div>
                 </div>
 

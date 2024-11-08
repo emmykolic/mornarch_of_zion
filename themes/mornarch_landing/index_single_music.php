@@ -14,6 +14,12 @@
         <div class="m-3">
             <small><?= date("M, Y") ?></small><br>
             <button class="bg-dark">fdds</button>
+            <?php 
+            foreach ($tags as $tag) {
+            // Trim whitespace and display each tag in a <span>
+                echo '<span class="bg-dark text-white p-1 m-1">' . htmlspecialchars(trim($tag)) . '</span>';
+            }
+            ?>
         </div>
         <div class="row d-flex mb-5 contact-info">
             <div class="col-md-8 block-9 mb-md-5">

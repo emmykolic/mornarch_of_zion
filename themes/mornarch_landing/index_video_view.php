@@ -38,40 +38,33 @@
 
                 <div class="form-group">
                     <div id="song_description">
-                        <?= $formattedSongDescription; ?>
+                        Description: <?= $formattedSongDescription; ?>
                     </div>
                 </div>
                 
                 <p class="bold">Share this post to your family and friends:<p>
                 <div class="row justify-content-center text-center">
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">Whatsapp</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">Facebook</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-brands fa-square-facebook"></i></a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">X</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-brands fa-x-twitter"></i></a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">Telegram</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-brands fa-telegram"></i></a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">Linked In</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-brands fa-linkedin"></i></a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
-                        <a class="btn btn-outline-danger shadow no-hover w-100" href="">Email</a>
+                        <a class="btn btn-outline-danger shadow no-hover w-100" href=""><i class="fa-solid fa-envelope"></i></a>
                     </div>
                 </div>
-
-
-
-
-
                 
             </div>
-
-            <!-- Share this post to your family and friends: -->
 
             <!-- Blog Section on the right -->
             <div class="col-md-4">
@@ -120,6 +113,5 @@
                 </div>
             </div>
         </div>
-        dlkasmkdlm
     </div>
 </section>

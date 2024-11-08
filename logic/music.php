@@ -90,6 +90,7 @@ class music extends boiler{
         $song_lyrics = $this->clean->post("song_lyrics");
         $song_img = $_FILES['song_img'];
         $audio_File = $_FILES['audioFile'];
+        $tag_video = $this->clean->post("tag_video");
         $moz_tune = $this->clean->post("moz_tune");
 
         // Handle Audio File Upload
@@ -130,13 +131,18 @@ class music extends boiler{
             $this->error = 1;
             $this->error_msg .= "Invalid image file type.<br>";
         }
+
+        if ($tag_audio == "") {
+            $this->error=1;
+            $this->error_msg.="Tag Need Needed";
+        }
     
         $date_created = time();
     
         // Insert data into the database
         if ($this->error == 0) {
-            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, date_created) 
-            VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$date_created')");
+            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, tag_audio, date_created) 
+            VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$tag_audio', '$date_created')");
     
             $this->alert->set("Upload successful", "success");
             header('Location: ' . BURL . 'music/song_list'); // Redirect to a success page
