@@ -13,7 +13,6 @@
     <div class="container">
         <div class="m-3">
             <small><?= date("M, Y") ?></small><br>
-            <button class="bg-dark">fdds</button>
             <?php 
             foreach ($tags as $tag) {
             // Trim whitespace and display each tag in a <span>

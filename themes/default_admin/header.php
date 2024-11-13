@@ -176,7 +176,7 @@
 
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?= BURL ?>Trace Payment" class="menu-link">
+                    <a href="<?= BURL ?>payments" class="menu-link">
                       <div data-i18n="Without menu">Payments</div>
                     </a>
                   </li>
