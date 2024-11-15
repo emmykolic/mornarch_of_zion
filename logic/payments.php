@@ -5,8 +5,28 @@
             $this->stats = new stats($this->db); 
         }
 
-		public function ong() : Returntype {
-			
+		public function defaultb() : Returntype {
+			$is_landing = 1;
+			$this->set_token();
+			$uid = $this->auth->uid;
+			$this->auth->user(9);
+			$this->page_title = "M.O.Z | View Payments Made";
+
+			include_once 'themes/' . $this->setting->admin_theme . '/header.php';
+			include_once 'themes/' . $this->setting->admin_theme . '/view_payments.php';
+			include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
+		}
+
+		function make_payments() {
+			$is_landing = 1;
+			$this->set_token();
+			$uid = $this->auth->uid;
+			// $this->auth->user(9);
+			$this->page_title = "M.O.Z | Make Payments";
+
+			include_once 'themes/' . $this->setting->landing_theme . '/header.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/make_payments.php';
+			include_once 'themes/' . $this->setting->landing_theme . '/footer.php';
 		}
 
         public function booking_action(){

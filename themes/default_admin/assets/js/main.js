@@ -9,25 +9,16 @@ let menu, animate;
 var input = document.querySelector('#tag-input');
 new Tagify(input);
 
-// $('#select-tags').selectize({
-//   delimiter: ',',
-//   persist: false,
-//   create: function(input) {
-//       return {
-//           value: input,
-//           text: input
-//       };
-//   }
-// });
-
-// $(document).ready(function() {
-//   $('#select-tags').selectize({
-//       plugins: ['remove_button'],  // Allows the tags to have a remove button
-//       delimiter: ',',
-//       persist: false,
-//       create: false  // Prevent users from adding new options if they type something
-//   });
-// });
+function copyToClipboard(link) {
+  navigator.clipboard.writeText(link).then(() => {
+      // Display confirmation message
+      const confirmation = document.getElementById("copyConfirmation");
+      confirmation.style.display = "inline";
+      setTimeout(() => confirmation.style.display = "none", 2000); // Hide after 2 seconds
+  }).catch(err => {
+      console.error('Failed to copy: ', err);
+  });
+}
 
 
 (function () {

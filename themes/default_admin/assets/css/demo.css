@@ -162,3 +162,16 @@
     border: 0;
     border-radius: inherit;
 }
+
+.copy-box {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 8px 20px #2b25c4;
+}
+
+.menu-item {
+  list-style: none;
+}

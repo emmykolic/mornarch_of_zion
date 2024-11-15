@@ -181,6 +181,17 @@
                     </a>
                   </li>
 
+                  <li class="menu-item" style="display: flex; align-items: center;">
+                    <label style="margin-right: 10px;">Send User's Payment Gateway!</label>
+                    <a href="javascript:void(0);" class="copy-container" onclick="copyToClipboard('<?= BURL ?>payments')" title="Copy Payment Link">
+                        <div class="copy-box">
+                            <i class="fas fa-link" style="font-size: 1.2em; color: #2b25c4;"></i>
+                            <label style="font-size: 0.9em; color: #2b25c4; margin-left: 5px;">Copy!</label>
+                        </div>
+                    </a>
+                    <span id="copyConfirmation" style="display: none; color: green; margin-left: 10px;">Link copied!</span>
+                </li>
+
                   <li class="menu-item">
                     <a href="<?= BURL ?>advert" class="menu-link">
                       <div data-i18n="Container">Advert Mgt.</div>
