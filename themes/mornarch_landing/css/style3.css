@@ -214,6 +214,30 @@
     right: -30px;
 }
 
+.payment-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-button {
+    font-size: 1.2em;
+    padding: 15px;
+    background-color: #2b25c4;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+    background-color: #1a1a8c;
+    color: #fff;
+}
+
 /* Ensure consistent button height and font scaling */
 /* .btn-responsive { */
     /* padding: 8px; */

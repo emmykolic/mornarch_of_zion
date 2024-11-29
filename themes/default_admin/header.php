@@ -203,6 +203,27 @@
                       <div data-i18n="Container">Make Payments</div>
                     </a>
                   </li>
+
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons fa-solid fa-bullhorn"></i>
+                  <div data-i18n="Layouts">Package Mgt.</div>
+                </a>
+
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>packages" class="menu-link">
+                      <div data-i18n="Fluid">Packages Add.</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?= BURL ?>packages/single" class="menu-link">
+                      <div data-i18n="Fluid">Packages View.</div>
+                    </a>
+                  </li>
                 </ul>
               </li>
 
