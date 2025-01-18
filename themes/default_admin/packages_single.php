@@ -33,7 +33,7 @@
                                         <td>
                                             <img src="<?=BURL . $row['subscription_package_img']?>" width="100" class="h-auto rounded-circle" />
                                         </td>
-                                        <td><?=htmlspecialchars($row['name_of_subscription_package']);?></td>
+                                        <td><?=htmlspecialchars($row['name']);?></td>
                                         
                                         <td>
                                             <div>
@@ -54,7 +54,7 @@
                                         
 
                                         <td>
-                                            <small>$ <?= $row['price_of_subscription_package'] ?></small>
+                                            <small>$<?= $row['price'] ?></small>
                                         </td>
 
                                         <td>

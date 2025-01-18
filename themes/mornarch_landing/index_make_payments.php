@@ -1,11 +1,14 @@
 <?php
 // Example packages (you can fetch these from your database)
-$packages = [
-    ['id' => 1, 'name' => 'Bronze Package', 'price' => 5000],
-    ['id' => 2, 'name' => 'Silver Package', 'price' => 10000],
-    ['id' => 3, 'name' => 'Gold Package', 'price' => 15000],
-    ['id' => 4, 'name' => 'Platinum Package', 'price' => 20000],
-];
+// $packages = [
+//     ['id' => 1, 'name' => 'Bronze Package', 'price' => 5000],
+//     ['id' => 2, 'name' => 'Silver Package', 'price' => 10000],
+//     ['id' => 3, 'name' => 'Gold Package', 'price' => 15000],
+//     ['id' => 4, 'name' => 'Platinum Package', 'price' => 20000],
+// ];
+
+// Fetch packages from the database
+$packages = $this->db->query("SELECT * FROM packages")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -58,8 +61,8 @@ $packages = [
                     <div class="package-card">
                         <h5><?= htmlspecialchars($package['name']) ?></h5>
                         <p>Price: ₦<?= number_format($package['price'], 2) ?></p>
-                        <form method="POST" action="<?=BURL?>payments/make_payments_action">
-                            <input type="hidden" name="package_id" value="<?= $package['id'] ?>">
+                        <form method="POST" action="<?= BURL ?>payments/make_payments_action">
+                            <input type="hidden" name="package_id" value="<?= $package['pid'] ?>">
                             <input type="hidden" name="price" value="<?= $package['price'] ?>">
                             <button type="submit">Select Package</button>
                         </form>
