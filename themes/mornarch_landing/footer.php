@@ -81,6 +81,8 @@
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery-migrate-3.0.1.min.js"></script>
 
 
@@ -100,6 +102,11 @@
 <!-- Include jQuery and Owl Carousel JS -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script> -->
+
+<!-- Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
 
 <script src="<?= BURL ?>themes/mornarch_landing/js/jquery.magnific-popup.min.js"></script>
 <script src="<?= BURL ?>themes/mornarch_landing/js/aos.js"></script>
@@ -137,6 +144,50 @@
             return false;
         }
     }
+
+    /*$(document).ready(function(){
+        $(".carousel-trend").owlCarousel({
+            loop: true, // Enables looping
+            margin: 20, // Space between items
+            nav: true, // Enables navigation arrows
+            dots: true, // Enables pagination dots
+            autoplay: true, // Auto slide
+            autoplayTimeout: 4000, // 4 seconds per slide
+            autoplayHoverPause: true, // Pause on hover
+            responsive: {
+                0: { items: 1 },  // Mobile: 1 item
+                600: { items: 2 }, // Tablet: 2 items
+                1000: { items: 3 } // Desktop: 3 items
+            }
+        });
+    });*/
+
+    var trendingCount = <?= $trending_count ?>;
+
+    $(document).ready(function(){
+        $('.carousel-trend').owlCarousel({
+        loop: trendingCount > 3, // Only loop if more than 3 items
+        margin: 20,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        responsive:{
+            0:{
+            items: Math.min(trendingCount, 1)
+            },
+            600:{
+            items: Math.min(trendingCount, 2)
+            },
+            1000:{
+            items: Math.min(trendingCount, 3)
+            }
+        }
+        });
+    });
+
+  
 </script>
 
 <?php $this->alert->get(); ?>

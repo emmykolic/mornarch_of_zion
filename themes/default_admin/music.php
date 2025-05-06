@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <form class="form-horizontal form-material" action="<?=BURL?>music/action" id="songForm" enctype="multipart/form-data" method="post">
+            <form class="form-horizontal form-material" action="<?= BURL ?>music/action" id="songForm" enctype="multipart/form-data" method="post">
                 <div class="row">
                     <!-- Left Column -->
                     <div class="col-12 col-md-6">
@@ -70,23 +70,22 @@
                             <input type="file" name="audioFile" id="audioFile" class="form-control" accept=".mp3, .aac, .wav" required>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label for="moz_tune">MOZ Tune <span class="text-danger">*</span></label>
                             <input type="file" class="form-control" id="moz_tune" name="moz_tune" accept=".aac">
-                        </div> -->
+                        </div>
 
                         <div class="mb-3">
-                            <label for="name">Add Tags For The Audio <span class="text-danger">*</span></label>
+                            <label for="tag-input">Add Tags For The Audio <span class="text-danger">*</span></label>
+                            <input type="text" id="tag-input" class="form-control" placeholder="Type a tag and press Enter or comma">
                             
-                            <!-- Input field for adding tags -->
-                            <input type="text" id="tagInput" class="form-control" placeholder="Type a tag and press Enter">
-                            
-                            <!-- Container to display added tags -->
+                            <!-- Display visual tags -->
                             <div id="tagContainer" class="mt-2"></div>
 
-                            <!-- Hidden input field to store tags for form submission -->
+                            <!-- Hidden input for form submission -->
                             <input type="hidden" name="tag_audio" id="hiddenTagInput" required>
                         </div>
+
                     </div>
                 </div>
 
@@ -126,3 +125,6 @@
    CKEDITOR.replace('editor1');
    var editorData = CKEDITOR.instances.editor1.getData();
 </script> -->
+
+<!-- Include Tagify -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>

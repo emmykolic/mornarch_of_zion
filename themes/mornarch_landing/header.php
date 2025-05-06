@@ -59,6 +59,11 @@
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/owl.carousel.min.css">
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/owl.theme.default.min.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/magnific-popup.css">
 
     <link rel="stylesheet" href="<?= BURL ?>themes/mornarch_landing/css/aos.css">

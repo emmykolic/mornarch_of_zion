@@ -350,24 +350,22 @@
 	$('#time_pick').timepicker();
 
 
-	$(document).ready(function(){
-		$('.owl-carousel').owlCarousel({
-			loop: true,
-			margin: 10,
-			nav: true,
-			responsive: {
-				0: {
-					items: 1
-				},
-				600: {
-					items: 2
-				},
-				1000: {
-					items: 3
-				}
-			}
-		});
-	});
+    // $(document).ready(function(){
+    //     $(".carousel-trend").owlCarousel({
+    //         loop: true, // Enables looping
+    //         margin: 20, // Space between items
+    //         nav: true, // Enables navigation arrows
+    //         dots: true, // Enables pagination dots
+    //         autoplay: true, // Auto slide
+    //         autoplayTimeout: 4000, // 4 seconds per slide
+    //         autoplayHoverPause: true, // Pause on hover
+    //         responsive: {
+    //             0: { items: 1 },  // Mobile: 1 item
+    //             600: { items: 2 }, // Tablet: 2 items
+    //             1000: { items: 3 } // Desktop: 3 items
+    //         }
+    //     });
+    // });
 	
 	
 

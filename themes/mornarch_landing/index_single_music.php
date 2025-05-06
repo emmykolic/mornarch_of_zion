@@ -27,15 +27,14 @@
                     <b><h1><?= htmlspecialchars($row['song_name']) ?></h1></b>
                 </div>
 
-                <div class="float-right">
-                    <audio controls loop id="audioPlayer-<?= $row['aid'] ?>" data-song-id="<?= $row['aid'] ?>">
-                        <source src="<?= BURL . htmlspecialchars($row['song']) ?>" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                <div class="float-right"><audio controls loop id="audioPlayer-<?= $row['aid'] ?>" data-song-id="<?= $row['aid'] ?>"><source src="<?= BURL . htmlspecialchars($row['song']) ?>" type="audio/mpeg">
+                    Your browser does not support the audio element.</audio>
                     <div class="text-left ml-5 mt-3">
-                        <a class="btn btn-primary download-btn" id="downloadButton-<?= $row['aid'] ?>" href="<?= BURL . htmlspecialchars($row['song']) ?>" download>Download Audio</a>
+                        <a class="btn btn-primary download-btn download-button" id="downloadButton-<?= $row['aid'] ?>" 
+                        href="<?= BURL . htmlspecialchars($row['song']) ?>" download>Download Audio</a>
                     </div>
                 </div>
+
 
                 <div class="mb-3" style="margin-top: 20%;">
                     <!-- <label for="song_lyrics">Lyrics Of The Song! <span class="text-danger">*</span></label> -->
@@ -107,3 +106,29 @@
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".download-button").click(function (e) {
+            e.preventDefault(); // Prevent auto-download at first
+            
+            let aid = $(this).data("aid");
+            let downloadUrl = $(this).attr("href");
+
+            // Send AJAX request to update clicks
+            $.post("<?= BURL ?>logic/update_clicks", { aid: aid }, function (response) {
+                let result = JSON.parse(response);
+                
+                if (result.success) {
+                    console.log("Click recorded successfully.");
+                } else {
+                    console.log("Error updating click count:", result.error);
+                }
+
+                // Allow the actual download
+                window.location.href = downloadUrl;
+            });
+        });
+    });
+</script>

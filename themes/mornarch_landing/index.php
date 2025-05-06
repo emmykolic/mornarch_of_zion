@@ -167,7 +167,7 @@
                                     <div class="col-md-6">
                                         <div class="part-text">
                                             <h4><a href="<?=BURL?>index/single/<?=$row['aid']?>"><?=$row['song_name']?></a></h4>
-                                            <small>dsjx</small>
+                                            <small><?= date("M d, Y h:i A", strtotime($row['date_created'])) ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -241,81 +241,38 @@
                     <h2 class="mb-2">Trending Post</h2>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <div class="carousel-trend owl-carousel">
-                        <div class="item">
-                            <div class="car-wrap rounded">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(https://genextmotors.com.ng/themes/genext_landing/images/inter.jpg);">
-                                </div>
-                                <div class="text">
-                                    <h2 class="mb-3"><a href="#">Inter-cities Transportation</a></h2>
-                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="https://genextmotors.com.ng/" class="btn btn-danger py-2 mr-1">Book now</a> </p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="item">
-                            <div class="car-wrap rounded">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(https://genextmotors.com.ng/themes/genext_landing/images/cargo.jpg);">
-                                </div>
-                                <div class="text">
-                                    <h2 class="mb-3"><a href="#">Waybill/Cargo</a></h2>
-                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="https://genextmotors.com.ng/index/cargo" class="btn btn-danger py-2 mr-1">Book now</a> </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="car-wrap rounded">
-                                <div class="img rounded d-flex align-items-end" style="background-image: url(https://genextmotors.com.ng/themes/genext_landing/images/charter.jpg);">
-                                </div>
-                                <div class="text">
-                                    <h2 class="mb-3"><a href="#">Charter</a></h2>
-                                    <p class="d-flex justify-content-end mb-0 d-block"><a href="https://genextmotors.com.ng/index/charter" class="btn btn-danger py-2 mr-1">Book now</a> </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="container mt-5">
+            <div class="container my-5">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="card">
-                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 1">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card 1</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="col-md-12">
+                    <?php if ($trending_count > 0): ?>
+                        <div class="carousel-trend owl-carousel owl-theme">
+                            <?php
+                            // $trending_music = $this->db->query("SELECT * FROM audios WHERE song_click > 10 ORDER BY song_click DESC");
+                            while ($row = $trending_music->fetch_assoc()):
+                            ?>
+                                <div class="item nb">
+                                    <div class="car-wrap rounded">
+                                        <div class="img d-flex align-items-start" >
+                                            <img src="<?=BURL . $row['song_img'];?>" alt="" style="background-size: cover; background-position: top; height: 150px;">
+                                        </div>
+                                        <div class="text">
+                                            <h2 class="mb-3"><a href="#"><?=$row['song_name']?></a></h2>
+                                            <p class="d-flex justify-content-center mb-0 d-block">
+                                                <a href="https://genextmotors.com.ng/" class="btn btn-danger py-2">Download</a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="item">
-                                <div class="card">
-                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card 2</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card">
-                                    <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Image 3">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card 3</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <?php endwhile; ?>
+                        </div> 
+                    <?php else: ?>
+                        <p class="text-center text-muted">No trending music available yet.</p>
+                    <?php endif; ?>
+                        
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 

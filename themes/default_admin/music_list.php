@@ -16,8 +16,11 @@
                                     <th>NO</th>
                                     <th>Song Image</th>
                                     <th>Song Name</th>
+                                    <th>Mood</th>
+                                    <th>Genre</th>
                                     <th>Song</th>
                                     <th>Song Lyrics</th>
+                                    <th>Music Tags</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -29,6 +32,8 @@
                                         <img src="<?=BURL . $row['song_img']?>" class="w-px-40 h-auto" />
                                     </td>
                                     <td><?=$row['song_name']?></td>
+                                    <td><?=$row['mood']?></td>
+                                    <td><?=$row['genre']?></td>
                                     <td>
                                         <audio controls loop class="audio-player" data-aid="<?=$row['aid']?>">
                                             <source src="<?=BURL . $row['song']?>" type="audio/mpeg">
@@ -53,6 +58,10 @@
                                                 <?php endif; ?>
                                             </p>
                                         </div>
+                                    </td>
+
+                                    <td>
+                                        <?=$row['tag_audio']?>
                                     </td>
 
                                     <td>

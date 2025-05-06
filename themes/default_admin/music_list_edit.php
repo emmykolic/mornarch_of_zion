@@ -1,57 +1,129 @@
-<div class="row mt-2">
-    <div class="col-12 col-sm-8 offset-sm-2 ">
+<div class="row m-2">
+    <div class="col-12">
         <div class="shadow card p-5">
             <h4 class="card-title text-center">Edit A Song!</h4>
-
-            <form class="form-horizontal form-material" action="<?= BURL ?>music/action" method="post" enctype="multipart/form-data">
-                
-                <div class="form-group">
-                    <label for="name" class="col-md-12">Name Of Song <span class="text-danger">*</span></label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" name="name_of_song" value="<?=$single['song_name']?>" required>
+            <div class="d-flex justify-content-end">
+                <div class="col-6">
+                    <!-- Progress bar (hidden initially) -->
+                    <div class="progress mt-3" style="display:none;" id="progressBarDiv">
+                        <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                     </div>
                 </div>
-                <div class="form-group mt-3">
-                    <label for="" class="col-md-12">Choose A Genre <span class="text-danger">*</span></label>
-                    <select name="genre" id="genre" class="form-select">
-                    <option value="">Choose A Genre</option>
-                       <option value="<?=$single['genre']?>"><?=$single['genre']?></option>
-                    </select>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="" class="col-md-12">Choose A Mood <span class="text-danger">*</span></label>
-                    <select name="mood" id="" class="form-select">
-                        <option value="">Choose A Mood</option>
-                        <option value="<?= $single['mood']?>"><?= $single['mood'] ?></option>
-                    </select>
+            </div>
+
+            <form class="form-horizontal form-material" action="<?= BURL ?>music/edit_action" id="songForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="aid" value="<?= $single['aid'] ?>">
+
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-12 col-md-6">
+                        <!-- Song Name -->
+                        <div class="form-group">
+                            <label for="name_of_song">Name Of Song <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name_of_song" value="<?=$single['song_name']?>" name="name_of_song" required>
+                        </div>
+
+                        <!-- Genre -->
+                        <div class="form-group mt-3">
+                            <label for="" class="col-md-12">Choose A Genre <span class="text-danger">*</span></label>
+                            <select name="genre" id="genre" class="form-select">
+                            <option value="">Choose A Genre</option>
+                            <option value="<?=$single['genre']?>"><?=$single['genre']?></option>
+                            </select>
+                        </div>
+                        
+
+                        <!-- Mood -->
+                        <div class="form-group mt-3">
+                            <label for="" class="col-md-12">Choose A Mood <span class="text-danger">*</span></label>
+                            <select name="mood" id="" class="form-select">
+                                <option value="">Choose A Mood</option>
+                                <option value="<?= $single['mood']?>"><?= $single['mood'] ?></option>
+                            </select>
+                        </div>
+
+                        <!-- Song Description (Using CKEditor) -->
+                        <div class="form-group">
+                            <label for="song_description">Tell Us About The Song! <span class="text-danger">*</span></label>
+                            <textarea id="song_description" name="song_description" rows="5" class="form-control" required><?=$single['song_description']?></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-12 col-md-6">
+                        <!-- Song Lyrics (Using CKEditor) -->
+                        <div class="form-group">
+                            <label for="song_lyrics">Lyrics Of The Song! <span class="text-danger">*</span></label>
+                            <textarea id="song_lyrics" name="song_lyrics" rows="5" class="form-control" required><?=$single['song_lyrics']?></textarea>
+                        </div>
+
+                        <!-- Song Image -->
+                        <div class="form-group">
+                            <label for="song_img">Add Photo <span class="text-danger">*</span></label>
+                            <input type="file" name="song_img" id="song_img" class="form-control" accept=".jpeg, .jpg, .png, .gif" required>
+                        </div>
+
+                        <!-- Audio File -->
+                        <div class="form-group">
+                            <label for="audioFile">Add Song <span class="text-danger">*</span></label>
+                            <input type="file" name="audioFile" id="audioFile" class="form-control" accept=".mp3, .aac, .wav" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="moz_tune">MOZ Tune <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" id="moz_tune" name="moz_tune" accept=".aac">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tag-input">Add Tags For The Audio <span class="text-danger">*</span></label>
+                            <input type="text" id="tag-input" class="form-control" value="<?= $single['tag_audio']?>">
+                            
+                            <!-- Display visual tags -->
+                            <div id="tagContainer" class="mt-2"><?= $single['tag_audio']?></div>
+
+                            <!-- Hidden input for form submission -->
+                            <input type="hidden" name="tag_audio" id="hiddenTagInput" required>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="Description" class="col-md-12">Tell Us About The Song! <span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="song_description" id="editor1" rows="5" cols="40" required><?=$single['song_description']?></textarea>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label for="Lyrics" class="col-md-12">Lyrics Of The Song! <span class="text-danger">*</span></label>
-                    <textarea class="form-control" name="song_lyrics" id="editor2" rows="5" cols="40" required><?=$single['song_lyrics']?></textarea>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label for="" class="col-md-12">Add Photo <span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" name="song_img" accept=".jpeg, .jpg, .png, .gif" required>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label for="MainSong" class="col-md-12">Add Song<span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" name="audioFile" accept=".mp3, .aac " id="audioFile" required>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label for="moz_tune" class="col-md-12">MOZ Tune<span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" name="moz_tune" accept=".acc">
-                </div>
+                <!-- Progress Bar -->
+                <!-- <div class="progress mt-3" id="progressBarDiv" style="display: none;">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div> -->
+
+                <!-- Submit Button -->
                 <div class="form-group">
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center mt-4">
                         <input type="submit" value="Send" class="btn btn-primary btn-block">
                     </div>
                 </div>
             </form>
+
+            <!-- Result area -->
+            <div id="result" class="mt-3"></div>
         </div>
     </div>
 </div>
+
+
+
+
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#songDescription' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+<script>
+   CKEDITOR.config.language = 'en'; // Set language
+   CKEDITOR.replace('editor1');
+   var editorData = CKEDITOR.instances.editor1.getData();
+</script> -->
+
+<!-- Include Tagify -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>

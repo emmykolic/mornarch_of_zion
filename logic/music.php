@@ -88,71 +88,86 @@ class music extends boiler{
         $mood = $this->clean->post("mood");
         $song_description = $this->clean->post("song_description");
         $song_lyrics = $this->clean->post("song_lyrics");
-        $song_img = $_FILES['song_img'];
-        $audio_File = $_FILES['audioFile'];
-        $tag_video = $this->clean->post("tag_video");
+        $tag_audio = $this->clean->post("tag_audio"); // from hidden input
         $moz_tune = $this->clean->post("moz_tune");
-
-        // Handle Audio File Upload
-        $audioFileType = $audio_File['type'];
-        echo "Audio File Type: " . $audioFileType . "<br>";  // Debugging line
-
-        $allowedAudioTypes = ['audio/mpeg', 'audio/aac', 'audio/wav'];
-
-        if (in_array($audioFileType, $allowedAudioTypes)) {
-            $audioFilePath = $uploadDir . $audio_File['name'];
-            if (move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
-                // File upload successful
+    
+        $this->error = 0;
+        $this->error_msg = "";
+    
+        $audioFilePath = null;
+        $imageFilePath = null;
+    
+        // Audio File Upload
+        if (isset($_FILES['audioFile']) && $_FILES['audioFile']['error'] === UPLOAD_ERR_OK) {
+            $audio_File = $_FILES['audioFile'];
+            $audioFileType = mime_content_type($audio_File['tmp_name']);
+    
+            if (in_array($audioFileType, $allowedAudioTypes)) {
+                $audioFilePath = $uploadDir . basename($audio_File['name']);
+                if (!move_uploaded_file($audio_File['tmp_name'], $audioFilePath)) {
+                    $this->error = 1;
+                    $this->error_msg .= "Error moving uploaded audio file.<br>";
+                }
             } else {
                 $this->error = 1;
-                $this->error_msg .= "Error moving uploaded audio file.<br>";
+                $this->error_msg .= "Invalid audio file type.<br>";
             }
         } else {
             $this->error = 1;
-            $this->error_msg .= "Invalid audio file type.<br>";
+            $this->error_msg .= "Audio file not uploaded properly.<br>";
         }
     
-        // Handle Image File Upload
-        $imageFilePath = $uploadDir2 . basename($song_img['name']);
-        $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
+        // Image File Upload
+        if (isset($_FILES['song_img']) && $_FILES['song_img']['error'] === UPLOAD_ERR_OK) {
+            $song_img = $_FILES['song_img'];
+            $imageFileType = mime_content_type($song_img['tmp_name']);
+    
+            if (in_array($imageFileType, $allowedImageTypes)) {
+                $imageFilePath = $uploadDir2 . basename($song_img['name']);
+                if (!move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
+                    $this->error = 1;
+                    $this->error_msg .= "Error moving uploaded image file.<br>";
+                }
+            } else {
+                $this->error = 1;
+                $this->error_msg .= "Invalid image file type.<br>";
+            }
+        } else {
+            $this->error = 1;
+            $this->error_msg .= "Image file not uploaded properly.<br>";
+        }
+    
+        if (empty($tag_audio)) {
+            $this->error = 1;
+            $this->error_msg .= "Please enter at least one tag.<br>";
+        }
         
-        echo "Image File Type: " . $imageFileType . "<br>";  // Debugging line
+        echo $this->error_msg;
+        // $date_created = time();
+        $date_created = date('Y-m-d H:i:s');
 
-        if (in_array($imageFileType, $allowedImageTypes)) {
-            if (move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
-                // Image upload successful
-                // $this->error = 1;
-                // $this->error_msg .= "Image Upload Successful.<br>";
-            } else {
-                $this->error = 1;
-                $this->error_msg .= "Error moving uploaded image file.<br>";
-            }
-        } else {
-            $this->error = 1;
-            $this->error_msg .= "Invalid image file type.<br>";
-        }
-
-        if ($tag_audio == "") {
-            $this->error=1;
-            $this->error_msg.="Tag Need Needed";
-        }
     
-        $date_created = time();
-    
-        // Insert data into the database
         if ($this->error == 0) {
-            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, tag_audio, date_created) 
-            VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$tag_audio', '$date_created')");
+            $this->db->query("INSERT INTO audios (song_name, song, genre, mood, song_description, song_lyrics, song_img, tag_audio, date_created) VALUES ('$name_of_song', '$audioFilePath', '$genre', '$mood', '$song_description', '$song_lyrics', '$imageFilePath', '$tag_audio', '$date_created')");
     
             $this->alert->set("Upload successful", "success");
-            header('Location: ' . BURL . 'music/song_list'); // Redirect to a success page
+            header("Location: " . BURL . "music/song_list");
+            exit;
         } else {
             $this->alert->set($this->error_msg, "danger");
-            header('Location: ' . BURL . 'music'); // Redirect back to the upload page
         }
-    }
+    }    
 
-    public function edit($aid){
+    // public function getAudioWithTags($audioId) {
+    //     $audio = $this->db->query("SELECT * FROM audios WHERE id = $audioId")->row();
+    //     if ($audio) {
+    //         $tagsResult = $this->db->query("SELECT t.name FROM tags t JOIN audio_tags at ON t.id = at.tag_id JOIN audios a ON at.audio_id = a.id WHERE a.id = $audioId")->result_array();
+    //         $audio->tags = array_column($tagsResult, 'name'); // Extract just the tag names
+    //     }
+    //     return $audio;
+    // }
+
+    public function edit($aid=0){
         $this->page_title = "Edit Trip";
         $this->set_token();
         $this->auth->user(9);
@@ -182,100 +197,117 @@ class music extends boiler{
         include_once 'themes/' . $this->setting->admin_theme . '/footer.php';
     }
 
-    // Your edit_action method
     public function edit_action() {
-        // Ensure user authentication and authorization
         $this->auth->user(9);
         $this->auth->editor();
-        $this->auth->uid;
-
-        // Define upload directories and allowed file types
+    
         $uploadDir = 'assets/music_uploads/';
         $uploadDir2 = 'assets/uploads/';
-        $allowedAudioTypes = ['audio/mp3', 'audio/aac', 'audio/wav'];
+        $allowedAudioTypes = ['audio/mpeg', 'audio/mp3', 'audio/aac', 'audio/wav'];
         $allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    
+        $this->error = 0;
+        $this->error_msg = "";
+    
+        // Get audio ID
+        $aid = intval($_POST['aid'] ?? 0);
+        if ($aid <= 0) {
+            $this->error = 1;
+            $this->error_msg .= "Invalid song ID.<br>";
+        }
 
-        // Retrieve form data
+        // $aid = intval($_GET['aid'] ?? 0); // Or use $_POST depending on source
+    
+        // Get fields
         $name_of_song = $this->clean->post("name_of_song");
         $genre = $this->clean->post("genre");
         $mood = $this->clean->post("mood");
         $song_description = $this->clean->post("song_description");
-        $song_img = $_FILES['song_img'];
-        $audio_File = $_FILES['audioFile'];
-        // $moz_tune = $this->clean->post("moz_tune");
+        $song_lyrics = $this->clean->post("song_lyrics");
+        $tag_audio = $this->clean->post("tag_audio");
+    
+        // Get previous song record for file fallback
+        // $prev = $this->db->get_row("SELECT * FROM audios WHERE aid = '$aid' ");
+        // if (!$prev) {
+        //     $this->error = 1;
+        //     $this->error_msg .= "Song not found.<br>";
+        // }
 
-        // Handle Audio File Upload
-        $audioFileType = $audio_File['type'];
+        $result = $this->db->query("SELECT * FROM audios WHERE aid='$aid'");
+        $song = $result ? $result->fetch_assoc() : null;
 
-        // Handle Audio File Upload
-        $audioFileType = $audio_File['type'];
-
-        // Debugging: Output the detected audio file type
-        echo "Detected Audio File Type: " . $audioFileType . "<br>";
-
-        // Define allowed audio file types
-        $allowedAudioTypes = ['audio/mpeg', 'audio/mp3', 'audio/aac', 'audio/wav'];
-
-        if (in_array($audioFileType, $allowedAudioTypes)) {
-            // Proceed with processing the audio file
-            $audioFilePath = $uploadDir . $audio_File['name'];
-
-            // Compress the audio file
-            $compressedAudioFilePath = compressAudio($audio_File['tmp_name'], $audioFilePath);
-
-            if ($compressedAudioFilePath) {
-                // Compression successful, move the compressed file
-                if (move_uploaded_file($compressedAudioFilePath, $audioFilePath)) {
-                    // File upload successful
-                } else {
-                    $this->error = 1;
-                    $this->error_msg .= "Error moving uploaded audio file.<br>";
-                }
+    
+        // Handle audio file update (optional)
+        if (isset($_FILES['audioFile']) && $_FILES['audioFile']['error'] === UPLOAD_ERR_OK) {
+            $audio_File = $_FILES['audioFile'];
+            $audioFileType = mime_content_type($audio_File['tmp_name']);
+            if (in_array($audioFileType, $allowedAudioTypes)) {
+                $audioFilePath = $uploadDir . basename($audio_File['name']);
+                move_uploaded_file($audio_File['tmp_name'], $audioFilePath);
             } else {
-                // Compression failed
                 $this->error = 1;
-                $this->error_msg .= "Error compressing audio file.<br>";
+                $this->error_msg .= "Invalid audio file type.<br>";
             }
         } else {
-            // Invalid audio file type
-            $this->error = 1;
-            $this->error_msg .= "Invalid audio file type. Only MP3, AAC, WAV files are allowed.<br>";
-
-            // Debugging: Output allowed audio file types
-            echo "Allowed Audio File Types: " . implode(', ', $allowedAudioTypes) . "<br>";
+            $audioFilePath = $prev['song']; // keep previous
         }
-
-
-
-        // Handle Image File Upload
-        $imageFilePath = $uploadDir2 . $song_img['name'];
-        $imageFileType = $this->getFileMimeType($song_img['tmp_name']);
-
-        if (in_array($imageFileType, $allowedImageTypes)) {
-            if (!move_uploaded_file($song_img['tmp_name'], $imageFilePath)) {
+    
+        // Handle image update (optional)
+        if (isset($_FILES['song_img']) && $_FILES['song_img']['error'] === UPLOAD_ERR_OK) {
+            $song_img = $_FILES['song_img'];
+            $imageFileType = mime_content_type($song_img['tmp_name']);
+            if (in_array($imageFileType, $allowedImageTypes)) {
+                $imageFilePath = $uploadDir2 . basename($song_img['name']);
+                move_uploaded_file($song_img['tmp_name'], $imageFilePath);
+            } else {
                 $this->error = 1;
-                $this->error_msg .= "Error moving uploaded image file.<br>";
+                $this->error_msg .= "Invalid image file type.<br>";
             }
         } else {
-            // Invalid image file type
+            $imageFilePath = $prev['song_img']; // keep previous
+        }
+    
+        if (empty($tag_audio)) {
             $this->error = 1;
-            $this->error_msg .= "Invalid image file type.<br>";
+            $this->error_msg .= "Please enter at least one tag.<br>";
         }
 
-        // Check for errors
+        $date_created = date('Y-m-d H:i:s');
+    
+        // Update
         if ($this->error == 0) {
-            // Update database with song information
-            // $this->db->query("UPDATE audios SET ...");
-
-            // Set success message and redirect
+            $this->db->query("UPDATE audios SET 
+                song_name = '$name_of_song',
+                song = '$audioFilePath',
+                genre = '$genre',
+                mood = '$mood',
+                song_description = '$song_description',
+                song_lyrics = '$song_lyrics',
+                tag_audio = '$tag_audio',
+                song_img = '$imageFilePath',
+                date_created = '$date_created'
+                WHERE aid = '$aid' ");
+    
             $this->alert->set("Song Was Just Updated Successfully", 'success');
             header('location:' . BURL . "music/song_list");
+            exit;
         } else {
-            // Set error message and redirect
             $this->alert->set($this->error_msg, 'danger');
-            header('location:' . BURL . "music/edit?=".$aid);
+            header('location:' . BURL . "music/edit?aid=$aid");
+            exit;
         }
     }
+
+    function delete($aid) {
+        $this->auth->editor();
+        $this->page_title = "Song Delete";
+        $uid = $this->auth->uid;
+        $this->set_token();
+        $delete_audio = $this->db->query("DELETE FROM audios WHERE aid='$aid'");
+        $this->alert->set("Audio Deleted", 'danger');
+        die(header('location:' . BURL . "music/song_list"));
+    }
+    
 
     public function track_play($aid) {
         // Get the POST data

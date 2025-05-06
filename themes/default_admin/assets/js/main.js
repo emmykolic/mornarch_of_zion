@@ -4,21 +4,51 @@
 
 'use strict';
 
-let menu, animate;
+// let menu, animate;
 
-var input = document.querySelector('#tag-input');
-new Tagify(input);
+// var input = document.querySelector('#tag-input');
+// new Tagify(input);
 
-function copyToClipboard(link) {
-  navigator.clipboard.writeText(link).then(() => {
-      // Display confirmation message
-      const confirmation = document.getElementById("copyConfirmation");
-      confirmation.style.display = "inline";
-      setTimeout(() => confirmation.style.display = "none", 2000); // Hide after 2 seconds
-  }).catch(err => {
-      console.error('Failed to copy: ', err);
+// function copyToClipboard(link) {
+//   navigator.clipboard.writeText(link).then(() => {
+//       // Display confirmation message
+//       const confirmation = document.getElementById("copyConfirmation");
+//       confirmation.style.display = "inline";
+//       setTimeout(() => confirmation.style.display = "none", 2000); // Hide after 2 seconds
+//   }).catch(err => {
+//       console.error('Failed to copy: ', err);
+//   });
+// }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const tagInput = document.querySelector('#tag-input');
+  const hiddenTagInput = document.getElementById('hiddenTagInput');
+  const tagContainer = document.getElementById('tagContainer');
+
+  const tagify = new Tagify(tagInput, {
+    delimiters: ", ", // Allow comma or space
+    maxTags: Infinity
   });
-}
+
+  tagify.on('change', () => {
+    const tags = tagify.value.map(tag => tag.value.trim());
+    hiddenTagInput.value = tags.join(',');
+    updateDisplayedTags(tags);
+  });
+
+  function updateDisplayedTags(tags) {
+    tagContainer.innerHTML = '';
+    tags.forEach(tag => {
+      if (tag) {
+        const el = document.createElement('span');
+        el.className = 'badge bg-secondary me-1';
+        el.textContent = tag;
+        tagContainer.appendChild(el);
+      }
+    });
+  }
+});
 
 
 (function () {

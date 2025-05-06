@@ -99,5 +99,4 @@ class mood extends boiler{
     }
 }
 
-
 ?>

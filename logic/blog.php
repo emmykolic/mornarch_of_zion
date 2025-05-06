@@ -113,9 +113,9 @@ class blog extends boiler
         $this->set_token();
         $this->auth->user(9);
         $blog_list = $this->db->query("SELECT *, slug FROM blogs ORDER BY bid DESC LIMIT 20");
-        //$blog_id = $row['bid']; // Assuming you have the blog post ID 
-        // $this->db->query("UPDATE blogs SET views = views + 1  OR slug = '$slug' WHERE bid = '$blog_id'");
-        // $slug = generateSlug($title, $db);
+        $blog_id = $row['bid']; // Assuming you have the blog post ID 
+        $this->db->query("UPDATE blogs SET views = views + 1  OR slug = '$slug' WHERE bid = '$blog_id'");
+        $slug = generateSlug($title, $db);
 
         function truncate($text, $chars = 100) {
             if (strlen($text) > $chars) {
@@ -125,30 +125,30 @@ class blog extends boiler
         }
         
         // Get the blog ID from the URL
-        // $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
+        $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
         
         // Debugging line to check the blog ID
-        // echo "Blog ID: " . $blog_id . "<br>";
+        echo "Blog ID: " . $blog_id . "<br>";
         
         // Fetch the blog post based on the blog ID
-        // $blog_list = $this->db->query("SELECT * FROM blogs LIMIT 1");
+        $blog_list = $this->db->query("SELECT * FROM blogs LIMIT 1");
     
         // // Check if the blog post exists
-        // if ($blog_list->num_rows > 0) {
-        //     // Fetch the blog post data
-        //     $row = $blog_list->fetch_assoc();
-        //     $blog_id = $row['bid'];
-        //     $slug = $row['slug'];
-        //     $title_of_blog = $row['title_of_blog'];
-        //     $blog_content = $row['blog_content'];
-        //     $views = $row['views'];
+        if ($blog_list->num_rows > 0) {
+            // Fetch the blog post data
+            $row = $blog_list->fetch_assoc();
+            $blog_id = $row['bid'];
+            $slug = $row['slug'];
+            $title_of_blog = $row['title_of_blog'];
+            $blog_content = $row['blog_content'];
+            $views = $row['views'];
     
             // Increment the views count for this blog post
-            // $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
-        // } else {
-        //     echo "Blog post not found.";
-        //     exit;
-        // }
+            $this->db->query("UPDATE blogs SET views = views + 1 WHERE bid = '$blog_id'");
+        } else {
+            echo "Blog post not found.";
+            exit;
+        }
     
         // Include the necessary files for the single blog post page
         include_once 'themes/' . $this->setting->admin_theme . '/header.php';
