@@ -57,53 +57,39 @@ class index extends boiler
 		$this->set_token();
 
 		// $user_id = $_SESSION['user_id'] ?? null;
-		// $uid = $this->auth->uid;
+		$uid = $this->auth->uid;
+		$ip = $_SERVER['REMOTE_ADDR'];
 
-		// if ($uid) {
-		// 	// Check if activity exists
-		// 	$check = $this->db->query("SELECT * FROM user_song_activity WHERE uid = '$uid' AND aid = '$aid'");
-		// 	if ($check->num_rows === 0) {
-		// 		// Insert new activity as "listened"
-		// 		// $this->db->query("INSERT INTO user_song_activity (uid, aid, listened) VALUES ('$uid', '$aid')");
-		// 		$this->db->query("INSERT INTO user_song_activity (uid, aid, listened) VALUES ('$uid', '$aid', 1)");
-		// 		// Optionally also increment song_click in audios
-		// 		$this->db->query("UPDATE audios SET song_click = song_click + 1 WHERE aid = '$aid'");
-		// 	}
-		// }
-
-		$uid = $this->auth->uid ?? null;
-		$ip = $_SERVER['REMOTE_ADDR']; // Get IP address
-		$aid = (int) $aid; // Sanitize aid
-
-		// Make sure song exists (optional but good practice)
-		$audio_check = $this->db->query("SELECT 1 FROM audios WHERE aid = '$aid'");
-		if ($audio_check->num_rows === 0) {
-			// Song not found
-			return;
-		}
-
-		// Build dynamic WHERE clause based on login status
-		$where = $uid
-			? "uid = '$uid' AND aid = '$aid'"
-			: "ip = '$ip' AND aid = '$aid'";
-
-		// Check if this user or guest has already played the song
-		$check = $this->db->query("SELECT 1 FROM user_song_activity WHERE $where");
-
-		if ($check->num_rows === 0) {
-			if ($uid) {
-				// Insert activity for logged-in user
+		if ($uid) {
+			// Check if activity exists
+			$check = $this->db->query("SELECT * FROM user_song_activity WHERE uid = '$uid' AND aid = '$aid'");
+			if ($check->num_rows === 0) {
+				// Insert new activity as "listened"
+				// $this->db->query("INSERT INTO user_song_activity (uid, aid, listened) VALUES ('$uid', '$aid')");
 				$this->db->query("INSERT INTO user_song_activity (uid, aid, listened) VALUES ('$uid', '$aid', 1)");
-			} else {
-				// Insert activity for guest user
-				$this->db->query("INSERT INTO user_song_activity (ip, aid, listened) VALUES ('$ip', '$aid', 1)");
+				// Optionally also increment song_click in audios
+				$this->db->query("UPDATE audios SET song_click = song_click + 1 WHERE aid = '$aid'");
 			}
-
-			// Update song play counter
-			$this->db->query("UPDATE audios SET song_click = song_click + 1 WHERE aid = '$aid'");
+		}else {
+			$listened =  1;
+			$this->db->query("INSERT INTO user_song_activity (ip, aid, listened) VALUES ('$ip', '$aid', $listened)");
 		}
 
 
+		// Delete guest activity older than 30 days
+		// $this->db->query("
+		// DELETE FROM user_song_activity
+		// WHERE uid IS NULL
+		// AND created_at < NOW() - INTERVAL 30 DAY
+		// ");
+		
+		// Delete logged-in user activity older than 90 days
+		// $this->db->query("
+		// DELETE FROM user_song_activity
+		// WHERE uid IS NOT NULL
+		// AND created_at < NOW() - INTERVAL 90 DAY
+		// ");
+		
 
 	
 		// Fetch audio data from the database

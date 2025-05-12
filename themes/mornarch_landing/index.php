@@ -1,27 +1,11 @@
-    <!-- <div class="hero-wrap ftco-degree-bg" style="background-image: url('<?= BURL ?>/themes/mornarch_landing/images/music_pics.jpg'); background-size :cover; background-position: center; height:70vh;" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text w-100 text-center mb-md-5 pb-md-5">
-                        <h1 class="mb-4"><?= $this->setting->site_name ?></h1>
-                        <p style="font-size:1.2em"> <?=$this->setting->site_description ?></p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('<?= BURL ?>/themes/mornarch_landing/images/music_pics.jpg'); background-size :cover; background-position: center; height:70vh;" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
                 <div class="col-lg-8">
                     <div class="text w-100 text-center mb-md-5 pb-md-5">
-                        <h1 class="mb-4">Genext Motors</h1>
-                        <p style="font-size:1.2em"> Unique, comfortable and safe transportation system.</p>
-
+                        <h1 class="mb-4"><?= $this->setting->site_name ?></h1>
+                        <p style="font-size:1.2em"><?=$this->setting->site_description ?></p>
                     </div>
                 </div>
             </div>
@@ -104,12 +88,12 @@
                     <div class="row no-gutters d-flex">
                         <div class="col-md-4 d-flex align-items-center bg-danger" style="min-height: 100%;">
                             <div class="m-5 bg-white shadow w-100 h-50">
-                                H1
+                                Google Ads/Ads From Site
                             </div>
                         </div>
                         <div class="col-md-8 d-flex align-items-center " style="min-height: 100%;">
                             <div class="services-wrap rounded-right w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-                                <h3 class="heading-section mb-5"><span class="text-danger">Mornarch...</span> A Place Where Everything Gospel Is Brought To Your Step</h3>
+                                <h3 class="heading-section mb-5"><span class="text-danger"><?=$this->setting->site_name ?>...</span> <?=$this->setting->site_description ?></h3>
                                 <div class="row d-flex mb-4">
                                     <div class="col-md-4 d-flex align-self-stretch">
                                         <div class="services w-100 text-center">
@@ -141,6 +125,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <?php endif; ?>
 
@@ -292,7 +277,7 @@
                             With our Special facilities Such as: Internet solutions/browsing on transit, special vehicle monitoring system, responsible drivers, a 100% working AC and a dedicated customer service.
                             <?=$this->setting->site_name?> Shuttle Service is available in the following routes: Aba, Awka, Calabar, Enugu, Onitsha, Owerri, Port Harcourt, Umuahia, Uyo And Warri.
                             Take advantage of our safe and comfortable shuttles, travel in air-conditioned space wagon that have speed control and tracking mechanism</p>
-                        <p><a href="https://genextmotors.com.ng/" class="btn btn-dark py-3 px-4">Book A Trip</a></p>
+                        <!-- <p><a href="https://genextmotors.com.ng/" class="btn btn-dark py-3 px-4">Book A Trip</a></p> -->
                     </div>
                 </div>
             </div>

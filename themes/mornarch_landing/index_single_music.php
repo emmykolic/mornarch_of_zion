@@ -30,8 +30,9 @@
                 <div class="float-right"><audio controls loop id="audioPlayer-<?= $row['aid'] ?>" data-song-id="<?= $row['aid'] ?>"><source src="<?= BURL . htmlspecialchars($row['song']) ?>" type="audio/mpeg">
                     Your browser does not support the audio element.</audio>
                     <div class="text-left ml-5 mt-3">
-                        <a class="btn btn-primary download-btn download-button" id="downloadButton-<?= $row['aid'] ?>" 
-                        href="<?= BURL . htmlspecialchars($row['song']) ?>" download>Download Audio</a>
+                        
+                    <a class="btn btn-primary download-btn download-button" id="downloadButton-<?= $row['aid'] ?>" href="<?= BURL . htmlspecialchars($row['song']) ?>" download>Download Audio</a>
+
                     </div>
                 </div>
 

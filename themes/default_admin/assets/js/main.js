@@ -182,30 +182,6 @@ $(document).ready(function(){
     });
 });
 
-// var carousel = function() {
-  // $('.carousel-car').owlCarousel({
-  //   center: true,
-  //   loop: true,
-  //   autoplay: true,
-  //   items:1,
-  //   margin: 30,
-  //   stagePadding: 0,
-  //   nav: false,
-  //   navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-  //   responsive:{
-  //     0:{
-  //       items: 1
-  //     },
-  //     600:{
-  //       items: 2
-  //     },
-  //     1000:{
-  //       items: 3
-  //     }
-  //   }
-  // });
-
-
 /*--------------------------
         Image Croper
   ---------------------------- */
@@ -234,7 +210,7 @@ $('#upload_image').on('change', function() {
         });
     }
     reader.readAsDataURL(this.files[0]);
-    //$('#uploadimageModal').modal('show');
+    // $('#uploadimageModal').modal('show');
 });
 
 var $image_blog_crop = $('#image_blog_demo').croppie({
@@ -457,4 +433,6 @@ document.addEventListener('DOMContentLoaded', function () {
       tag.appendChild(closeBtn);
       tagContainer.insertBefore(tag, input);
   }
+
+
 });
