@@ -9,16 +9,16 @@
 // var input = document.querySelector('#tag-input');
 // new Tagify(input);
 
-// function copyToClipboard(link) {
-//   navigator.clipboard.writeText(link).then(() => {
-//       // Display confirmation message
-//       const confirmation = document.getElementById("copyConfirmation");
-//       confirmation.style.display = "inline";
-//       setTimeout(() => confirmation.style.display = "none", 2000); // Hide after 2 seconds
-//   }).catch(err => {
-//       console.error('Failed to copy: ', err);
-//   });
-// }
+function copyToClipboard(link) {
+  navigator.clipboard.writeText(link).then(() => {
+      // Display confirmation message
+      const confirmation = document.getElementById("copyConfirmation");
+      confirmation.style.display = "inline";
+      setTimeout(() => confirmation.style.display = "none", 2000); // Hide after 2 seconds
+  }).catch(err => {
+      console.error('Failed to copy: ', err);
+  });
+}
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -368,36 +368,25 @@ $("#userSearch").on('input',function(){
 		});
 	});
 
-  document.addEventListener('DOMContentLoaded', function() {
-		document.querySelectorAll('.see-more').forEach(function(readMoreLink) {
-			readMoreLink.addEventListener('click', function() {
-				var truncatedText = this.previousElementSibling.previousElementSibling;
-				var fullText = this.previousElementSibling;
-	
-				console.log('See More clicked');
-				console.log('Truncated Text:', truncatedText);
-				console.log('Full Text:', fullText);
-	
-				// Toggle the display of truncated and full text
-				if (fullText.style.display === 'none') {
-					fullText.style.display = 'inline';
-					truncatedText.style.display = 'none';
-					this.textContent = 'Read Less';
-				} else {
-					fullText.style.display = 'none';
-					truncatedText.style.display = 'inline';
-					this.textContent = 'Read More';
-				}
-			});
-		});
-	});
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.see-more').forEach(function(readMoreLink) {
+        readMoreLink.addEventListener('click', function() {
+            var container = this.closest('div');
+            var truncatedText = container.querySelector('.truncated-text');
+            var fullText = container.querySelector('.full-text');
 
-  
-
-
-  
-
-
+            if (fullText.style.display === 'none') {
+                fullText.style.display = 'inline';
+                truncatedText.style.display = 'none';
+                this.textContent = 'Read Less';
+            } else {
+                fullText.style.display = 'none';
+                truncatedText.style.display = 'inline';
+                this.textContent = 'Read More';
+            }
+        });
+    });
+});
 
 
 

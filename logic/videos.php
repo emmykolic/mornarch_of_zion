@@ -35,11 +35,12 @@
                 $this->error=1;
                 $this->error_msg.="Video Description Needed";
             }
-            $tag_video = $this->clean->post("tag_video");
-            if ($tag_video == "") {
-                $this->error=1;
-                $this->error_msg.="Tag Need Needed";
+            $tag_video = $this->clean->post("tag_video");dlmc
+            if (empty($tag_video)) {
+                $this->error = 1;
+                $this->error_msg .= "Please enter at least one tag.<br>";
             }
+            
             $source = $this->clean->post("source");
             if ($source == "") {
                 $this->error = 1;

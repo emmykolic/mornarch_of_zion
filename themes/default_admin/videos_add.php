@@ -13,16 +13,15 @@
                     <label for="">Add Description For The Video <span class="text-danger">*</span></label>
                     <textarea class="form-control" name="video_description" id="editor1" cols="30" rows="10"></textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label for="name">Add Tags For The Video <span class="text-danger">*</span></label>
+                    <label for="tag-input">Add Tags For The Video <span class="text-danger">*</span></label>
+                    <input type="text" id="tag-input" class="form-control" placeholder="Type a tag and press Enter or comma">
                     
-                    <!-- Input field for adding tags -->
-                    <input type="text" id="tagInput" class="form-control" placeholder="Type a tag and press Enter">
-                    
-                    <!-- Container to display added tags -->
+                    <!-- Display visual tags -->
                     <div id="tagContainer" class="mt-2"></div>
 
-                    <!-- Hidden input field to store tags for form submission -->
+                    <!-- Hidden input for form submission -->
                     <input type="hidden" name="tag_video" id="hiddenTagInput" required>
                 </div>
 

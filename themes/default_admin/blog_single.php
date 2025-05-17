@@ -9,8 +9,12 @@
         <div class="row">
             <div class="col-md-8 offset-md-2 col-12">
                 <div class="card mb-4">
+                    <!-- <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">View </h5>
+                    </div> -->
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">View Blogs</h5>
+                        <h5 class="mb-0"></h5>
+                        <a href="<?=BURL?>blog" class="btn btn-primary p-2">Add Blogs</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -36,19 +40,22 @@
                                         <td><?=htmlspecialchars($row['title_of_blog']);?></td>
                                         
                                         <td>
-                                            <div>
-                                                <!-- Truncated Text -->
-                                                 <span class="truncated-text"><?= truncate($row['blog_content'], 100) ?></span>
-                                                <!-- Full Text -->
-                                                <p class="full-text" style="display: none;"><?= nl2br(htmlspecialchars($row['blog_content'])); ?></p>
+                                            <p>
+                                                <div class="blog-content-block">
+                                                    <!-- Truncated Text -->
+                                                    <span class="truncated-text"><?= truncate($row['blog_content'], 100) ?></span>
+                                                    <!-- Full Text -->
+                                                    <p class="full-text" style="display: none;"><?= nl2br(htmlspecialchars($row['blog_content'])); ?></p>
 
-                                                <?php if ($row['blog_content']):?>
-                                                <!-- Read More Link -->
-                                                <a href="javascript:void(0);" class="see-more">Read More</a>
-                                                <?php elseif ($row['blog_content'] == ""):?>
-                                                    
-                                                <?php endif; ?>
-                                            </div>
+                                                    <?php if ($row['blog_content']):?>
+                                                    <!-- Read More Link -->
+                                                    <a href="javascript:void(0);" class="see-more">Read More</a>
+                                                    <?php elseif ($row['blog_content'] == ""):?>
+                                                        
+                                                    <?php endif; ?>
+                                                </div>
+
+                                            </p>
                                         </td>
 
                                         <td>

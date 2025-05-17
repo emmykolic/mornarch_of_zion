@@ -120,7 +120,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><a class="dropdown-item" href="<?= BURL ?>index/music">Music</a></li>
-                                    <li><a class="dropdown-item" href="<?= BURL ?>index/video">Video</a></li>
+                                    <li><a class="dropdown-item" href="<?= BURL ?>index/video_view">Video</a></li>
                                     <li><a class="dropdown-item" href="<?= BURL ?>index/blog_view">Blog</a></li>
                                     <li><a class="dropdown-item" href="<?= BURL ?>index/cargo">Upload Songs</a></li>
                                 </ul>

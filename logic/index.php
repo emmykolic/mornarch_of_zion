@@ -399,13 +399,18 @@ class index extends boiler
 		}
 		return $formattedText;
 	}
+
+	
 	
 	public function video_view($vid) {
 		$this->set_token();
 		$this->auth->user();
 		$this->page_title = "M.O.Z Videos | Video List";
 		$uid = $this->auth->uid;
-	
+
+		$vid = isset($_GET['vid']) ? (int)$_GET['vid'] : 0;
+
+		
 		// Fetch data from both videos and audio tables
 		$get_video_query = $this->db->query("SELECT videos.*, audios.song_name, audios.song_img, audios.song_description, audios.song_lyrics FROM videos INNER JOIN audios ON videos.vid = audios.aid WHERE videos.vid = '$vid' LIMIT 1");
 		// Fetch blog post data

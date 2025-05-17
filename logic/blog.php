@@ -86,24 +86,31 @@ class blog extends boiler
     }
 
     public function single() {
-        $this->auth->user();
+        $this->set_token();
         $this->auth->user(9);
         $this->page_title = "M.O.Z Blog | Single";
-        $this->set_token();
     
         $blog_id = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
-        if ($blog_id <= 0) {
-            echo "Invalid blog ID.";
-            exit;
-        }
+        // if ($blog_id <= 0) {
+            // echo "Invalid blog ID.";
+            // exit;
+        // }
     
-        $result = $this->db->query("SELECT * FROM blogs WHERE bid = '$blog_id'");
-        if ($result->num_rows === 0) {
+        $blog_list  = $this->db->query("SELECT * FROM blogs ORDER BY bid");
+        if ($blog_list ->num_rows === 0) {
             echo "Blog post not found.";
             exit;
         }
+
+        function truncate($text, $chars = 100) {
+            if (strlen($text) > $chars) {
+                $text = substr($text, 0, $chars) . "...";
+            }
+            return $text;
+        }
+
     
-        $row = $result->fetch_assoc();
+        $row = $blog_list ->fetch_assoc();
         $title_of_blog = $row['title_of_blog'];
         $blog_content = $row['blog_content'];
         $blog_img = $row['blog_img'];
